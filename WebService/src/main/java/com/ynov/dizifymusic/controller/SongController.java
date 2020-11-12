@@ -58,7 +58,7 @@ public class SongController {
     }
     
     //DELETE by id
-    @DeleteMapping("/song/{id}")
+    @DeleteMapping("/song/id/{id}")
     public void deleteSong(final @PathVariable("id") Integer songId) {
     	try {
     		songRepository.deleteById(songId);
@@ -68,7 +68,7 @@ public class SongController {
     }
     
   //DELETE by name
-    @DeleteMapping("/song/{id}")
+    @DeleteMapping("/song/name/{name}")
     public void deleteSong(final @PathVariable("name") String songName) {
     	try {
     		songRepository.deleteByName(songName);

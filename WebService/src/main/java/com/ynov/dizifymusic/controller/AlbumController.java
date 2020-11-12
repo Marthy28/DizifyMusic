@@ -38,7 +38,7 @@ public class AlbumController {
     
     //GET by id
     @ResponseBody
-    @GetMapping("/album/{id}")
+    @GetMapping("/album/id/{id}")
     public Album getAlbum(final @PathVariable("id") Integer albumId) {
     	try {
             return albumRepository.findById(albumId).get();
@@ -47,12 +47,34 @@ public class AlbumController {
             return null;
         }
     }
+
+  //GET by name
+    @ResponseBody
+    @GetMapping("/album/name/{name}")
+    public Album getAlbum(final @PathVariable("name") String albumName) {
+    	try {
+            return albumRepository.findByName(albumName);
+        } catch (Exception e) {
+        	System.out.println(e.toString());
+            return null;
+        }
+    }
     
     //DELETE by id
-    @DeleteMapping("/album/{id}")
+    @DeleteMapping("/album/id/{id}")
     public void deleteAlbum(final @PathVariable("id") Integer albumId) {
     	try {
     	albumRepository.deleteById(albumId);
+    	} catch (Exception e) {
+    		System.out.println(e.toString());
+        }
+    }
+    
+    //DELETE by name
+    @DeleteMapping("/album/name/{name}")
+    public void deleteAlbum(final @PathVariable("name") String albumName) {
+    	try {
+    	albumRepository.deleteByName(albumName);
     	} catch (Exception e) {
     		System.out.println(e.toString());
         }
