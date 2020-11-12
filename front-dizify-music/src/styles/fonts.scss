@@ -1,0 +1,126 @@
+@font-face {
+  font-family: "GreycliffCF";
+  src: url("../assets/fonts/GreycliffCF/GreycliffCF-Regular.woff2")
+      format("woff2"),
+    url("../assets/fonts/GreycliffCF/GreycliffCF-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "GreycliffCF";
+  src: url("../assets/fonts/GreycliffCF/GreycliffCF-DemiBold.woff2")
+      format("woff2"),
+    url("../assets/fonts/GreycliffCF/GreycliffCF-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GreycliffCF";
+  src: url("../assets/fonts/GreycliffCF/GreycliffCF-RegularOblique.woff2")
+      format("woff2"),
+    url("../assets/fonts/GreycliffCF/GreycliffCF-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "GreycliffCF";
+  src: url("../assets/fonts/GreycliffCF/GreycliffCF-DemiBoldOblique.woff2")
+      format("woff2"),
+    url("../assets/fonts/GreycliffCF/GreycliffCF-DemiBold.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+// @font-face {
+//   font-family: 'GreycliffCF';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-BoldOblique.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-DemiBold.woff') format('woff');
+//   font-weight: bolder;
+//   font-style: italic;
+//   font-display: swap;
+// }
+// @font-face {
+//   font-family: 'GreycliffCF';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-BoldOblique.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-Bold.woff') format('woff');
+//   font-weight: bolder;
+//   font-style: italic;
+//   font-display: swap;
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-ThinOblique';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-ThinOblique.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-ThinOblique.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-ExtraLightOblique';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-ExtraLightOblique.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-ExtraLightOblique.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-ExtraLight';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-ExtraLight.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-ExtraLight.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-Thin';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-Thin.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-Thin.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-ExtraBoldOblique';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-ExtraBoldOblique.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-ExtraBoldOblique.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-HeavyOblique';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-HeavyOblique.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-HeavyOblique.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-Heavy';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-Heavy.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-Heavy.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-ExtraBold';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-ExtraBold.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-ExtraBold.woff') format('woff');
+// }
+
+// @font-face {
+//   font-family: 'GreycliffCF-DemiBoldOblique';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-DemiBoldOblique.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-DemiBoldOblique.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-DemiBold';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-DemiBold.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-DemiBold.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-Light';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-Light.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-Light.woff') format('woff');
+// }
+
+// @font-face {
+//   font-family: 'GreycliffCF-RegularOblique';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-RegularOblique.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-RegularOblique.woff') format('woff');
+// }
+// @font-face {
+//   font-family: 'GreycliffCF-Regular';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-Regular.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-Regular.woff') format('woff');
+// }
+
+// @font-face {
+//   font-family: 'GreycliffCF-LightOblique';
+//   src: url('../assets/fonts/GreycliffCF/GreycliffCF-LightOblique.woff2') format('woff2'),
+//     url('../assets/fonts/GreycliffCF/GreycliffCF-LightOblique.woff') format('woff');
+// }
