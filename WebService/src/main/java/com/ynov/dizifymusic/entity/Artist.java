@@ -13,24 +13,25 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Artist")
 public class Artist {
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @OneToMany
-    private Set<Album> albums;
-    
-    @OneToMany
-    private Set<Song> songs;
-    
-    @ManyToMany
-    private Set<Favorite> favorites = new HashSet<Favorite>();
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String name;
-    private String imageUri;
-    
-    
+	@OneToMany (mappedBy = "artist", fetch = FetchType.LAZY,
+			cascade = CascadeType.ALL)
+	private Set<Album> albums;
+
+	@OneToMany (mappedBy = "artist", fetch = FetchType.LAZY,
+			cascade = CascadeType.ALL)
+	private Set<Song> songs;
+
+	@ManyToMany
+	private Set<Favorite> favorites = new HashSet<Favorite>();
+
+	private String name;
+	private String imageUri;
+
 	public Long getId() {
 		return id;
 	}
@@ -67,7 +68,7 @@ public class Artist {
 	public void setImageUri(String imageUri) {
 		this.imageUri = imageUri;
 	}
-    
-    
+
+
 
 }

@@ -25,6 +25,7 @@ public class AdministratorController {
 		this.administratorRepository = administratorRepository;
 	}
 
+	//GET all
 	@GetMapping("/administrator")
     public List<Administrator> getAlbums() {
 		try {
@@ -35,6 +36,7 @@ public class AdministratorController {
         }
     }
     
+	//GET by id
     @ResponseBody
     @GetMapping("/administrator/{id}")
     public Administrator getAdministrator(final @PathVariable("id") Long albumId) {
@@ -46,6 +48,7 @@ public class AdministratorController {
         }
     }
     
+    //DELETE by id
     @DeleteMapping("/administrator/{id}")
     public void deleteAdministrator(final @PathVariable("id") Long albumId) {
     	try {
@@ -55,6 +58,7 @@ public class AdministratorController {
         }	
     }
 	
+    //POST
     @PostMapping("/administrator")
     public Administrator addAdministrator(@RequestBody Administrator album) {
     	try {
@@ -65,6 +69,7 @@ public class AdministratorController {
         }
     }
 
+    //PUT by id
     @ResponseBody
     @PutMapping("/administrator/{id}")
     public Administrator editAdministrator(@RequestBody Administrator album) {

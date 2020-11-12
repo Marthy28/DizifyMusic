@@ -15,14 +15,10 @@ import com.ynov.dizifymusic.entity.Artist;
  */
 public interface ArtistRepository extends JpaRepository<Artist, Integer> {
 
-    /**
-     * Recherche un auteur par son nom ou son prénom.
-     * 
-     * @param lastname le nom
-     * @param firstname le prénom
-     * @return un auteur
-     */
     @Query("SELECT a FROM Artist a WHERE a.name LIKE %:name%")
     public Artist findByName(@Param("name") String lastname);
+    
+    @Query("DELETE a FROM Artist WHERE a.name LIKE %:name%")
+    public Artist deleteByName(@Param("name") String lastname);
 
 }

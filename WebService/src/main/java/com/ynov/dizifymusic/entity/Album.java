@@ -10,18 +10,21 @@ public class Album {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
 	private String name;
 	private String pictureUri;
 	private Date releaseDate;
 	
+	//modifié
 	@ManyToOne
-	private Artist Artist;
+	@JoinColumn(name = "artist_id", nullable = false)
+    private Artist artist;
+	
 	
 	@ManyToMany
 	private Set<Favorite> favorites = new HashSet<Favorite>();
 	
-	@OneToMany
+	@OneToMany (mappedBy = "album", fetch = FetchType.LAZY,
+    cascade = CascadeType.ALL)
 	private Set<Song> songs;
 
 	public Long getId() {
@@ -57,11 +60,11 @@ public class Album {
 	}
 
 	public Artist getArtist() {
-		return Artist;
+		return artist;
 	}
 
-	public void setArtist(Artist artist) {
-		Artist = artist;
+	public void setArtist(Artist _artist) {
+		artist = _artist;
 	}
 
 	public Set<Favorite> getFavorites() {

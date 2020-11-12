@@ -20,10 +20,14 @@ public class Song {
 	@ManyToMany
 	private Set<Favorite> favorites = new HashSet<Favorite>();
 	
-	@ManyToOne
-	private Artist artist;
+	//modifié
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "artist_id", nullable = false)
+    private Artist artist;
 	
-	@ManyToOne
+	//modifié
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "album_id", nullable = false)
 	private Album album;
 
 	public Long getId() {

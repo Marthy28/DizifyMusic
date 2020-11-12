@@ -26,6 +26,7 @@ public class ArtistController {
         this.artistRepository = artistRepository;
     }
     
+    //GET all
     @GetMapping("/artist")
     public List<Artist> getArtists() {
     	try {
@@ -36,8 +37,9 @@ public class ArtistController {
         }
     }
     
+    //GET by id
     @ResponseBody
-    @GetMapping("/artist/{id}")
+    @GetMapping("/artist/id/{id}")
     public Artist getArtist(final @PathVariable("id") Integer artistId) {
     	try {
             return artistRepository.findById(artistId).get();
@@ -47,7 +49,20 @@ public class ArtistController {
         }
     }
     
-    @DeleteMapping("/artist/{id}")
+    //GET by name
+    @ResponseBody
+    @GetMapping("/artist/name/{name}")
+    public Artist getArtist(final @PathVariable("name") String artistName) {
+    	try {
+            return artistRepository.findByName(artistName);
+        } catch (Exception e) {
+        	System.out.println(e.toString());
+            return null;
+        }
+    }
+   
+    //DELETE by id 
+    @DeleteMapping("/artist/id/{id}")
     public void deleteArtist(final @PathVariable("id") Integer artistId) {
     	try {
     		artistRepository.deleteById(artistId);
@@ -56,6 +71,17 @@ public class ArtistController {
     	}
     }
 	
+    //DELETE by name
+    @DeleteMapping("/artist/name/{name}")
+    public void deleteArtist(final @PathVariable("name") String artistName) {
+    	try {
+            artistRepository.deleteByName(artistName);
+        } catch(Exception e) {
+    		System.out.println(e.toString());
+    	}
+    }
+    
+    //POST 
     @PostMapping("/artist")
     public Artist addArtist(@RequestBody Artist artist) {
     	try {
@@ -66,6 +92,7 @@ public class ArtistController {
     	}
     }
 
+    //PUT by id
     @ResponseBody
     @PutMapping("/artist/{id}")
     public Artist editArtist(@RequestBody Artist artist) {

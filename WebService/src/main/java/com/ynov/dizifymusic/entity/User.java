@@ -11,27 +11,27 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class User {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String eMail;
 	private String avatarUri;
 	private String pseudo;
-	
+
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+			cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("user")
 	private Set<Favorite> favorites;
-	
+
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+			cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("user")
 	private Set<Playlist> playlist;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
 	@JoinColumn(name = "administrator_id")
 	@JsonIgnoreProperties({"user","hibernateLazyInitializer"})
-	
+
 	private Administrator administrator;
 
 	public Long getId() {
@@ -89,6 +89,6 @@ public class User {
 	public void setAdministrator(Administrator administrator) {
 		this.administrator = administrator;
 	}
-	
-	
+
+
 }

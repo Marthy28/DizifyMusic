@@ -22,6 +22,7 @@ public class SongController {
         this.songRepository = songRepository;
     }
     
+    //GET all
     @GetMapping("/song")
     public List<Song> getArtists() {
     	try {
@@ -32,8 +33,9 @@ public class SongController {
         }
     }
     
+    //GET by id
     @ResponseBody
-    @GetMapping("/song/{id}")
+    @GetMapping("/song/id/{id}")
     public Song getSong(final @PathVariable("id") Integer songId) {
     	try {
             return songRepository.findById(songId).get();
@@ -43,6 +45,19 @@ public class SongController {
         }
     }
     
+  //GET by name
+    @ResponseBody
+    @GetMapping("/song/name/{name}")
+    public Song getSong(final @PathVariable("name") String songName) {
+    	try {
+            return songRepository.findByName(songName);
+        } catch (Exception e) {
+        	System.out.println(e.toString());
+            return null;
+        }
+    }
+    
+    //DELETE by id
     @DeleteMapping("/song/{id}")
     public void deleteSong(final @PathVariable("id") Integer songId) {
     	try {
@@ -51,7 +66,18 @@ public class SongController {
     		System.out.println(e.toString());
     	}
     }
+    
+  //DELETE by name
+    @DeleteMapping("/song/{id}")
+    public void deleteSong(final @PathVariable("name") String songName) {
+    	try {
+    		songRepository.deleteByName(songName);
+    	} catch(Exception e) {
+    		System.out.println(e.toString());
+    	}
+    }
 	
+    //POST 
     @PostMapping("/song")
     public Song addSong(@RequestBody Song song) {
     	try {
@@ -62,6 +88,7 @@ public class SongController {
     	}
     }
 
+    //PUT by id
     @ResponseBody
     @PutMapping("/song/{id}")
     public Song editSong(@RequestBody Song song) {

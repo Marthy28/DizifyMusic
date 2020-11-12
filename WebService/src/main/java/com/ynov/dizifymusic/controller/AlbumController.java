@@ -25,6 +25,7 @@ public class AlbumController {
 		this.albumRepository = albumRepository;
 	}
 	
+    //GET all
     @GetMapping("/album")
     public List<Album> getAlbums() {
     	try {
@@ -35,6 +36,7 @@ public class AlbumController {
         }
     }
     
+    //GET by id
     @ResponseBody
     @GetMapping("/album/{id}")
     public Album getAlbum(final @PathVariable("id") Integer albumId) {
@@ -46,6 +48,7 @@ public class AlbumController {
         }
     }
     
+    //DELETE by id
     @DeleteMapping("/album/{id}")
     public void deleteAlbum(final @PathVariable("id") Integer albumId) {
     	try {
@@ -55,6 +58,7 @@ public class AlbumController {
         }
     }
 	
+    //POST 
     @PostMapping("/album")
     public Album addAlbum(@RequestBody Album album) {
     	try {
@@ -65,6 +69,7 @@ public class AlbumController {
         }
     }
 
+    //PUT by id
     @ResponseBody
     @PutMapping("/album/{id}")
     public Album editAlbum(@RequestBody Album album) { 

@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ynov.dizifymusic.entity.Artist;
 import com.ynov.dizifymusic.entity.Playlist;
 import com.ynov.dizifymusic.entity.Song;
 import com.ynov.dizifymusic.entity.User;
-import com.ynov.dizifymusic.repository.ArtistRepository;
 import com.ynov.dizifymusic.repository.PlaylistRepository;
 import com.ynov.dizifymusic.repository.UserRepository;
 
@@ -31,6 +29,7 @@ public class PlaylistController {
         this.userRepository = userRepository;
     }
     
+    //GET all 
     @GetMapping("/playlist")
     public List<Playlist> getPlaylists() {
     	try {
@@ -41,6 +40,7 @@ public class PlaylistController {
         }
     }
     
+    //GET all by id
     @ResponseBody
     @GetMapping("/playlist/{id}")
     public Playlist getPlaylist(final @PathVariable("id") Long playlistId) {
@@ -52,6 +52,7 @@ public class PlaylistController {
         }
     }
     
+    //GET by user id
     @ResponseBody
     @GetMapping("/playlistByUserId/{user_id}")
     public List<Playlist> getPlaylistByUserId(final @PathVariable("user_id") Long user_id) {
@@ -63,6 +64,7 @@ public class PlaylistController {
         }
     }
     
+    //DELETE by id
     @DeleteMapping("/playlist/{id}")
     public void deletePlaylist(final @PathVariable("id") Long playlistId) {
     	try {
@@ -72,6 +74,7 @@ public class PlaylistController {
     	}
     }
     
+    //POST
     @ResponseBody
     @PostMapping("/playlist/{user_id}")
     public Playlist addPlaylist(@RequestBody Playlist playlist, final @PathVariable("user_id") Long user_id) {
@@ -85,6 +88,7 @@ public class PlaylistController {
     	}
     }
 
+    //PUT by user id
     @ResponseBody
     @PutMapping("/playlistAddSong/{playlist_id}")
     public Playlist editPlaylist_addSong(@RequestBody Song song,final @PathVariable("playlist_id") Long playlist_id) {

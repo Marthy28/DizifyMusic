@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ynov.dizifymusic.entity.Administrator;
-import com.ynov.dizifymusic.entity.Playlist;
 import com.ynov.dizifymusic.entity.User;
-import com.ynov.dizifymusic.repository.AdministratorRepository;
-import com.ynov.dizifymusic.repository.PlaylistRepository;
 import com.ynov.dizifymusic.repository.UserRepository;
 
 @RestController
@@ -28,6 +25,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
     
+    // GET all
     @GetMapping("/user")
     public List<User> getUsers() {
     	try {
@@ -38,6 +36,7 @@ public class UserController {
         }
     }
     
+    //GET user by id
     @ResponseBody
     @GetMapping("/user/{id}")
     public User getUser(final @PathVariable("id") Long userId) {
@@ -49,6 +48,7 @@ public class UserController {
         }
     }
     
+    //DELETE by id
     @DeleteMapping("/user/{id}")
     public void deleteUser(final @PathVariable("id") Long userId) {
     	try {
@@ -58,6 +58,7 @@ public class UserController {
     	}
     }
 	
+    //POST
     @PostMapping("/user")
     public User addUser(@RequestBody User user) {
     	try {
@@ -68,6 +69,7 @@ public class UserController {
     	}
     }
     
+    //PUT user to admin by id
     @PutMapping("/usertoadmin/{id}")
     public User userToAdmin(final @PathVariable("id") Long userId) {
     	try {
@@ -82,6 +84,7 @@ public class UserController {
     	}
     }
 
+    //PUT by id
     @ResponseBody
     @PutMapping("/user/{id}")
     public User editUser(@RequestBody User user) {
