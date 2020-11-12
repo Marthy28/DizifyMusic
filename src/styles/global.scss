@@ -1,0 +1,17 @@
+html {
+  margin: 0;
+  font-size: var(--baseFontSize);
+  line-height: 1.5;
+  font-family: GreycliffCF, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Reset Antd-design default usage of tabular-nums
+body,
+.ant-tabs,
+.ant-table,
+.ant-tooltip {
+  font-variant: normal;
+  font-feature-settings: normal;
+}
