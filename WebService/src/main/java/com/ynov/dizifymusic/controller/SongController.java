@@ -10,26 +10,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.ynov.dizifymusic.entity.Artist;
-import com.ynov.dizifymusic.repository.ArtistRepository;
+import com.ynov.dizifymusic.entity.Song;
+import com.ynov.dizifymusic.repository.SongRepository;
 
-
-@RestController
-public class ArtistController {
-
-	private ArtistRepository artistRepository;
+public class SongController {
+	private SongRepository songRepository;
 
     @Autowired
-    public ArtistController(ArtistRepository artistRepository) {
-        this.artistRepository = artistRepository;
+    public SongController(SongRepository songRepository) {
+        this.songRepository = songRepository;
     }
     
-    @GetMapping("/artist")
-    public List<Artist> getArtists() {
+    @GetMapping("/song")
+    public List<Song> getArtists() {
     	try {
-    		return artistRepository.findAll();
+    		return songRepository.findAll();
     	} catch (Exception e) {
     		System.out.println(e.toString());
             return null;
@@ -37,29 +33,29 @@ public class ArtistController {
     }
     
     @ResponseBody
-    @GetMapping("/artist/{id}")
-    public Artist getArtist(final @PathVariable("id") Integer artistId) {
+    @GetMapping("/song/{id}")
+    public Song getSong(final @PathVariable("id") Integer songId) {
     	try {
-            return artistRepository.findById(artistId).get();
+            return songRepository.findById(songId).get();
         } catch (Exception e) {
         	System.out.println(e.toString());
             return null;
         }
     }
     
-    @DeleteMapping("/artist/{id}")
-    public void deleteArtist(final @PathVariable("id") Integer artistId) {
+    @DeleteMapping("/song/{id}")
+    public void deleteSong(final @PathVariable("id") Integer songId) {
     	try {
-    		artistRepository.deleteById(artistId);
+    		songRepository.deleteById(songId);
     	} catch(Exception e) {
     		System.out.println(e.toString());
     	}
     }
 	
-    @PostMapping("/artist")
-    public Artist addArtist(@RequestBody Artist artist) {
+    @PostMapping("/song")
+    public Song addSong(@RequestBody Song song) {
     	try {
-    		return artistRepository.save(artist);
+    		return songRepository.save(song);
     	}catch(Exception e) {
     		System.out.println(e.toString());
     		return null;
@@ -67,14 +63,13 @@ public class ArtistController {
     }
 
     @ResponseBody
-    @PutMapping("/artist/{id}")
-    public Artist editArtist(@RequestBody Artist artist) {
+    @PutMapping("/song/{id}")
+    public Song editSong(@RequestBody Song song) {
     	try {
-    		return artistRepository.save(artist);
+    		return songRepository.save(song);
     	} catch(Exception e) {
     		System.out.println(e.toString());
     		return null;
     	}
     }
-    
 }

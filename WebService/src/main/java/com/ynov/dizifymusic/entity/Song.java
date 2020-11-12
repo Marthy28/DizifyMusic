@@ -1,10 +1,7 @@
 package com.ynov.dizifymusic.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Song")
@@ -12,27 +9,79 @@ public class Song {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 	
-	String name;
-	String duration;
+	private String name;
+	private String duration;
 	
-	void setName(String _name)
-	{
-		name = _name;
-	}
+	@ManyToMany
+	private Set<Playlist> playlists = new HashSet<Playlist>();
 	
-	void setDuration(String _duration)
-	{
-		duration = _duration;
+	@ManyToMany
+	private Set<Favorite> favorites = new HashSet<Favorite>();
+	
+	@ManyToOne
+	private Artist artist;
+	
+	@ManyToOne
+	private Album album;
+
+	public Long getId() {
+		return id;
 	}
 
-	String getName() {
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
 		return name;
 	}
 
-	String getDuration() {
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDuration() {
 		return duration;
 	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public Set<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(Set<Playlist> playlists) {
+		this.playlists = playlists;
+	}
+
+	public Set<Favorite> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(Set<Favorite> favorites) {
+		this.favorites = favorites;
+	}
+
+	public Artist getArtist() {
+		return artist;
+	}
+
+	public void setArtist(Artist artist) {
+		this.artist = artist;
+	}
+
+	public Album getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(Album album) {
+		this.album = album;
+	}
+	
+	
 	
 }

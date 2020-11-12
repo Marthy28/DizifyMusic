@@ -1,39 +1,39 @@
 package com.ynov.dizifymusic.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "Admin")
+@Table(name = "Administrator")
 public class Administrator {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 	
-	@ManyToMany
-    private Set<User> adminUsers = new HashSet<>();
-	
-	Integer getId()
-	{
+	@OneToOne(mappedBy = "administrator",fetch=FetchType.EAGER)
+	@JsonIgnoreProperties("administrator")
+	private User user;
+
+	public Long getId() {
 		return id;
 	}
-	
-	void setAdminUsers(Set<User> _users)
-	{
-		adminUsers = _users;
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
-	Set<User> getAdminUsers()
-	{
-		return adminUsers;
-	}
+	
+	
+	
 
 }

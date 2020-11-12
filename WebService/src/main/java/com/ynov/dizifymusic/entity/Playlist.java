@@ -1,14 +1,9 @@
 package com.ynov.dizifymusic.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Playlist")
@@ -16,36 +11,48 @@ public class Playlist {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 	
-	String name;
+	private String name;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "playlist_id", nullable = true)
+	@JsonIgnoreProperties("playlist")
+	private User user;
 	
 	@ManyToMany
-    private Set<Song> songs = new HashSet<>();
-	
-	Integer getId()
-	{
+    private Set<Song> songs = new HashSet<Song>();
+
+	public Long getId() {
 		return id;
 	}
-	
-	String getName()
-	{
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
 		return name;
 	}
-	
-	void setNAme (String _name)
-	{
-		name = _name;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	Set<Song> getSongs()
-	{
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Song> getSongs() {
 		return songs;
 	}
-	
-	void setSongs(Set<Song> _songs)
-	{
-		songs = _songs;
+
+	public void setSongs(Set<Song> songs) {
+		this.songs = songs;
 	}
 	
 }
