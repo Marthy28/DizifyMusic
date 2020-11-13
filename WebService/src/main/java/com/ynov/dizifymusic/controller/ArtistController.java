@@ -62,7 +62,7 @@ public class ArtistController {
     }
    
     //DELETE by id 
-    @DeleteMapping("/artist/id/{id}")
+    @DeleteMapping("/artist/{id}")
     public void deleteArtist(final @PathVariable("id") Integer artistId) {
     	try {
     		artistRepository.deleteById(artistId);

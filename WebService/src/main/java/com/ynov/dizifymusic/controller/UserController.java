@@ -92,7 +92,7 @@ public class UserController {
 
     //PUT by id
     @ResponseBody
-    @PutMapping("/user/{id}")
+    @PutMapping("/user")
     public User editUser(@RequestBody User user) {
     	try {
     		return userRepository.save(user);

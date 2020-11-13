@@ -61,7 +61,7 @@ public class AlbumController {
     }
     
     //DELETE by id
-    @DeleteMapping("/album/id/{id}")
+    @DeleteMapping("/album/{id}")
     public void deleteAlbum(final @PathVariable("id") Integer albumId) {
     	try {
     	albumRepository.deleteById(albumId);

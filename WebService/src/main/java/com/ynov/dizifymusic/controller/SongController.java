@@ -58,7 +58,7 @@ public class SongController {
     }
     
     //DELETE by id
-    @DeleteMapping("/song/id/{id}")
+    @DeleteMapping("/song/{id}")
     public void deleteSong(final @PathVariable("id") Long songId) {
     	try {
     		songRepository.deleteById(songId);
@@ -80,7 +80,7 @@ public class SongController {
 
     //PUT by id
     @ResponseBody
-    @PutMapping("/song/{id}")
+    @PutMapping("/song")
     public Song editSong(@RequestBody Song song) {
     	try {
     		return songRepository.save(song);
