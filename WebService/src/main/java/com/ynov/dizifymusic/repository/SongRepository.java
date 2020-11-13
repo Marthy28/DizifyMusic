@@ -7,11 +7,8 @@ import org.springframework.data.repository.query.Param;
 import com.ynov.dizifymusic.entity.Artist;
 import com.ynov.dizifymusic.entity.Song;
 
-public interface SongRepository extends JpaRepository<Song, Integer> {
+public interface SongRepository extends JpaRepository<Song, Long> {
 
-	@Query("SELECT a FROM Song a WHERE a.name LIKE %:name%")
+	@Query("SELECT s FROM Song s WHERE s.name LIKE %:name%")
     public Song findByName(@Param("name") String songName);
-	
-	@Query("DELETE a FROM Song WHERE a.name LIKE %:name%")
-    public Song deleteByName(@Param("name") String songName);
 }

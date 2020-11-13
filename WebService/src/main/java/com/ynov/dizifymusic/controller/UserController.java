@@ -13,16 +13,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ynov.dizifymusic.entity.Administrator;
+import com.ynov.dizifymusic.entity.Favorite;
 import com.ynov.dizifymusic.entity.User;
+import com.ynov.dizifymusic.repository.FavoriteRepository;
 import com.ynov.dizifymusic.repository.UserRepository;
 
 @RestController
 public class UserController {
 	private UserRepository userRepository;
+	private FavoriteRepository favoriteRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, FavoriteRepository favoriteRepository) {
         this.userRepository = userRepository;
+        this.favoriteRepository = favoriteRepository;
     }
     
     // GET all
@@ -62,6 +66,8 @@ public class UserController {
     @PostMapping("/user")
     public User addUser(@RequestBody User user) {
     	try {
+    		Favorite fav = favoriteRepository.save(new Favorite());
+    		user.setFavorite(fav);
     		return userRepository.save(user);
     	}catch(Exception e) {
     		System.out.println(e.toString());

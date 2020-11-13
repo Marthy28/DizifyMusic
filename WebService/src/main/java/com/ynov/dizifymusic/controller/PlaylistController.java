@@ -16,17 +16,20 @@ import com.ynov.dizifymusic.entity.Playlist;
 import com.ynov.dizifymusic.entity.Song;
 import com.ynov.dizifymusic.entity.User;
 import com.ynov.dizifymusic.repository.PlaylistRepository;
+import com.ynov.dizifymusic.repository.SongRepository;
 import com.ynov.dizifymusic.repository.UserRepository;
 
 @RestController
 public class PlaylistController {
 	private PlaylistRepository playlistRepository;
 	private UserRepository userRepository;
+	private SongRepository songRepository;
 
     @Autowired
-    public PlaylistController(PlaylistRepository playlistRepository, UserRepository userRepository) {
+    public PlaylistController(PlaylistRepository playlistRepository, UserRepository userRepository, SongRepository songRepository) {
         this.playlistRepository = playlistRepository;
         this.userRepository = userRepository;
+        this.songRepository = songRepository;
     }
     
     //GET all 
@@ -88,13 +91,29 @@ public class PlaylistController {
     	}
     }
 
-    //PUT by user id
+    //add song to playlist by playlist_id and song_id
     @ResponseBody
-    @PutMapping("/playlistAddSong/{playlist_id}")
-    public Playlist editPlaylist_addSong(@RequestBody Song song,final @PathVariable("playlist_id") Long playlist_id) {
+    @PutMapping("/playlistAdd/{playlist_id}/song/{song_id}")
+    public Playlist editPlaylist_addSong(final @PathVariable("song_id") Long song_id,final @PathVariable("playlist_id") Long playlist_id) {
     	try {
     		Playlist playlist = playlistRepository.findById(playlist_id).get();
+    		Song song = songRepository.findById(song_id).get();
     		playlist.getSongs().add(song);
+    		return playlistRepository.save(playlist);
+    	} catch(Exception e) {
+    		System.out.println(e.toString());
+    		return null;
+    	}
+    }
+    
+  //delete song to playlist by playlist_id and song_id
+    @ResponseBody
+    @PutMapping("/playlistDelete/{playlist_id}/song/{song_id}")
+    public Playlist editPlaylist_deleteSong(final @PathVariable("song_id") Long song_id,final @PathVariable("playlist_id") Long playlist_id) {
+    	try {
+    		Playlist playlist = playlistRepository.findById(playlist_id).get();
+    		Song song = songRepository.findById(song_id).get();
+    		playlist.getSongs().remove(song);
     		return playlistRepository.save(playlist);
     	} catch(Exception e) {
     		System.out.println(e.toString());
