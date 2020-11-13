@@ -18,7 +18,4 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer> {
     @Query("SELECT a FROM Artist a WHERE a.name LIKE %:name%")
     public Artist findByName(@Param("name") String lastname);
     
-    @Query("DELETE a FROM Artist WHERE a.name LIKE %:name%")
-    public Artist deleteByName(@Param("name") String lastname);
-
 }

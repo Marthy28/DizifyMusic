@@ -12,6 +12,4 @@ public interface AlbumRepository extends JpaRepository<Album, Integer> {
 	@Query("SELECT a FROM Album a WHERE a.name LIKE %:name%")
     public Album findByName(@Param("name") String albumName);
 	
-	@Query("DELETE a FROM Album WHERE a.name LIKE %:name%")
-    public Song deleteByName(@Param("name") String albumName);
 }

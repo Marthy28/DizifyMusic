@@ -26,7 +26,7 @@ public class AlbumController {
 	}
 	
     //GET all
-    @GetMapping("/album")
+    @GetMapping("/albums")
     public List<Album> getAlbums() {
     	try {
         return albumRepository.findAll();
@@ -65,16 +65,6 @@ public class AlbumController {
     public void deleteAlbum(final @PathVariable("id") Integer albumId) {
     	try {
     	albumRepository.deleteById(albumId);
-    	} catch (Exception e) {
-    		System.out.println(e.toString());
-        }
-    }
-    
-    //DELETE by name
-    @DeleteMapping("/album/name/{name}")
-    public void deleteAlbum(final @PathVariable("name") String albumName) {
-    	try {
-    	albumRepository.deleteByName(albumName);
     	} catch (Exception e) {
     		System.out.println(e.toString());
         }

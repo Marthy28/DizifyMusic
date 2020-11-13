@@ -36,7 +36,7 @@ public class SongController {
     //GET by id
     @ResponseBody
     @GetMapping("/song/id/{id}")
-    public Song getSong(final @PathVariable("id") Integer songId) {
+    public Song getSong(final @PathVariable("id") Long songId) {
     	try {
             return songRepository.findById(songId).get();
         } catch (Exception e) {
@@ -59,19 +59,9 @@ public class SongController {
     
     //DELETE by id
     @DeleteMapping("/song/id/{id}")
-    public void deleteSong(final @PathVariable("id") Integer songId) {
+    public void deleteSong(final @PathVariable("id") Long songId) {
     	try {
     		songRepository.deleteById(songId);
-    	} catch(Exception e) {
-    		System.out.println(e.toString());
-    	}
-    }
-    
-  //DELETE by name
-    @DeleteMapping("/song/name/{name}")
-    public void deleteSong(final @PathVariable("name") String songName) {
-    	try {
-    		songRepository.deleteByName(songName);
     	} catch(Exception e) {
     		System.out.println(e.toString());
     	}

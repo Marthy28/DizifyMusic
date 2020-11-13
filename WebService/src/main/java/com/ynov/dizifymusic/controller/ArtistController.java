@@ -27,7 +27,7 @@ public class ArtistController {
     }
     
     //GET all
-    @GetMapping("/artist")
+    @GetMapping("/artists")
     public List<Artist> getArtists() {
     	try {
     		return artistRepository.findAll();
@@ -67,16 +67,6 @@ public class ArtistController {
     	try {
     		artistRepository.deleteById(artistId);
     	} catch(Exception e) {
-    		System.out.println(e.toString());
-    	}
-    }
-	
-    //DELETE by name
-    @DeleteMapping("/artist/name/{name}")
-    public void deleteArtist(final @PathVariable("name") String artistName) {
-    	try {
-            artistRepository.deleteByName(artistName);
-        } catch(Exception e) {
     		System.out.println(e.toString());
     	}
     }
