@@ -1,6 +1,9 @@
 import React, { FC } from "react";
 import { RouteComponentProps } from "@reach/router";
 import { Button, Tabs } from "antd/lib";
+import ArtistsList from "../../artists/artists";
+
+
 const { TabPane } = Tabs;
 
 const Home: FC<RouteComponentProps> = () => {
@@ -12,8 +15,8 @@ const Home: FC<RouteComponentProps> = () => {
     <div>
       <h1>Coucou DizifyMusic</h1>
       <Tabs defaultActiveKey="1" onChange={callback}>
-        <TabPane tab="Je ne me" key="1">
-          coucou 1
+        <TabPane tab="Artists" key="1">
+          <ArtistsList/>
         </TabPane>
         <TabPane tab="souviens plus" key="2">
           coucou 2
