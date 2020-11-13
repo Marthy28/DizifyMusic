@@ -18,10 +18,10 @@ public class User {
 	private String avatarUri;
 	private String pseudo;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
-			cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
+	@JoinColumn(name = "favorite_id")
 	@JsonIgnoreProperties("user")
-	private Set<Favorite> favorites;
+	private Favorite favorite;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
 			cascade = CascadeType.ALL)
@@ -66,12 +66,12 @@ public class User {
 		this.pseudo = pseudo;
 	}
 
-	public Set<Favorite> getFavorites() {
-		return favorites;
+	public Favorite getFavorite() {
+		return favorite;
 	}
 
-	public void setFavorites(Set<Favorite> favorites) {
-		this.favorites = favorites;
+	public void setFavorite(Favorite favorites) {
+		this.favorite = favorites;
 	}
 
 	public Set<Playlist> getPlaylist() {

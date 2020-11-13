@@ -12,8 +12,7 @@ public class Favorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "favorite_id", nullable = true)
+	@OneToOne(mappedBy = "favorite",fetch=FetchType.EAGER)
 	@JsonIgnoreProperties("favorite")
 	private User user;
 	
