@@ -3,6 +3,9 @@ package com.ynov.dizifymusic.entity;
 import java.util.*;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * Entité Livre persistente en base de données.
  * 
@@ -12,25 +15,30 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Artist")
+@JsonIgnoreProperties("favorites")
 public class Artist {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String name;
+	private String imageUri;
+
 	@OneToMany (mappedBy = "artist", fetch = FetchType.LAZY,
 			cascade = CascadeType.ALL)
+
+	@JsonIgnoreProperties("artist")
 	private Set<Album> albums;
 
 	@OneToMany (mappedBy = "artist", fetch = FetchType.LAZY,
 			cascade = CascadeType.ALL)
+
+	@JsonManagedReference(value="artist-song")
 	private Set<Song> songs;
 
 	@ManyToMany
 	private Set<Favorite> favorites = new HashSet<Favorite>();
-
-	private String name;
-	private String imageUri;
 
 	public Long getId() {
 		return id;
@@ -68,6 +76,8 @@ public class Artist {
 	public void setImageUri(String imageUri) {
 		this.imageUri = imageUri;
 	}
+	
+	
 
 
 

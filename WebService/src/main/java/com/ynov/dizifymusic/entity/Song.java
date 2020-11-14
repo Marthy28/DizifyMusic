@@ -3,8 +3,12 @@ package com.ynov.dizifymusic.entity;
 import java.util.*;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "Song")
+@JsonIgnoreProperties({"favorites","playlists"})
 public class Song {
 	
 	@Id
@@ -23,11 +27,13 @@ public class Song {
 	//modifié
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "artist_id", nullable = false)
+	@JsonBackReference(value="artist-song")
     private Artist artist;
 	
 	//modifié
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "album_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "album_id")
+	@JsonBackReference(value="album-song")
 	private Album album;
 
 	public Long getId() {
