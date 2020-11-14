@@ -13,7 +13,7 @@ import com.ynov.dizifymusic.entity.Artist;
  * @since 2020-11
  * @version 1.0
  */
-public interface ArtistRepository extends JpaRepository<Artist, Integer> {
+public interface ArtistRepository extends JpaRepository<Artist, Long> {
 
     @Query("SELECT a FROM Artist a WHERE a.name LIKE %:name%")
     public Artist findByName(@Param("name") String lastname);

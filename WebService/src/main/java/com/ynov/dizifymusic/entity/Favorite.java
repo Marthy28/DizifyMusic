@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Favorite")
+@JsonIgnoreProperties({"user","hibernateLazyInitializer"})
 public class Favorite {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
