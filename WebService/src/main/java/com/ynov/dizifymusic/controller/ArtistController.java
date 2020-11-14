@@ -40,7 +40,7 @@ public class ArtistController {
     //GET by id
     @ResponseBody
     @GetMapping("/artist/id/{id}")
-    public Artist getArtist(final @PathVariable("id") Integer artistId) {
+    public Artist getArtist(final @PathVariable("id") Long artistId) {
     	try {
             return artistRepository.findById(artistId).get();
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class ArtistController {
    
     //DELETE by id 
     @DeleteMapping("/artist/{id}")
-    public void deleteArtist(final @PathVariable("id") Integer artistId) {
+    public void deleteArtist(final @PathVariable("id") Long artistId) {
     	try {
     		artistRepository.deleteById(artistId);
     	} catch(Exception e) {
@@ -84,10 +84,21 @@ public class ArtistController {
 
     //PUT by id
     @ResponseBody
-    @PutMapping("/artist/{id}")
+    @PutMapping("/artist")
     public Artist editArtist(@RequestBody Artist artist) {
     	try {
-    		return artistRepository.save(artist);
+    		Artist currentArtist = artistRepository.getOne(artist.getId());
+    		if(currentArtist == null)
+    			return null;
+
+    		if(artist.getName() != null && !artist.getName().isEmpty() && !artist.getName().isBlank())
+    			currentArtist.setName(artist.getName());
+    		
+    		if(artist.getImageUri() != null && !artist.getImageUri().isEmpty() && !artist.getImageUri().isBlank())
+    			currentArtist.setImageUri(artist.getImageUri());
+    		
+    		return artistRepository.save(currentArtist);
+    		
     	} catch(Exception e) {
     		System.out.println(e.toString());
     		return null;

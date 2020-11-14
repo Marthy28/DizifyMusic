@@ -13,23 +13,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ynov.dizifymusic.entity.Album;
+import com.ynov.dizifymusic.entity.Artist;
+import com.ynov.dizifymusic.entity.Song;
 import com.ynov.dizifymusic.repository.AlbumRepository;
+import com.ynov.dizifymusic.repository.ArtistRepository;
+import com.ynov.dizifymusic.repository.SongRepository;
 
 @RestController
 public class AlbumController {
 	
 	private AlbumRepository albumRepository;
+	private ArtistRepository artistRepository;
+	private SongRepository songRepository;
 
     @Autowired
-	public AlbumController(AlbumRepository albumRepository) {
+	public AlbumController(AlbumRepository albumRepository,ArtistRepository artistRepository, SongRepository songRepository) {
 		this.albumRepository = albumRepository;
+		this.artistRepository = artistRepository;
+		this.songRepository = songRepository;
 	}
 	
     //GET all
     @GetMapping("/albums")
     public List<Album> getAlbums() {
     	try {
-        return albumRepository.findAll();
+    		
+    		return albumRepository.findAll();
+    	
     	} catch (Exception e) {
     		System.out.println(e.toString());
             return null;
@@ -39,9 +49,11 @@ public class AlbumController {
     //GET by id
     @ResponseBody
     @GetMapping("/album/id/{id}")
-    public Album getAlbum(final @PathVariable("id") Integer albumId) {
+    public Album getAlbum(final @PathVariable("id") Long albumId) {
     	try {
+    		
             return albumRepository.findById(albumId).get();
+            
         } catch (Exception e) {
         	System.out.println(e.toString());
             return null;
@@ -53,7 +65,9 @@ public class AlbumController {
     @GetMapping("/album/name/{name}")
     public Album getAlbum(final @PathVariable("name") String albumName) {
     	try {
+    		
             return albumRepository.findByName(albumName);
+            
         } catch (Exception e) {
         	System.out.println(e.toString());
             return null;
@@ -62,9 +76,11 @@ public class AlbumController {
     
     //DELETE by id
     @DeleteMapping("/album/{id}")
-    public void deleteAlbum(final @PathVariable("id") Integer albumId) {
+    public void deleteAlbum(final @PathVariable("id") Long albumId) {
     	try {
-    	albumRepository.deleteById(albumId);
+    		
+    		albumRepository.deleteById(albumId);
+    		
     	} catch (Exception e) {
     		System.out.println(e.toString());
         }
@@ -74,7 +90,28 @@ public class AlbumController {
     @PostMapping("/album")
     public Album addAlbum(@RequestBody Album album) {
     	try {
-        return albumRepository.save(album);
+    		
+    		return albumRepository.save(album);
+        
+    	} catch (Exception e) {
+    		System.out.println(e.toString());
+            return null;
+        }
+    }
+    
+  //POST 
+    @PostMapping("/album/{artist_id}")
+    public Album addAlbum(@RequestBody Album album, @PathVariable("artist_id") Long artist_id) {
+    	try {
+    		
+    		Artist artist = artistRepository.getOne(artist_id);
+    		
+    		if(artist==null)
+    			return null;
+    		album.setArtist(artist);
+    		
+    		return albumRepository.save(album);
+    		
     	} catch (Exception e) {
     		System.out.println(e.toString());
             return null;
@@ -83,10 +120,83 @@ public class AlbumController {
 
     //PUT by id
     @ResponseBody
-    @PutMapping("/album/{id}")
+    @PutMapping("/album")
     public Album editAlbum(@RequestBody Album album) { 
     	try {
-        return albumRepository.save(album);
+    		Album currentAlbum = albumRepository.getOne(album.getId());
+    		
+    		if(currentAlbum == null)
+    			return null;
+    		
+    		if(album.getSongs() != null && !album.getSongs().isEmpty())
+    			currentAlbum.setSongs(album.getSongs());
+    		
+    		if(album.getArtist() != null)
+    			currentAlbum.setArtist(album.getArtist());
+    		
+    		if(album.getName() != null && !album.getName().isEmpty() && !album.getName().isBlank())
+    			currentAlbum.setName(album.getName());
+
+    		if(album.getPictureUri() != null && !album.getPictureUri().isEmpty() && !album.getPictureUri().isBlank())
+    			currentAlbum.setPictureUri(album.getPictureUri());
+    		
+
+    		if(album.getReleaseDate() != null)
+    			currentAlbum.setReleaseDate(album.getReleaseDate());
+    		
+    		return albumRepository.save(currentAlbum);
+    		
+    	} catch (Exception e) {
+    		System.out.println(e.toString());
+            return null;
+        }
+    }
+    
+    //PUT by id
+    @ResponseBody
+    @PutMapping("/album/{album_id}/song/{song_id}/add")
+    public Album AddSongToAlbum(@PathVariable("album_id") Long album_id,@PathVariable("song_id") Long song_id) { 
+    	try { 
+    		Album currentAlbum = albumRepository.getOne(album_id);
+    		if(currentAlbum == null)
+    			return null;
+    		
+    		Song song = songRepository.getOne(song_id); 
+    		if(song == null)
+    			return null;
+    		
+    		song.setAlbum(currentAlbum);
+    		songRepository.save(song);
+    		
+    		return currentAlbum;
+    		
+    	} catch (Exception e) {
+    		System.out.println(e.toString());
+            return null;
+        }
+    }
+    
+  //PUT by id
+    @ResponseBody
+    @PutMapping("/album/{album_id}/song/{song_id}/delete")
+    public Album DeleteSongToAlbum(@PathVariable("album_id") Long album_id,@PathVariable("song_id") Long song_id) { 
+    	try { 
+    		Album currentAlbum = albumRepository.getOne(album_id);
+    		if(currentAlbum == null)
+    			return null;
+    		
+    		Song song = songRepository.getOne(song_id); 
+    		if(song == null)
+    			return null;
+    		
+    		currentAlbum.getSongs().remove(song);
+    		albumRepository.save(currentAlbum);
+    		
+    		song.setAlbum(null);
+    		songRepository.save(song);
+    		
+    		return currentAlbum;
+    		
     	} catch (Exception e) {
     		System.out.println(e.toString());
             return null;

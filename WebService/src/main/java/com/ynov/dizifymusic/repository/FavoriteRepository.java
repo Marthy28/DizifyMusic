@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ynov.dizifymusic.entity.Favorite;
 import com.ynov.dizifymusic.entity.User;
 
-public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
+public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
-	List<Favorite> findByUserId(Long user_id);
+	@Query("SELECT f FROM Favorite f "
+			+ "INNER JOIN f.user u  "
+			+ "WHERE u.id = :user_id")
+	Favorite findByUserId(Long user_id);
 }

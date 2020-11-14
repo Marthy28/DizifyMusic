@@ -30,7 +30,7 @@ public class UserController {
     }
     
     // GET all
-    @GetMapping("/user")
+    @GetMapping("/users")
     public List<User> getUsers() {
     	try {
     		return userRepository.findAll();
@@ -67,7 +67,11 @@ public class UserController {
     public User addUser(@RequestBody User user) {
     	try {
     		Favorite fav = favoriteRepository.save(new Favorite());
+    		if(fav == null)
+    			return null;
+    		
     		user.setFavorite(fav);
+    		
     		return userRepository.save(user);
     	}catch(Exception e) {
     		System.out.println(e.toString());
@@ -81,8 +85,12 @@ public class UserController {
     	try {
     		Administrator admin = new Administrator();
     		User user = userRepository.findById(userId).get();
+    		if(user == null)
+    			return null;
+    		
     		user.setAdministrator(admin);
     		admin.setUser(user);
+    		
     		return userRepository.save(user);
     	}catch(Exception e) {
     		System.out.println(e.toString());
