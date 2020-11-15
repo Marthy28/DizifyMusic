@@ -1,8 +1,8 @@
-import React, { FC } from "react";
 import { RouteComponentProps } from "@reach/router";
-import { Button, Tabs } from "antd/lib";
+import { Tabs } from "antd/lib";
+import React, { FC } from "react";
+import AlbumsList from "../../albums/albums";
 import ArtistsList from "../../artists/artists";
-
 
 const { TabPane } = Tabs;
 
@@ -13,19 +13,14 @@ const Home: FC<RouteComponentProps> = () => {
 
   return (
     <div>
-      <h1>Coucou DizifyMusic</h1>
       <Tabs defaultActiveKey="1" onChange={callback}>
         <TabPane tab="Artists" key="1">
-          <ArtistsList/>
+          <ArtistsList />
         </TabPane>
-        <TabPane tab="souviens plus" key="2">
-          coucou 2
-        </TabPane>
-        <TabPane tab="du sujet !" key="3">
-          Bonne soirée :*
+        <TabPane tab="Albums" key="2">
+          <AlbumsList />
         </TabPane>
       </Tabs>
-      <Button type="primary">Primary Button</Button>
     </div>
   );
 };
