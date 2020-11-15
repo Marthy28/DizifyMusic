@@ -44,6 +44,16 @@ const AlbumsList: FC<AlbumsProps> = () => {
 
   return (
     <>
+      <h1
+        style={{
+          fontWeight: "bold",
+          fontSize: 55,
+          marginTop: 50,
+          color: "var(--pink)",
+        }}
+      >
+        Albums
+      </h1>
       <div style={{ display: "flex", flexWrap: "wrap", marginTop: "1%" }}>
         {Albums.map((album, i) => (
           <>

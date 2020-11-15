@@ -1,4 +1,4 @@
-import { Tabs } from "antd";
+import { Button, Tabs } from "antd";
 import React from "react";
 import ReactDOM from "react-dom";
 import AlbumsList from "./albums/albums";
@@ -7,6 +7,8 @@ import ArtistsList from "./artists/artists";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.less";
 import "./styles/index.scss";
+import Connection from "./user/connection";
+import Inscription from "./user/inscription";
 
 const { TabPane } = Tabs;
 
@@ -24,19 +26,16 @@ ReactDOM.render(
         <TabPane tab="Accueil" key="1">
           <Home />
         </TabPane>
-        <TabPane tab="Compte utilisateur" key="2">
-          Se connecter
-        </TabPane>
-        <TabPane tab="Artists" key="3">
+        <TabPane tab="Artists" key="2">
           <ArtistsList />
         </TabPane>
-        <TabPane tab="Albums" key="4">
+        <TabPane tab="Albums" key="3">
           <AlbumsList />
         </TabPane>
-        <TabPane tab="Favoris" key="5">
+        <TabPane tab="Favoris" key="4">
           Favoris
         </TabPane>
-        <TabPane tab="Playlists" key="6">
+        <TabPane tab="Playlists" key="5">
           Playlists
         </TabPane>
       </Tabs>

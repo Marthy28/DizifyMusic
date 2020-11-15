@@ -3,6 +3,8 @@ import { Card, Image } from "antd";
 import React, { FC, useEffect, useState } from "react";
 import albumsService from "../../services/albumsService";
 import artistService from "../../services/artistService";
+import Inscription from "../../user/inscription";
+import Connection from "../../user/connection";
 
 type Artist = {
   id: number;
@@ -37,11 +39,7 @@ const Home: FC<RouteComponentProps> = () => {
       const Artists = res.data;
       setArtists(Artists);
     });
-  }, [Albums, Artists]);
-
-  function getRandomInt(max: any) {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
+  }, []);
 
   return (
     <>
@@ -57,6 +55,10 @@ const Home: FC<RouteComponentProps> = () => {
       >
         Bienvenue sur DizifyMusic
       </h1>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Inscription />
+        <Connection />
+      </div>
       <h2
         style={{
           textAlign: "center",
