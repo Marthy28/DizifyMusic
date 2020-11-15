@@ -18,7 +18,7 @@ type Album = {
 
 interface AlbumsProps {}
 
-const CreateAlbum: FC<AlbumsProps> = (AlbumsProps) => {
+const CreateAlbum: FC<AlbumsProps> = () => {
   const [artists, setArtists] = useState<Artist[]>([]);
   const [newAlbum, setNewAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
