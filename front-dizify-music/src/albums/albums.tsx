@@ -23,16 +23,12 @@ const AlbumsList: FC<AlbumsProps> = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
 
-  function getAlbums() {
+  useEffect(() => {
     AlbumsService.getAlbums().then((res) => {
       const Albums = res.data;
       setAlbums(Albums);
     });
-  }
-
-  useEffect(() => {
-    getAlbums();
-  }, []);
+  }, [Albums]);
 
   return (
     <>
@@ -49,7 +45,18 @@ const AlbumsList: FC<AlbumsProps> = () => {
             >
               <h1 style={{ fontWeight: "bold", fontSize: 20 }}>{album.name}</h1>
               {album.artist?.name}
-              <Image width={200} src={`${album.pictureUri}`} />
+              <Image
+                width={200}
+                src={`${album.pictureUri}`}
+                style={{ marginBottom: "2%" }}
+              />
+              <Button
+                onClick={() => {
+                  album.id && AlbumsService.deleteAlbum(album.id.toString());
+                }}
+              >
+                Supprimer l'album
+              </Button>
             </Card>
           </>
         ))}
@@ -60,10 +67,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
       <Modal
         title="Ajouter un album"
         visible={visible}
-        onOk={() => {
-          getAlbums();
-          setVisible(false);
-        }}
+        onOk={() => setVisible(false)}
         onCancel={() => setVisible(false)}
       >
         <CreateAlbum />
