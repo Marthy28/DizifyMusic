@@ -7,13 +7,16 @@ import ArtistsList from "../../artists/artists";
 const { TabPane } = Tabs;
 
 const Home: FC<RouteComponentProps> = () => {
-  function callback(key: string) {
-    console.log(key);
-  }
-
   return (
-    <div>
-      <Tabs defaultActiveKey="1" onChange={callback}>
+    <div
+      style={{
+        width: "90%",
+        marginRight: "auto",
+        marginLeft: "auto",
+        marginTop: "2%",
+      }}
+    >
+      <Tabs defaultActiveKey="1" centered>
         <TabPane tab="Artists" key="1">
           <ArtistsList />
         </TabPane>
