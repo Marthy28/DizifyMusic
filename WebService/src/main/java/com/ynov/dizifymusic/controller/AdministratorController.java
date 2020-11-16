@@ -39,9 +39,9 @@ public class AdministratorController {
 	//GET by id
     @ResponseBody
     @GetMapping("/administrator/{id}")
-    public Administrator getAdministrator(final @PathVariable("id") Long albumId) {
+    public Administrator getAdministrator(final @PathVariable("id") Long adminId) {
     	try {
-            return administratorRepository.findById(albumId).get();
+            return administratorRepository.findById(adminId).get();
         } catch (Exception e) {
     		System.out.println(e.toString());
             return null;
@@ -50,9 +50,9 @@ public class AdministratorController {
     
     //DELETE by id
     @DeleteMapping("/administrator/{id}")
-    public void deleteAdministrator(final @PathVariable("id") Long albumId) {
+    public void deleteAdministrator(final @PathVariable("id") Long adminId) {
     	try {
-    		administratorRepository.deleteById(albumId);
+    		administratorRepository.deleteById(adminId);
     	} catch (Exception e) {
     		System.out.println(e.toString());
         }	
@@ -60,9 +60,9 @@ public class AdministratorController {
 	
     //POST
     @PostMapping("/administrator")
-    public Administrator addAdministrator(@RequestBody Administrator album) {
+    public Administrator addAdministrator(@RequestBody Administrator admin) {
     	try {
-    		return administratorRepository.save(album);
+    		return administratorRepository.save(admin);
     	} catch (Exception e) {
     		System.out.println(e.toString());
             return null;
@@ -72,9 +72,9 @@ public class AdministratorController {
     //PUT by id
     @ResponseBody
     @PutMapping("/administrator/{id}")
-    public Administrator editAdministrator(@RequestBody Administrator album) {
+    public Administrator editAdministrator(@RequestBody Administrator admin) {
     	try {
-    		return administratorRepository.save(album);
+    		return administratorRepository.save(admin);
     	} catch (Exception e) {
     		System.out.println(e.toString());
             return null;

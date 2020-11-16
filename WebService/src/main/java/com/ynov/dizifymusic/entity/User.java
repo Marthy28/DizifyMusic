@@ -17,6 +17,7 @@ public class User {
 	private String eMail;
 	private String avatarUri;
 	private String pseudo;
+	private String password;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
 	@JoinColumn(name = "favorite_id")
@@ -28,10 +29,9 @@ public class User {
 	@JsonIgnoreProperties("user")
 	private Set<Playlist> playlist;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
 	@JoinColumn(name = "administrator_id")
 	@JsonIgnoreProperties({"user","hibernateLazyInitializer"})
-
 	private Administrator administrator;
 
 	public Long getId() {
@@ -88,6 +88,14 @@ public class User {
 
 	public void setAdministrator(Administrator administrator) {
 		this.administrator = administrator;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 

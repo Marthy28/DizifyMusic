@@ -32,6 +32,7 @@ public class SongController {
     }
     
     //GET all
+    
     @GetMapping("/songs")
     public List<Song> getArtists() {
     	try {

@@ -3,6 +3,7 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class UserController {
     }
     
     // GET all
+    //admin
     @GetMapping("/users")
     public List<User> getUsers() {
     	try {
@@ -41,6 +43,7 @@ public class UserController {
     }
     
     //GET user by id
+    //user 
     @ResponseBody
     @GetMapping("/user/{id}")
     public User getUser(final @PathVariable("id") Long userId) {
@@ -53,6 +56,7 @@ public class UserController {
     }
     
     //DELETE by id
+    //user - admin
     @DeleteMapping("/user/{id}")
     public void deleteUser(final @PathVariable("id") Long userId) {
     	try {
@@ -63,7 +67,8 @@ public class UserController {
     }
 	
     //POST
-    @PostMapping("/user")
+    //user
+    @PostMapping("/signin")
     public User addUser(@RequestBody User user) {
     	try {
     		Favorite fav = favoriteRepository.save(new Favorite());
@@ -80,6 +85,7 @@ public class UserController {
     }
     
     //PUT user to admin by id
+    //admin
     @PutMapping("/usertoadmin/{id}")
     public User userToAdmin(final @PathVariable("id") Long userId) {
     	try {
@@ -99,6 +105,7 @@ public class UserController {
     }
 
     //PUT by id
+    //user
     @ResponseBody
     @PutMapping("/user")
     public User editUser(@RequestBody User user) {
