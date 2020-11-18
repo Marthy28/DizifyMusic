@@ -4,7 +4,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ynov.dizifymusic.Global;
 import com.ynov.dizifymusic.entity.User;
 import com.ynov.dizifymusic.repository.UserRepository;
 

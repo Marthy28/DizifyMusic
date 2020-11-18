@@ -27,11 +27,12 @@ public class UserController {
 	private UserRepository userRepository;
 	private FavoriteRepository favoriteRepository;
 	private JwtAutenticationController jwtAutenticationController;
-	
-    @Autowired
-    public UserController(UserRepository userRepository, FavoriteRepository favoriteRepository) {
+
+	@Autowired
+    public UserController(UserRepository userRepository, FavoriteRepository favoriteRepository, JwtAutenticationController jwtAutenticationController) {
         this.userRepository = userRepository;
         this.favoriteRepository = favoriteRepository;
+        this.jwtAutenticationController = jwtAutenticationController;
     }
     
     // GET all
@@ -80,7 +81,11 @@ public class UserController {
     		if(fav == null)
     			return null;
     		
+    		
+    		
     		user.setFavorite(fav);
+    		
+
     		
     		userRepository.save(user);
     		return jwtAutenticationController.createAuthenticationToken(new JwtRequest(user.geteMail(), user.getPassword()));
