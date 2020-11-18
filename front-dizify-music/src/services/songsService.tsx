@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ALBUMS_API_BASE_URL = "http://localhost:8080/song";
+const SONGS_API_BASE_URL = "http://localhost:8080/song";
 
 let axiosConfig = {
   headers: {
@@ -11,27 +11,27 @@ let axiosConfig = {
 
 class SongsService {
   getSongs() {
-    return axios.get(ALBUMS_API_BASE_URL + "s");
+    return axios.get(SONGS_API_BASE_URL + "s");
   }
 
   createSong(artistId: string, song: any) {
     return axios.post(
-      ALBUMS_API_BASE_URL + "/" + artistId,
+      SONGS_API_BASE_URL + "/" + artistId,
       JSON.stringify(song),
       axiosConfig
     );
   }
 
   getSongById(songId: string) {
-    return axios.get(ALBUMS_API_BASE_URL + "/" + songId);
+    return axios.get(SONGS_API_BASE_URL + "/" + songId);
   }
 
   updateSong(song: any, songId: string) {
-    return axios.put(ALBUMS_API_BASE_URL + "/" + songId, song);
+    return axios.put(SONGS_API_BASE_URL + "/" + songId, song);
   }
 
   deleteSong(songId: string) {
-    return axios.delete(ALBUMS_API_BASE_URL + "/" + songId);
+    return axios.delete(SONGS_API_BASE_URL + "/" + songId);
   }
 }
 

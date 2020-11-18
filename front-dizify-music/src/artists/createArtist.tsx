@@ -1,0 +1,94 @@
+import { Button, Form, Input, Select } from "antd";
+import React, { FC, useEffect, useState } from "react";
+import ArtistService from "../services/artistService";
+import AlbumsService from "../services/albumsService";
+
+type Artist = {
+  id?: number;
+  name?: string;
+  imageUri?: string;
+  album?: Album;
+};
+
+type Album = {
+  id: number;
+  name?: string;
+  pictureUri?: string;
+};
+
+interface Props {}
+
+const CreateArtist: FC<Props> = () => {
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [newArtist, setNewArtist] = useState<Artist>();
+  const [ready, setReady] = useState<boolean>(false);
+
+  useEffect(() => {
+    AlbumsService.getAlbums().then((res) => {
+      const albums = res.data;
+      setAlbums(albums);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (ready) {
+      ArtistService.createArtist(newArtist);
+      setNewArtist(undefined);
+      setReady(false);
+    }
+  }, [newArtist, ready]);
+
+  function handleChange(value: any) {
+    setNewArtist({
+      album: { id: value },
+    });
+  }
+
+  return (
+    <Form
+      name="basic"
+      onFinish={(e) => {
+        setNewArtist({
+          ...newArtist,
+          name: e.name,
+          imageUri: e.imageUri,
+        });
+        setReady(true);
+      }}
+    >
+      <Form.Item
+        label="Nom de l'artiste"
+        name="name"
+        rules={[{ required: true, message: "Nom de l'artiste" }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Lien vers l'image"
+        name="imageUri"
+        rules={[{ required: true, message: "Lien vers l'image" }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Album">
+        <Select onChange={handleChange}>
+          {albums.map((album, i) => (
+            <Select.Option key={i} value={album.id}>
+              {album.name}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Ajouter
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
+
+export default CreateArtist;

@@ -2,7 +2,7 @@ import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useState } from "react";
-import songsService from "../services/songsService";
+import SongsService from "../services/songsService";
 import CreateSong from "./createSong";
 
 type Artist = {
@@ -81,7 +81,7 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
                 style={{ border: "none", color: "var(--pink)" }}
                 onClick={() => {
                   if (song.id) {
-                    songsService.deleteSong(song.id.toString());
+                    SongsService.deleteSong(song.id.toString());
                   }
                 }}
                 shape="circle"
