@@ -29,7 +29,6 @@ public class ArtistController {
     }
     
     //GET all
-    @Secured("ADMIN")
     @GetMapping("/artists") 
     public List<Artist> getArtists() {
     	try {

@@ -3,6 +3,7 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ynov.dizifymusic.entity.Administrator;
 import com.ynov.dizifymusic.entity.Favorite;
 import com.ynov.dizifymusic.entity.User;
+import com.ynov.dizifymusic.model.JwtRequest;
 import com.ynov.dizifymusic.repository.FavoriteRepository;
 import com.ynov.dizifymusic.repository.UserRepository;
 
@@ -23,11 +25,13 @@ import com.ynov.dizifymusic.repository.UserRepository;
 public class UserController {
 	private UserRepository userRepository;
 	private FavoriteRepository favoriteRepository;
+	private JwtAutenticationController jwtAutenticationController;
 
     @Autowired
-    public UserController(UserRepository userRepository, FavoriteRepository favoriteRepository) {
+    public UserController(UserRepository userRepository, FavoriteRepository favoriteRepository, JwtAutenticationController jwtAutenticationController) {
         this.userRepository = userRepository;
         this.favoriteRepository = favoriteRepository;
+        this.jwtAutenticationController = jwtAutenticationController;
     }
     
     // GET all
@@ -69,15 +73,19 @@ public class UserController {
     //POST
     //user
     @PostMapping("/signin")
-    public User addUser(@RequestBody User user) {
+    public ResponseEntity<?> addUser(@RequestBody User user) {
     	try {
     		Favorite fav = favoriteRepository.save(new Favorite());
     		if(fav == null)
     			return null;
     		
+    		
+    		
     		user.setFavorite(fav);
     		
-    		return userRepository.save(user);
+    		
+    		userRepository.save(user);
+    		return jwtAutenticationController.createAuthenticationToken(new JwtRequest(user.geteMail(), user.getPassword()));
     	}catch(Exception e) {
     		System.out.println(e.toString());
     		return null;
