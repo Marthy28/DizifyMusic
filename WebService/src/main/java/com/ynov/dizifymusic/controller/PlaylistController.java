@@ -3,6 +3,7 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,6 +69,7 @@ public class PlaylistController {
     }
     
     //DELETE by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/playlist/{id}")
     public void deletePlaylist(final @PathVariable("id") Long playlistId) {
     	try {
@@ -79,6 +81,7 @@ public class PlaylistController {
     
     //POST
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/playlist/{user_id}")
     public Playlist addPlaylist(@RequestBody Playlist playlist, final @PathVariable("user_id") Long user_id) {
     	try {	
@@ -97,6 +100,7 @@ public class PlaylistController {
 
     //add song to playlist by playlist_id and song_id
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/playlist/{playlist_id}/song/{song_id}/add")
     public Playlist editPlaylist_addSong(final @PathVariable("song_id") Long song_id,final @PathVariable("playlist_id") Long playlist_id) {
     	try {
@@ -119,6 +123,7 @@ public class PlaylistController {
     
   //delete song to playlist by playlist_id and song_id
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/playlist/{playlist_id}/song/{song_id}/delete")
     public Playlist editPlaylist_deleteSong(final @PathVariable("song_id") Long song_id,final @PathVariable("playlist_id") Long playlist_id) {
     	try {

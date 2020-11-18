@@ -29,7 +29,6 @@ public class ArtistController {
     }
     
     //GET all
-    @Secured("ADMIN")
     @GetMapping("/artists") 
     public List<Artist> getArtists() {
     	try {
@@ -65,6 +64,7 @@ public class ArtistController {
     }
    
     //DELETE by id 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/artist/{id}")
     public void deleteArtist(final @PathVariable("id") Long artistId) {
     	try {
@@ -75,6 +75,7 @@ public class ArtistController {
     }
     
     //POST 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/artist")
     public Artist addArtist(@RequestBody Artist artist) {
     	try {
@@ -87,6 +88,7 @@ public class ArtistController {
 
     //PUT by id
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/artist")
     public Artist editArtist(@RequestBody Artist artist) {
     	try {

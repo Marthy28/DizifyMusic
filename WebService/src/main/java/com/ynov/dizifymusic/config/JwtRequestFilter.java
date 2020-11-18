@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -77,7 +78,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				}
 				
 				 
-				List<SimpleGrantedAuthority> updatedAuthorities = new ArrayList<SimpleGrantedAuthority>();
+				List<GrantedAuthority> updatedAuthorities = new ArrayList<GrantedAuthority>();
 				updatedAuthorities.add(authority);
 				
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
@@ -88,8 +89,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				// that the current user is authenticated. So it passes the
 				// Spring Security Configurations successfully.
 				
-				System.out.println(usernamePasswordAuthenticationToken.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+				//System.out.println(usernamePasswordAuthenticationToken.getAuthorities());
+				System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
 			}
 		}
 		chain.doFilter(request, response);

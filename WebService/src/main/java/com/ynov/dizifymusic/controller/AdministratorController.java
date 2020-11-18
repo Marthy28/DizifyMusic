@@ -3,6 +3,7 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,7 @@ public class AdministratorController {
     }
     
     //DELETE by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/administrator/{id}")
     public void deleteAdministrator(final @PathVariable("id") Long adminId) {
     	try {
@@ -59,6 +61,7 @@ public class AdministratorController {
     }
 	
     //POST
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/administrator")
     public Administrator addAdministrator(@RequestBody Administrator admin) {
     	try {
@@ -70,6 +73,7 @@ public class AdministratorController {
     }
 
     //PUT by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @PutMapping("/administrator/{id}")
     public Administrator editAdministrator(@RequestBody Administrator admin) {
