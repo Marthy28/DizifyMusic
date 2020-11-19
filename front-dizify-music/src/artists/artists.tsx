@@ -2,28 +2,8 @@ import { Button, Card, Image } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useEffect, useState } from "react";
 import ArtistService from "../services/artistService";
+import { Artist } from "../utils/types";
 import CreateArtist from "./createArtist";
-
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-  albums: Array<Album>;
-};
-
-type Song = {
-  id?: number;
-  duration?: string;
-  name?: string;
-};
-
-type Album = {
-  id: number;
-  name: string;
-  pictureUri: string;
-  artist: Artist;
-  songs: Array<Song>;
-};
 
 interface Props {}
 

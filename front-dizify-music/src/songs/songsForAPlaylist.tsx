@@ -1,35 +1,15 @@
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
+import axios from "axios";
 import React, { FC, useState } from "react";
-import SongsService from "../services/songsService";
-import CreateSong from "./createSong";
-
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-};
-
-type Song = {
-  id?: number;
-  duration?: string;
-  name?: string;
-};
-
-type Album = {
-  id?: number;
-  name?: string;
-  pictureUri?: string;
-  artist?: Artist;
-  songs: Array<Song>;
-};
+import { Playlist } from "../utils/types";
 
 interface SongsProps {
-  album: Album;
+  playlist: Playlist;
 }
 
-const SongsForAnAlbum: FC<SongsProps> = (album) => {
+const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   return (
@@ -62,10 +42,10 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
             }}
             onCancel={() => setVisible(false)}
           >
-            <CreateSong album={album.album} />
+            TO DO
           </Modal>
         </div>
-        {album.album.songs.map((song, i) => (
+        {playlist.playlist.songs.map((song, i) => (
           <>
             <div
               style={{
@@ -77,16 +57,7 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
               <p>
                 {song.name} {song.duration}
               </p>
-              <Button
-                style={{ border: "none", color: "var(--pink)" }}
-                onClick={() => {
-                  if (song.id) {
-                    SongsService.deleteSong(song.id.toString());
-                  }
-                }}
-                shape="circle"
-                icon={<CloseOutlined />}
-              />
+              <p> {song.artist}</p>
             </div>
           </>
         ))}
@@ -95,4 +66,4 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
   );
 };
 
-export default SongsForAnAlbum;
+export default SongsForAPlaylist;

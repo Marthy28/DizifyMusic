@@ -33,7 +33,7 @@ const CreateSong: FC<AlbumsProps> = (album) => {
   const [ready, setReady] = useState<boolean>(false);
 
   useEffect(() => {
-    if (ready && album.album.artist) {
+    if (ready && album?.album.artist) {
       songsService.createSong(album.album.artist.id.toString(), newSong);
       setNewSong(undefined);
       setReady(false);

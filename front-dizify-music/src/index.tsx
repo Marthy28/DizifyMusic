@@ -1,14 +1,13 @@
-import { Button, Tabs } from "antd";
+import { Tabs } from "antd";
 import React from "react";
 import ReactDOM from "react-dom";
 import AlbumsList from "./albums/albums";
 import Home from "./app/Home";
 import ArtistsList from "./artists/artists";
+import Playlists from "./playlists/playlist";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.less";
 import "./styles/index.scss";
-import Connection from "./user/connection";
-import Inscription from "./user/inscription";
 
 const { TabPane } = Tabs;
 
@@ -36,7 +35,7 @@ ReactDOM.render(
           Favoris
         </TabPane>
         <TabPane tab="Playlists" key="5">
-          Playlists
+          <Playlists />
         </TabPane>
       </Tabs>
     </div>
