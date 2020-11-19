@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Administrator")
+@JsonIgnoreProperties("user")
 public class Administrator {
 	
 	@Id
@@ -13,7 +14,6 @@ public class Administrator {
     private Long id;
 	
 	@OneToOne(mappedBy = "administrator",fetch=FetchType.EAGER)
-	@JsonIgnoreProperties("administrator")
 	private User user;
 
 	public Long getId() {
