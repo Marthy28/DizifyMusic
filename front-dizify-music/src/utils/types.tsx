@@ -6,22 +6,24 @@ export type Artist = {
 };
 
 export type Song = {
-  id?: number;
+  id: number;
   duration?: string;
   name?: string;
-  artist: Artist;
+  artist?: Artist;
+  albums: Album[];
 };
 
 export type Album = {
-  id?: number;
+  id: number;
   name?: string;
   pictureUri?: string;
-  artist: Artist;
-  songs: Song[];
+  artist?: Artist;
+  songs?: Song;
+  releaseDate?: string;
 };
 
 export type Playlist = {
   id?: number;
-  name: string;
-  songs: Song[];
+  name?: string;
+  songs?: Song[];
 };

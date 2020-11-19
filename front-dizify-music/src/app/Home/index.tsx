@@ -5,26 +5,7 @@ import albumsService from "../../services/albumsService";
 import artistService from "../../services/artistService";
 import Inscription from "../../user/inscription";
 import Connection from "../../user/connection";
-
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-};
-
-type Song = {
-  id?: number;
-  duration?: string;
-  name?: string;
-};
-
-type Album = {
-  id?: number;
-  name?: string;
-  pictureUri?: string;
-  artist?: Artist;
-  songs: Array<Song>;
-};
+import { Artist, Album } from "../../utils/types";
 
 const Home: FC<RouteComponentProps> = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
@@ -43,7 +24,6 @@ const Home: FC<RouteComponentProps> = () => {
 
   return (
     <>
-      {" "}
       <h1
         style={{
           textAlign: "center",
@@ -68,8 +48,7 @@ const Home: FC<RouteComponentProps> = () => {
           marginBottom: 50,
         }}
       >
-        {" "}
-        Artistes qui peuvent vous plaire{" "}
+        Artistes qui peuvent vous plaire
       </h2>
       <div
         style={{
@@ -110,8 +89,7 @@ const Home: FC<RouteComponentProps> = () => {
           marginBottom: 50,
         }}
       >
-        {" "}
-        Albums qui peuvent vous plaire{" "}
+        Albums qui peuvent vous plaire
       </h2>
       <div
         style={{

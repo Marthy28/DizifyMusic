@@ -2,8 +2,31 @@ import { Button, Card, Image } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useEffect, useState } from "react";
 import ArtistService from "../services/artistService";
-import { Artist } from "../utils/types";
 import CreateArtist from "./createArtist";
+
+type Song = {
+  id: number;
+  duration?: string;
+  name?: string;
+  artist?: Artist;
+  albums: Album[];
+};
+
+type Album = {
+  id: number;
+  name?: string;
+  pictureUri?: string;
+  artist?: Artist;
+  songs?: Song;
+  releaseDate?: string;
+};
+
+type Artist = {
+  id: number;
+  name?: string;
+  imageUri?: string;
+  albums: Album[];
+};
 
 interface Props {}
 
@@ -14,6 +37,8 @@ const ArtistsList: FC<Props> = () => {
   function getArtists() {
     ArtistService.getArtists().then((res) => {
       const Artists = res.data;
+      console.log(Artists);
+
       setArtists(Artists);
     });
   }
@@ -55,7 +80,7 @@ const ArtistsList: FC<Props> = () => {
                   <>
                     <h3>Liste Albums :</h3>
                     <p>{album.name}</p>
-                    <p>{album.releaseDate}</p>
+                    <p>{album.releaseDate?.slice(0, 10)}</p>
                     <p>{album.songs.length}</p>
                   </>
                 ))

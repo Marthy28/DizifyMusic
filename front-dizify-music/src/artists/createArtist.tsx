@@ -3,17 +3,28 @@ import React, { FC, useEffect, useState } from "react";
 import ArtistService from "../services/artistService";
 import AlbumsService from "../services/albumsService";
 
-type Artist = {
-  id?: number;
+type Song = {
+  id: number;
+  duration?: string;
   name?: string;
-  imageUri?: string;
-  album?: Album;
+  artist?: Artist;
+  albums?: Album[];
 };
 
 type Album = {
   id: number;
   name?: string;
   pictureUri?: string;
+  artist?: Artist;
+  songs?: Song;
+  releaseDate?: string;
+};
+
+type Artist = {
+  id?: number;
+  name?: string;
+  imageUri?: string;
+  albums?: Album;
 };
 
 interface Props {}
@@ -40,7 +51,7 @@ const CreateArtist: FC<Props> = () => {
 
   function handleChange(value: any) {
     setNewArtist({
-      album: { id: value },
+      albums: { id: value },
     });
   }
 

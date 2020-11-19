@@ -3,8 +3,31 @@ import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useState } from "react";
 import SongsService from "../services/songsService";
-import { Album } from "../utils/types";
 import CreateSong from "./createSong";
+
+type Song = {
+  id?: number;
+  duration?: string;
+  name?: string;
+  artist?: Artist;
+  albums: Album;
+};
+
+type Album = {
+  id: number;
+  name?: string;
+  pictureUri?: string;
+  artist: Artist;
+  songs: Song[];
+  releaseDate?: string;
+};
+
+type Artist = {
+  id: number;
+  name?: string;
+  imageUri?: string;
+  albums: Album;
+};
 
 interface SongsProps {
   album: Album;

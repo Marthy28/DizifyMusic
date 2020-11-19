@@ -2,11 +2,14 @@ import { Button, Form, Input, Select } from "antd";
 import React, { FC, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import artistService from "../services/artistService";
+import songsService from "../services/songsService";
 
-type Artist = {
+type Song = {
   id: number;
+  duration?: string;
   name?: string;
-  imageUri?: string;
+  artist?: Artist;
+  albums?: Album[];
 };
 
 type Album = {
@@ -14,19 +17,40 @@ type Album = {
   name?: string;
   pictureUri?: string;
   artist?: Artist;
+  songs?: Song;
+  releaseDate?: string;
+};
+
+type Artist = {
+  id: number;
+  name?: string;
+  imageUri?: string;
+  albums?: Album[];
 };
 
 interface AlbumsProps {}
 
 const CreateAlbum: FC<AlbumsProps> = () => {
   const [artists, setArtists] = useState<Artist[]>([]);
+  const [songs, setSongs] = useState<Song[]>([]);
   const [newAlbum, setNewAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
 
   useEffect(() => {
     artistService.getArtists().then((res) => {
       const artists = res.data;
+      console.log(artists);
+
       setArtists(artists);
+    });
+  }, []);
+
+  useEffect(() => {
+    songsService.getSongs().then((res) => {
+      const songs = res.data;
+      console.log(songs);
+
+      setSongs(songs);
     });
   }, []);
 
@@ -39,11 +63,19 @@ const CreateAlbum: FC<AlbumsProps> = () => {
   }, [newAlbum, ready]);
 
   function handleChange(value: any) {
+    console.log(value);
+
     setNewAlbum({
       artist: { id: value },
     });
   }
+  function handleChangeSong(value: any) {
+    console.log(value);
 
+    setNewAlbum({
+      songs: { id: value },
+    });
+  }
   return (
     <Form
       name="basic"
@@ -79,7 +111,13 @@ const CreateAlbum: FC<AlbumsProps> = () => {
           ))}
         </Select>
       </Form.Item>
-
+      <Form.Item label="Sons">
+        <Select onChange={handleChangeSong}>
+          {songs.map((song, i) => (
+            <Select.Option value={song.id}>{song.name}</Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Ajouter

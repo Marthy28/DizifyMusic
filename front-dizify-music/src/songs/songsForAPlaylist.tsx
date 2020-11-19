@@ -1,7 +1,6 @@
-import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import axios from "axios";
 import React, { FC, useState } from "react";
 import { Playlist } from "../utils/types";
 
@@ -45,7 +44,7 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
             TO DO
           </Modal>
         </div>
-        {playlist.playlist.songs.map((song, i) => (
+        {playlist.playlist.songs?.map((song, i) => (
           <>
             <div
               style={{

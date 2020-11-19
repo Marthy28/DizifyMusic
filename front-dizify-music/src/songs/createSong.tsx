@@ -2,26 +2,28 @@ import { Button, Form, Input } from "antd";
 import React, { FC, useEffect, useState } from "react";
 import songsService from "../services/songsService";
 
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-};
-
 type Song = {
   id?: number;
   duration?: string;
   name?: string;
   artist?: Artist;
-  album?: Album;
+  albums: Album;
 };
 
 type Album = {
-  id?: number;
+  id: number;
   name?: string;
   pictureUri?: string;
-  artist?: Artist;
-  songs: Array<Song>;
+  artist: Artist;
+  songs: Song[];
+  releaseDate?: string;
+};
+
+type Artist = {
+  id: number;
+  name?: string;
+  imageUri?: string;
+  albums: Album;
 };
 
 interface AlbumsProps {
@@ -33,12 +35,12 @@ const CreateSong: FC<AlbumsProps> = (album) => {
   const [ready, setReady] = useState<boolean>(false);
 
   useEffect(() => {
-    if (ready && album?.album.artist) {
+    if (ready && album.album.artist) {
       songsService.createSong(album.album.artist.id.toString(), newSong);
       setNewSong(undefined);
       setReady(false);
     }
-  }, [newSong, ready]);
+  }, [album.album.artist, newSong, ready]);
 
   return (
     <Form
@@ -48,7 +50,7 @@ const CreateSong: FC<AlbumsProps> = (album) => {
           name: e.name,
           duration: e.duration,
           artist: album.album.artist,
-          album: album.album,
+          albums: album.album,
         });
         setReady(true);
       }}
