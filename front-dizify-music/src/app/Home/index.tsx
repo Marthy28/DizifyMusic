@@ -7,7 +7,7 @@ import Inscription from "../../user/inscription";
 import Connection from "../../user/connection";
 import { Artist, Album } from "../../utils/types";
 
-const Home: FC<RouteComponentProps> = () => {
+const Home: FC = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [Artists, setArtists] = useState<Artist[]>([]);
 

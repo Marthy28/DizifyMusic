@@ -87,20 +87,6 @@ public class AlbumController {
     		System.out.println(e.toString());
         }
     }
-	
-    //POST 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/album")
-    public Album addAlbum(@RequestBody Album album) {
-    	try {
-    		
-    		return albumRepository.save(album);
-        
-    	} catch (Exception e) {
-    		System.out.println(e.toString());
-            return null;
-        }
-    }
     
   //POST 
     @PreAuthorize("hasAuthority('ADMIN')")

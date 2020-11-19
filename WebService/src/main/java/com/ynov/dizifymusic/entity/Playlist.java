@@ -16,7 +16,7 @@ public class Playlist {
 	private String name;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "playlist_id", nullable = true)
+    @JoinColumn(name = "user_id", nullable = true)
 	@JsonIgnoreProperties("playlist")
 	private User user;
 	

@@ -2,8 +2,6 @@ package com.ynov.dizifymusic.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,9 +21,6 @@ public class JwtAutenticationController {
 	{
 		this.userRepository = userRepository;
 	}
-	
-	@Autowired
-	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -38,7 +33,7 @@ public class JwtAutenticationController {
 
 		final UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEMail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.ok(new JwtResponse(token,userDetails));
 	}
 	
 }
