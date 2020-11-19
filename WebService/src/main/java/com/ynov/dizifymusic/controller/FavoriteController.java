@@ -3,6 +3,7 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class FavoriteController {
     }
     
     //GET all
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/favorites")
     public List<Favorite> getFavorites() {
     	try {
@@ -52,6 +54,7 @@ public class FavoriteController {
     
     
     //GET by id
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @GetMapping("/favorite/{id}")
     public Favorite getFavorite(final @PathVariable("id") Long favoriteId) {
@@ -64,6 +67,7 @@ public class FavoriteController {
     }
     
     //GET by user id
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @GetMapping("/favoriteByUserId/{user_id}")
     public Favorite getFavoriteByUserId(final @PathVariable("user_id") Long user_id){
@@ -76,6 +80,7 @@ public class FavoriteController {
     }
     
     //DELETE by id
+    @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping("/favorite/{id}")
     public void deleteFavorite(final @PathVariable("id") Long favoriteId) {
     	try {
@@ -86,6 +91,7 @@ public class FavoriteController {
     }
 
     //PUT by id
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{id}")
     public Favorite editFavorite(@RequestBody Favorite favorite) {
@@ -97,6 +103,8 @@ public class FavoriteController {
     	}
     }
     
+
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/song/{song_id}/add")
     public Favorite addSongToFavorite(final @PathVariable("favorite_id") Long favorite_id,final @PathVariable("song_id") Long song_id) {
@@ -118,6 +126,8 @@ public class FavoriteController {
     	}
     }
     
+
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/album/{album_id}/add")
     public Favorite addAlbumToFavorite(final @PathVariable("favorite_id") Long favorite_id,final @PathVariable("album_id") Long album_id) {
@@ -139,6 +149,8 @@ public class FavoriteController {
     	}
     }
     
+
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/artist/{artist_id}/add")
     public Favorite addArtistToFavorite(final @PathVariable("favorite_id") Long favorite_id,final @PathVariable("artist_id") Long artist_id) {
@@ -160,6 +172,8 @@ public class FavoriteController {
     	}
     }
     
+
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/song/{song_id}/delete")
     public Favorite deleteSongToFavorite(final @PathVariable("favorite_id") Long favorite_id,final @PathVariable("song_id") Long song_id) {
@@ -181,6 +195,8 @@ public class FavoriteController {
     	}
     }
     
+
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/album/{album_id}/delete")
     public Favorite deleteAlbumToFavorite(final @PathVariable("favorite_id") Long favorite_id,final @PathVariable("album_id") Long album_id) {
@@ -202,6 +218,8 @@ public class FavoriteController {
     	}
     }
     
+
+    @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/artist/{artist_id}/delete")
     public Favorite deleteArtistToFavorite(final @PathVariable("favorite_id") Long favorite_id,final @PathVariable("artist_id") Long artist_id) {

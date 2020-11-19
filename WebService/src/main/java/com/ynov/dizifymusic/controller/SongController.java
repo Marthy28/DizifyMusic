@@ -3,6 +3,8 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +37,9 @@ public class SongController {
     @GetMapping("/songs")
     public List<Song> getArtists() {
     	try {
+    		System.out.println(SecurityContextHolder.getContext());
+    		System.out.println(SecurityContextHolder.getContext().getAuthentication());
+    		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
     		return songRepository.findAll();
     	} catch (Exception e) {
     		System.out.println(e.toString());
@@ -67,6 +72,7 @@ public class SongController {
     }
     
     //DELETE by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/song/{id}")
     public void deleteSong(final @PathVariable("id") Long songId) {
     	try {
@@ -77,6 +83,7 @@ public class SongController {
     }
 	
     //POST 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/song/{artist_id}")
     public Song addSong(@RequestBody Song song,final @PathVariable("artist_id") Long artist_id) {
     	try {
@@ -94,6 +101,7 @@ public class SongController {
 
     //PUT by id
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/song")
     public Song editSong(@RequestBody Song song) {
     	try {

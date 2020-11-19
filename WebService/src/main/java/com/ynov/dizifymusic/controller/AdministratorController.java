@@ -3,6 +3,7 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,9 +40,9 @@ public class AdministratorController {
 	//GET by id
     @ResponseBody
     @GetMapping("/administrator/{id}")
-    public Administrator getAdministrator(final @PathVariable("id") Long albumId) {
+    public Administrator getAdministrator(final @PathVariable("id") Long adminId) {
     	try {
-            return administratorRepository.findById(albumId).get();
+            return administratorRepository.findById(adminId).get();
         } catch (Exception e) {
     		System.out.println(e.toString());
             return null;
@@ -49,20 +50,22 @@ public class AdministratorController {
     }
     
     //DELETE by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/administrator/{id}")
-    public void deleteAdministrator(final @PathVariable("id") Long albumId) {
+    public void deleteAdministrator(final @PathVariable("id") Long adminId) {
     	try {
-    		administratorRepository.deleteById(albumId);
+    		administratorRepository.deleteById(adminId);
     	} catch (Exception e) {
     		System.out.println(e.toString());
         }	
     }
 	
     //POST
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/administrator")
-    public Administrator addAdministrator(@RequestBody Administrator album) {
+    public Administrator addAdministrator(@RequestBody Administrator admin) {
     	try {
-    		return administratorRepository.save(album);
+    		return administratorRepository.save(admin);
     	} catch (Exception e) {
     		System.out.println(e.toString());
             return null;
@@ -70,11 +73,12 @@ public class AdministratorController {
     }
 
     //PUT by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @PutMapping("/administrator/{id}")
-    public Administrator editAdministrator(@RequestBody Administrator album) {
+    public Administrator editAdministrator(@RequestBody Administrator admin) {
     	try {
-    		return administratorRepository.save(album);
+    		return administratorRepository.save(admin);
     	} catch (Exception e) {
     		System.out.println(e.toString());
             return null;

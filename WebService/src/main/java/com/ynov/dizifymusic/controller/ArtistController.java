@@ -3,6 +3,8 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ public class ArtistController {
     }
     
     //GET all
-    @GetMapping("/artists")
+    @GetMapping("/artists") 
     public List<Artist> getArtists() {
     	try {
     		return artistRepository.findAll();
@@ -62,6 +64,7 @@ public class ArtistController {
     }
    
     //DELETE by id 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/artist/{id}")
     public void deleteArtist(final @PathVariable("id") Long artistId) {
     	try {
@@ -72,6 +75,7 @@ public class ArtistController {
     }
     
     //POST 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/artist")
     public Artist addArtist(@RequestBody Artist artist) {
     	try {
@@ -84,6 +88,7 @@ public class ArtistController {
 
     //PUT by id
     @ResponseBody
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/artist")
     public Artist editArtist(@RequestBody Artist artist) {
     	try {

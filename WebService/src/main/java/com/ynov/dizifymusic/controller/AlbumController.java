@@ -3,6 +3,7 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,6 +76,7 @@ public class AlbumController {
     }
     
     //DELETE by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/album/{id}")
     public void deleteAlbum(final @PathVariable("id") Long albumId) {
     	try {
@@ -87,6 +89,7 @@ public class AlbumController {
     }
 	
     //POST 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/album")
     public Album addAlbum(@RequestBody Album album) {
     	try {
@@ -100,6 +103,7 @@ public class AlbumController {
     }
     
   //POST 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/album/{artist_id}")
     public Album addAlbum(@RequestBody Album album, @PathVariable("artist_id") Long artist_id) {
     	try {
@@ -119,6 +123,7 @@ public class AlbumController {
     }
 
     //PUT by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @PutMapping("/album")
     public Album editAlbum(@RequestBody Album album) { 
@@ -153,6 +158,7 @@ public class AlbumController {
     }
     
     //PUT by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @PutMapping("/album/{album_id}/song/{song_id}/add")
     public Album AddSongToAlbum(@PathVariable("album_id") Long album_id,@PathVariable("song_id") Long song_id) { 
@@ -177,6 +183,7 @@ public class AlbumController {
     }
     
   //PUT by id
+    @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @PutMapping("/album/{album_id}/song/{song_id}/delete")
     public Album DeleteSongToAlbum(@PathVariable("album_id") Long album_id,@PathVariable("song_id") Long song_id) { 
