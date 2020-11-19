@@ -86,8 +86,7 @@ public class UserController {
     		
     		user.setFavorite(fav);
     		
-    		userRepository.save(user);
-    		return jwtAutenticationController.createAuthenticationToken(new JwtRequest(user.geteMail(), user.getPassword()));
+    		return ResponseEntity.ok(userRepository.save(user));
     	}catch(Exception e) {
     		System.out.println(e.toString());
     		return null;
