@@ -3,6 +3,7 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -81,11 +82,10 @@ public class UserController {
     		if(fav == null)
     			return null;
     		
-    		
+    		if(userRepository.findByEMail(user.geteMail()) != null)
+    			return new ResponseEntity<>("Cet email est déjà utilisé",HttpStatus.BAD_REQUEST);
     		
     		user.setFavorite(fav);
-    		
-
     		
     		userRepository.save(user);
     		return jwtAutenticationController.createAuthenticationToken(new JwtRequest(user.geteMail(), user.getPassword()));
