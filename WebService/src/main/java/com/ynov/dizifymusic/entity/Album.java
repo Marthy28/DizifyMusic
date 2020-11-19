@@ -1,10 +1,14 @@
 package com.ynov.dizifymusic.entity;
 
+import java.time.LocalDate;
 import java.util.*;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.ynov.dizifymusic.config.LocalDateDeserializer;
 
 @Entity
 @Table(name = "Album")
@@ -16,7 +20,8 @@ public class Album {
     private Long id;
 	private String name;
 	private String pictureUri;
-	private Date releaseDate;
+	@JsonDeserialize(using=LocalDateDeserializer.class)
+	private LocalDate releaseDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "artist_id", nullable = false)
@@ -56,11 +61,11 @@ public class Album {
 		this.pictureUri = pictureUri;
 	}
 
-	public Date getReleaseDate() {
+	public LocalDate getReleaseDate() {
 		return releaseDate;
 	}
 
-	public void setReleaseDate(Date releaseDate) {
+	public void setReleaseDate(LocalDate releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
