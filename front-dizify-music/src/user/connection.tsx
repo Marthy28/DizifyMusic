@@ -1,12 +1,16 @@
 import { Button, Card, Form, Input } from "antd";
-import React, { FC } from "react";
+import axios from "axios";
+import React, { FC, useContext, useState } from "react";
+import { userContext } from "../utils/types";
+import App from "../App";
 
 interface UserProps {}
 
 const Connection: FC<UserProps> = () => {
+  const { isConnected, userId, token, connection } = useContext(userContext);
+
   const onFinish = (values: any) => {
-    //TO DO
-    console.log("Success:", values);
+    connection(values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -38,8 +42,8 @@ const Connection: FC<UserProps> = () => {
         </Form.Item>
 
         <Form.Item
-          label="Mot de passe"
-          name="mot de passe"
+          label="password"
+          name="password"
           rules={[{ required: true, message: "Entrez votre mot de passe" }]}
         >
           <Input.Password />

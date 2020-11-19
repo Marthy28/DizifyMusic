@@ -1,44 +1,14 @@
 import { Tabs } from "antd";
 import React from "react";
 import ReactDOM from "react-dom";
-import AlbumsList from "./albums/albums";
-import Home from "./app/Home";
-import ArtistsList from "./artists/artists";
-import Playlists from "./playlists/playlist";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./styles/index.less";
 import "./styles/index.scss";
 
-const { TabPane } = Tabs;
-
 ReactDOM.render(
   <React.StrictMode>
-    <div
-      style={{
-        width: "90%",
-        marginRight: "auto",
-        marginLeft: "auto",
-        marginTop: "2%",
-      }}
-    >
-      <Tabs defaultActiveKey="1" centered>
-        <TabPane tab="Accueil" key="1">
-          <Home />
-        </TabPane>
-        <TabPane tab="Artists" key="2">
-          <ArtistsList />
-        </TabPane>
-        <TabPane tab="Albums" key="3">
-          <AlbumsList />
-        </TabPane>
-        <TabPane tab="Favoris" key="4">
-          Favoris
-        </TabPane>
-        <TabPane tab="Playlists" key="5">
-          <Playlists />
-        </TabPane>
-      </Tabs>
-    </div>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

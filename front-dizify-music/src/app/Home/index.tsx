@@ -26,7 +26,7 @@ type Album = {
   songs: Array<Song>;
 };
 
-const Home: FC<RouteComponentProps> = () => {
+const Home: FC = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [Artists, setArtists] = useState<Artist[]>([]);
 
