@@ -18,44 +18,56 @@ const Connection: FC<UserProps> = () => {
   };
 
   return (
-    <Card
-      style={{
-        width: "30%",
-        marginRight: "1%",
-        marginBottom: "1%",
-        marginTop: 50,
-        boxShadow: "0px 4px 100px -64px rgba(0,0,0,0.35)",
-      }}
-    >
-      <Form
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
+    <>
+      <Card
+        style={{
+          width: "30%",
+          marginRight: "1%",
+          marginBottom: "1%",
+          marginTop: 50,
+          boxShadow: "0px 4px 100px -64px rgba(0,0,0,0.35)",
+        }}
       >
-        <Form.Item
-          label="Email"
-          name="eMail"
-          rules={[{ required: true, message: "Entrez votre email" }]}
+        <h2
+          style={{
+            fontWeight: "bold",
+            fontSize: 40,
+            marginBottom: 50,
+          }}
         >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="password"
-          name="password"
-          rules={[{ required: true, message: "Entrez votre mot de passe" }]}
+          Se connecter
+        </h2>
+        <Form
+          name="basic"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-          <Input.Password />
-        </Form.Item>
+          <Form.Item
+            label="Email"
+            name="eMail"
+            rules={[{ required: true, message: "Entrez votre email" }]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Se connecter
-          </Button>
-        </Form.Item>
-      </Form>
-    </Card>
+          <Form.Item
+            label="password"
+            name="password"
+            rules={[{ required: true, message: "Entrez votre mot de passe" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" shape="round" htmlType="submit">
+              Se connecter
+            </Button>
+          </Form.Item>
+        </Form>
+        {console.log({ isConnected, userId, token, connection })}
+      </Card>
+    </>
   );
 };
 

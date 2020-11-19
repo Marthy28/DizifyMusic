@@ -1,4 +1,4 @@
-import { Tabs } from "antd";
+import { message, Tabs } from "antd";
 import axios from "axios";
 import React, { FC, useState } from "react";
 import AlbumsList from "./albums/albums";
@@ -26,7 +26,7 @@ const App: FC = () => {
       password: values.password,
     };
     axios.post("http://localhost:8080/login", data).then((res) => {
-      console.log("Connected !");
+      res && message.success(`Connecté`);
       setUser({
         isConnected: true,
         userId: res.data.user.id,
@@ -39,7 +39,7 @@ const App: FC = () => {
     <userContext.Provider value={{ ...user, connection }}>
       <div
         style={{
-          width: "90%",
+          width: "80%",
           marginRight: "auto",
           marginLeft: "auto",
           marginTop: "2%",

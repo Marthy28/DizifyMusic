@@ -40,36 +40,39 @@ const ArtistsList: FC<Props> = () => {
             <Card
               key={i}
               style={{
+                flex: 1,
                 width: 300,
                 marginRight: "1%",
                 marginBottom: "1%",
                 boxShadow: "0px 4px 100px -64px rgba(0,0,0,0.35)",
               }}
             >
-              <h1 style={{ fontWeight: "bold", fontSize: 34 }}>
-                {artist.name}
-              </h1>
+              <div style={{ height: 440 }}>
+                <h1 style={{ fontWeight: "bold", fontSize: 34 }}>
+                  {artist.name}
+                </h1>
 
-              {artist.albums.length ? (
-                artist.albums.map((album: any) => (
-                  <>
-                    <h3>Liste Albums :</h3>
-                    <p>{album.name}</p>
-                    <p>{album.releaseDate}</p>
-                    <p>{album.songs.length}</p>
-                  </>
-                ))
-              ) : (
-                <p>Pas d'album pour cet artist</p>
-              )}
+                {artist.albums.length ? (
+                  artist.albums.map((album: any) => (
+                    <>
+                      <h3>Liste Albums :</h3>
+                      <p>{album.name}</p>
+                      <p>{album.releaseDate}</p>
+                      <p>{album.songs.length}</p>
+                    </>
+                  ))
+                ) : (
+                  <p>Pas d'album pour cet artist</p>
+                )}
 
-              <Image
-                width={200}
-                src={`${artist.imageUri}`}
-                style={{ marginBottom: "2%" }}
-              />
-
+                <Image
+                  width={200}
+                  src={`${artist.imageUri}`}
+                  style={{ marginBottom: "2%" }}
+                />
+              </div>
               <Button
+                shape="round"
                 onClick={() => {
                   artist.id && ArtistService.deleteArtist(artist.id.toString());
                 }}
@@ -81,6 +84,7 @@ const ArtistsList: FC<Props> = () => {
         ))}
       </div>
       <Button
+        shape="round"
         type="primary"
         onClick={() => {
           setVisible(true);

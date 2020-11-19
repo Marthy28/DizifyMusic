@@ -1,9 +1,9 @@
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import axios from "axios";
-import React, { FC, useState } from "react";
-import { Playlist } from "../utils/types";
+import React, { FC, useContext, useState } from "react";
+import playlistService from "../services/playlistService";
+import { Playlist, userContext } from "../utils/types";
 
 interface SongsProps {
   playlist: Playlist;
@@ -11,6 +11,9 @@ interface SongsProps {
 
 const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
   const [visible, setVisible] = useState<boolean>(false);
+  const { token } = useContext(userContext);
+
+  console.log(playlist);
 
   return (
     <>
@@ -57,7 +60,22 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
               <p>
                 {song.name} {song.duration}
               </p>
-              <p> {song.artist}</p>
+              {/* <p> {song.artist.name}</p> */}
+
+              <Button
+                style={{ border: "none", color: "var(--pink)" }}
+                onClick={() => {
+                  if (playlist.playlist.id && song.id) {
+                    playlistService.deleteSongInPlaylist(
+                      playlist.playlist.id,
+                      song.id,
+                      token
+                    );
+                  }
+                }}
+                shape="circle"
+                icon={<CloseOutlined />}
+              />
             </div>
           </>
         ))}

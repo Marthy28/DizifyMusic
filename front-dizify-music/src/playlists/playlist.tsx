@@ -1,26 +1,29 @@
 import { Card } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import playlistService from "../services/playlistService";
 import SongsForAPlaylist from "../songs/songsForAPlaylist";
-import { Playlist } from "../utils/types";
+import Connection from "../user/connection";
+import { Playlist, userContext } from "../utils/types";
 
 interface PlaylistProps {}
 
 const Playlists: FC<PlaylistProps> = () => {
   const [Playlists, setPlaylists] = useState<Playlist[]>([]);
+  const { isConnected, userId, token, connection } = useContext(userContext);
 
   function getPlaylistsByUser() {
-    playlistService.getPlaylistsByUser("1").then((res) => {
+    playlistService.getPlaylistsByUser(userId).then((res) => {
+      console.log(res.data);
       const Plalists = res.data;
       setPlaylists(Plalists);
     });
   }
 
   useEffect(() => {
-    getPlaylistsByUser();
-  }, []);
+    isConnected && getPlaylistsByUser();
+  }, [isConnected]);
 
-  return (
+  return isConnected ? (
     <>
       <h1
         style={{
@@ -37,7 +40,7 @@ const Playlists: FC<PlaylistProps> = () => {
           <>
             <Card
               style={{
-                width: 300,
+                flex: 1,
                 marginRight: "1%",
                 marginBottom: "1%",
                 boxShadow: "0px 4px 100px -64px rgba(0,0,0,0.35)",
@@ -52,6 +55,8 @@ const Playlists: FC<PlaylistProps> = () => {
         ))}
       </div>
     </>
+  ) : (
+    <Connection />
   );
 };
 

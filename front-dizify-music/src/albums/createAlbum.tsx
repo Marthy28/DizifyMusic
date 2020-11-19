@@ -81,7 +81,7 @@ const CreateAlbum: FC<AlbumsProps> = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button shape="round" type="primary" htmlType="submit">
           Ajouter
         </Button>
       </Form.Item>

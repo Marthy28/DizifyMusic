@@ -1,17 +1,21 @@
 import axios from "axios";
 
-const ALBUMS_API_BASE_URL = "http://localhost:8080";
-
-let axiosConfig = {
-  headers: {
-    "Content-Type": "application/json;charset=UTF-8",
-    "Access-Control-Allow-Origin": "*",
-  },
-};
+const API_BASE_URL = "http://localhost:8080";
 
 class PlaylistService {
-  getPlaylistsByUser(userId: string) {
-    return axios.get(ALBUMS_API_BASE_URL + "/playlistByUserId/" + userId);
+  getPlaylistsByUser(userId: any) {
+    return axios.get(API_BASE_URL + "/playlistByUserId/" + userId);
+  }
+
+  deleteSongInPlaylist(playlistId: number, songId: number, token: string) {
+    return axios.put(
+      API_BASE_URL + "/playlist/" + playlistId + "/song/" + songId + "/delete",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   }
 }
 
