@@ -25,6 +25,7 @@ public class Album {
 	
 	@ManyToOne
 	@JoinColumn(name = "artist_id", nullable = false)
+	@JsonIgnoreProperties("albums")
     private Artist artist;
 	
 	
@@ -35,6 +36,7 @@ public class Album {
     cascade = CascadeType.ALL)
 
 	@JsonManagedReference(value="album-song")
+	@JsonIgnoreProperties("artist")
 	private Set<Song> songs;
 
 	public Long getId() {
