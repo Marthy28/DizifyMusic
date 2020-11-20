@@ -15,7 +15,7 @@ public class Administrator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@OneToOne(mappedBy = "administrator",fetch=FetchType.EAGER)
+@OneToOne(mappedBy = "administrator",fetch=FetchType.LAZY)
 	private User user;
 
 	public Long getId() {

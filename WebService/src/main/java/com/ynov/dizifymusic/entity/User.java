@@ -30,7 +30,7 @@ public class User {
 	@JsonIgnoreProperties("user")
 	private Set<Playlist> playlist;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
 	@JoinColumn(name = "administrator_id")
 	@JsonIgnoreProperties({"user","hibernateLazyInitializer"})
 	private Administrator administrator;
