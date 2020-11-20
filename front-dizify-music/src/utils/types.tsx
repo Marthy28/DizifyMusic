@@ -36,10 +36,9 @@ export type USER_CONNECTED = {
 };
 
 const userContext = React.createContext({
-  isConnected: false,
-  userId: "",
-  token: "",
-  admin: "",
+  userId: window.sessionStorage.getItem("userId"),
+  token: window.sessionStorage.getItem("token"),
+  admin: window.sessionStorage.getItem("admin"),
   connection: (values: any) => {},
 }); // Create a context object
 

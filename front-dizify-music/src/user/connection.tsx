@@ -5,9 +5,7 @@ import { userContext } from "../utils/types";
 interface UserProps {}
 
 const Connection: FC<UserProps> = () => {
-  const { isConnected, userId, token, connection, admin } = useContext(
-    userContext
-  );
+  const { userId, token, connection, admin } = useContext(userContext);
 
   const onFinish = (values: any) => {
     connection(values);
@@ -65,7 +63,7 @@ const Connection: FC<UserProps> = () => {
             </Button>
           </Form.Item>
         </Form>
-        {console.log({ isConnected, userId, token })}
+        {console.log({ userId, token })}
       </Card>
     </>
   );

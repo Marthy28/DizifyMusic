@@ -36,7 +36,6 @@ const CreateAlbum: FC<AlbumsProps> = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [newAlbum, setNewAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
-  const { isConnected, token } = useContext(userContext);
 
   useEffect(() => {
     artistService.getArtists().then((res) => {

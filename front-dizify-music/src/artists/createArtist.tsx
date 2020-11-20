@@ -34,7 +34,7 @@ const CreateArtist: FC<Props> = () => {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [newArtist, setNewArtist] = useState<Artist>();
   const [ready, setReady] = useState<boolean>(false);
-  const { isConnected, token, admin } = useContext(userContext);
+  const { userId, token, admin } = useContext(userContext);
 
   useEffect(() => {
     AlbumsService.getAlbums().then((res) => {
@@ -44,12 +44,12 @@ const CreateArtist: FC<Props> = () => {
   }, []);
 
   useEffect(() => {
-    if (ready && isConnected && admin) {
+    if (ready && userId && admin) {
       ArtistService.createArtist(newArtist);
       setNewArtist(undefined);
       setReady(false);
     }
-  }, [admin, isConnected, newArtist, ready]);
+  }, [admin, userId, newArtist, ready]);
 
   function handleChange(value: any) {
     setNewArtist({

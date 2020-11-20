@@ -30,7 +30,7 @@ interface Props {}
 const ArtistsList: FC<Props> = () => {
   const [Artists, setArtists] = useState<Artist[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
-  const { isConnected, token, admin } = useContext(userContext);
+  const { userId, token, admin } = useContext(userContext);
   console.log(admin);
 
   function getArtists() {
@@ -42,9 +42,9 @@ const ArtistsList: FC<Props> = () => {
     });
   }
   useEffect(() => {
-    isConnected && getArtists();
-  }, [isConnected]);
-  return isConnected ? (
+    userId && getArtists();
+  }, [userId]);
+  return userId ? (
     <>
       <h1
         style={{

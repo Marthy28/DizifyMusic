@@ -9,9 +9,7 @@ interface PlaylistProps {}
 
 const Playlists: FC<PlaylistProps> = () => {
   const [Playlists, setPlaylists] = useState<Playlist[]>([]);
-  const { isConnected, userId, token, connection, admin } = useContext(
-    userContext
-  );
+  const { userId } = useContext(userContext);
 
   function getPlaylistsByUser() {
     playlistService.getPlaylistsByUser(userId).then((res) => {
@@ -21,11 +19,13 @@ const Playlists: FC<PlaylistProps> = () => {
     });
   }
 
-  useEffect(() => {
-    isConnected && getPlaylistsByUser();
-  }, [isConnected]);
+  console.log(window.sessionStorage.getItem("token"));
 
-  return isConnected ? (
+  useEffect(() => {
+    userId && getPlaylistsByUser();
+  }, [userId]);
+
+  return userId ? (
     <>
       <h1
         style={{

@@ -31,7 +31,7 @@ interface AlbumsProps {}
 const AlbumsList: FC<AlbumsProps> = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
-  const { isConnected, token, admin } = useContext(userContext);
+  const { userId, token, admin } = useContext(userContext);
   function getAlbums() {
     AlbumsService.getAlbums().then((res) => {
       const Albums = res.data;
@@ -40,10 +40,10 @@ const AlbumsList: FC<AlbumsProps> = () => {
   }
 
   useEffect(() => {
-    isConnected && getAlbums();
-  }, [isConnected]);
+    userId && getAlbums();
+  }, [userId]);
 
-  return isConnected ? (
+  return userId ? (
     <>
       <h1
         style={{
