@@ -1,7 +1,10 @@
 package com.ynov.dizifymusic.model;
 
 import java.io.Serializable;
-
+/**
+ * Classe permettant de récupérer
+ * la requête de connexion
+ */
 public class JwtRequest implements Serializable {
 
 	private static final long serialVersionUID = 5926468583005150707L;

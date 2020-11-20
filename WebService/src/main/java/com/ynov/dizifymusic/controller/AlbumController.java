@@ -20,6 +20,9 @@ import com.ynov.dizifymusic.repository.AlbumRepository;
 import com.ynov.dizifymusic.repository.ArtistRepository;
 import com.ynov.dizifymusic.repository.SongRepository;
 
+/**
+ * Controlleur pour l'entité Album
+ */
 @RestController
 public class AlbumController {
 	
@@ -76,6 +79,7 @@ public class AlbumController {
     }
     
     //DELETE by id
+    //ADMIN
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/album/{id}")
     public void deleteAlbum(final @PathVariable("id") Long albumId) {
@@ -89,6 +93,7 @@ public class AlbumController {
     }
     
   //POST 
+    //ADMIN
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/album/{artist_id}")
     public Album addAlbum(@RequestBody Album album, @PathVariable("artist_id") Long artist_id) {
@@ -109,6 +114,7 @@ public class AlbumController {
     }
 
     //PUT by id
+    //ADMIN
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @PutMapping("/album")
@@ -143,7 +149,7 @@ public class AlbumController {
         }
     }
     
-    //PUT by id
+    //PUT a new song in an album
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @PutMapping("/album/{album_id}/song/{song_id}/add")
@@ -168,7 +174,7 @@ public class AlbumController {
         }
     }
     
-  //PUT by id
+  //PUT remove a song from an album
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @PutMapping("/album/{album_id}/song/{song_id}/delete")

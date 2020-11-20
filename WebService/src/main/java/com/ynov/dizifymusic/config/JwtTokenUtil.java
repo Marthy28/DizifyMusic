@@ -8,18 +8,15 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-<<<<<<< HEAD
-=======
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
->>>>>>> develop
-
 import com.ynov.dizifymusic.service.UserDetailsImpl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
+/**
+ * Classe utilisée pour faire toutes 
+ * les opérations sur le token
+ */
 @Configuration
 public class JwtTokenUtil implements Serializable {
 
@@ -45,7 +42,7 @@ public class JwtTokenUtil implements Serializable {
 		return claimsResolver.apply(claims);
 	}
 	
-    //for retrieveing any information from token we will need the secret key
+    //Récupération de la clé secrète
 	private Claims getAllClaimsFromToken(String token) {
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 	}
@@ -59,11 +56,7 @@ public class JwtTokenUtil implements Serializable {
 	//génération du token
 	public String generateToken(UserDetailsImpl userDetails) {
 		Map<String, Object> claims = new HashMap<>();
-<<<<<<< HEAD
 		return doGenerateToken(claims, userDetails.getEmail());
-=======
-		return doGenerateToken(claims, userDetails.getUsername());
->>>>>>> develop
 	}
 
 	//while creating the token -
@@ -78,7 +71,7 @@ public class JwtTokenUtil implements Serializable {
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 
-	//validate token
+	//valider le token
 	public Boolean validateToken(String token, UserDetailsImpl userDetails) {
 		final String username = getUsernameFromToken(token);
 		return (username.equals(userDetails.getEmail()) && !isTokenExpired(token));

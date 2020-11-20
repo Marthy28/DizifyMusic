@@ -4,15 +4,13 @@ import java.time.LocalDate;
 import java.util.*;
 import javax.persistence.*;
 
-<<<<<<< HEAD
-import com.fasterxml.jackson.annotation.JsonFormat;
-=======
->>>>>>> develop
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.ynov.dizifymusic.config.LocalDateDeserializer;
-
+/**
+ * entité Album
+ */
 @Entity
 @Table(name = "Album")
 @JsonIgnoreProperties("favorites")
@@ -30,7 +28,6 @@ public class Album {
 	@JoinColumn(name = "artist_id", nullable = false)
 	@JsonIgnoreProperties("albums")
     private Artist artist;
-	
 	
 	@ManyToMany
 	private Set<Favorite> favorites = new HashSet<Favorite>();
@@ -97,7 +94,4 @@ public class Album {
 	public void setSongs(Set<Song> songs) {
 		this.songs = songs;
 	}
-
-	
-	
 }

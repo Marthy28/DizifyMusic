@@ -4,14 +4,9 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
- * Entité Livre persistente en base de données.
- * 
- * @author Matthieu BACHELIER
- * @since 2020-11
- * @version 1.0
+ * entité Artist
  */
 @Entity
 @Table(name = "Artist")

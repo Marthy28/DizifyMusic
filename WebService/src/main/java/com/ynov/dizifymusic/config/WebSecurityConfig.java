@@ -3,10 +3,7 @@ package com.ynov.dizifymusic.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-<<<<<<< HEAD
 import org.springframework.http.HttpMethod;
-=======
->>>>>>> develop
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,13 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Configuration de spring security
+ * Le context et les routes autorisées 
+ */
 @Configuration
 @EnableWebSecurity
-<<<<<<< HEAD
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-=======
-@EnableGlobalMethodSecurity(prePostEnabled = true)
->>>>>>> develop
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -62,15 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		httpSecurity.cors().and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.authorizeRequests()
+		.authorizeRequests() // requêtes sans identification obligatoire
 		.antMatchers("/login").permitAll()
 		.antMatchers("/signin").permitAll()
-<<<<<<< HEAD
 		.antMatchers("/usertoadmin/{id}").permitAll()
 		.antMatchers(HttpMethod.GET).permitAll()
-=======
->>>>>>> develop
-		.anyRequest().authenticated().and()
+		.anyRequest().authenticated().and() //toutes les autres auront besoin d'authentification
 		.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
 
 		// Add a filter to validate the tokens with every request
