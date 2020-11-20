@@ -3,9 +3,13 @@ package com.ynov.dizifymusic.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+=======
+import org.springframework.security.access.prepost.PostAuthorize;
+>>>>>>> develop
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,7 +66,10 @@ public class UserController {
     
     //DELETE by id
     //user - admin
+<<<<<<< HEAD
     @PreAuthorize("hasAuthority('ADMIN')")
+=======
+>>>>>>> develop
     @DeleteMapping("/user/{id}")
     public void deleteUser(final @PathVariable("id") Long userId) {
     	try {
@@ -75,7 +82,11 @@ public class UserController {
     //POST
     //user
     @PostMapping("/signin")
+<<<<<<< HEAD
     public ResponseEntity<?> addUser(@RequestBody User user) {
+=======
+    public User addUser(@RequestBody User user) {
+>>>>>>> develop
     	try {
     		Favorite fav = favoriteRepository.save(new Favorite());
     		if(fav == null)
