@@ -1,9 +1,10 @@
 import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { FC, useState } from "react";
+import React, { FC, useState, useContext } from "react";
 import SongsService from "../services/songsService";
 import CreateSong from "./createSong";
+import { userContext } from "../utils/types";
 
 type Song = {
   id?: number;
@@ -35,6 +36,7 @@ interface SongsProps {
 
 const SongsForAnAlbum: FC<SongsProps> = (album) => {
   const [visible, setVisible] = useState<boolean>(false);
+  const { isConnected, userId, token, admin } = useContext(userContext);
 
   return (
     <>
@@ -82,10 +84,11 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
                 {song.name} {song.duration}
               </p>
               <Button
+                disabled={!admin}
                 style={{ border: "none", color: "var(--pink)" }}
                 onClick={() => {
                   if (song.id) {
-                    SongsService.deleteSong(song.id.toString());
+                    SongsService.deleteSong(song.id.toString(), token);
                   }
                 }}
                 shape="circle"

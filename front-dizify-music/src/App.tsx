@@ -14,10 +14,12 @@ const App: FC = () => {
     isConnected: boolean;
     userId: string;
     token: string;
+    admin: string;
   }>({
     isConnected: false,
     userId: "",
     token: "",
+    admin: "",
   });
 
   const connection = (values: any) => {
@@ -26,11 +28,14 @@ const App: FC = () => {
       password: values.password,
     };
     axios.post("http://localhost:8080/login", data).then((res) => {
+      console.log("USER : " + res.data.user);
+
       res && message.success(`Connecté`);
       setUser({
         isConnected: true,
         userId: res.data.user.id,
         token: res.data.token,
+        admin: res.data.user.administrator.id,
       });
     });
   };

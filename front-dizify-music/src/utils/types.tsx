@@ -39,6 +39,7 @@ const userContext = React.createContext({
   isConnected: false,
   userId: "",
   token: "",
+  admin: "",
   connection: (values: any) => {},
 }); // Create a context object
 

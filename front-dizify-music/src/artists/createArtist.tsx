@@ -1,7 +1,8 @@
 import { Button, Form, Input, Select } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useContext } from "react";
 import ArtistService from "../services/artistService";
 import AlbumsService from "../services/albumsService";
+import { userContext } from "../utils/types";
 
 type Song = {
   id: number;
@@ -33,6 +34,7 @@ const CreateArtist: FC<Props> = () => {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [newArtist, setNewArtist] = useState<Artist>();
   const [ready, setReady] = useState<boolean>(false);
+  const { isConnected, token, admin } = useContext(userContext);
 
   useEffect(() => {
     AlbumsService.getAlbums().then((res) => {
@@ -42,12 +44,12 @@ const CreateArtist: FC<Props> = () => {
   }, []);
 
   useEffect(() => {
-    if (ready) {
-      ArtistService.createArtist(newArtist);
+    if (ready && isConnected && admin) {
+      ArtistService.createArtist(newArtist, token);
       setNewArtist(undefined);
       setReady(false);
     }
-  }, [newArtist, ready]);
+  }, [admin, isConnected, newArtist, ready, token]);
 
   function handleChange(value: any) {
     setNewArtist({

@@ -1,6 +1,7 @@
 import { Button, Form, Input } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useContext } from "react";
 import songsService from "../services/songsService";
+import { userContext } from "../utils/types";
 
 type Song = {
   id?: number;
@@ -33,14 +34,15 @@ interface AlbumsProps {
 const CreateSong: FC<AlbumsProps> = (album) => {
   const [newSong, setNewSong] = useState<Song>();
   const [ready, setReady] = useState<boolean>(false);
+  const { isConnected, token, admin } = useContext(userContext);
 
   useEffect(() => {
-    if (ready && album.album.artist) {
-      songsService.createSong(album.album.artist.id.toString(), newSong);
+    if (ready && isConnected && admin && album.album.artist) {
+      songsService.createSong(album.album.artist.id.toString(), newSong, token);
       setNewSong(undefined);
       setReady(false);
     }
-  }, [album.album.artist, newSong, ready]);
+  }, [admin, album.album.artist, isConnected, newSong, ready, token]);
 
   return (
     <Form

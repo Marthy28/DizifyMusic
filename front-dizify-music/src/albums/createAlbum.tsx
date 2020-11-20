@@ -1,8 +1,9 @@
 import { Button, Form, Input, Select } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useContext } from "react";
 import AlbumsService from "../services/albumsService";
 import artistService from "../services/artistService";
 import songsService from "../services/songsService";
+import { userContext } from "../utils/types";
 
 type Song = {
   id: number;
@@ -35,6 +36,7 @@ const CreateAlbum: FC<AlbumsProps> = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [newAlbum, setNewAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
+  const { isConnected, token } = useContext(userContext);
 
   useEffect(() => {
     artistService.getArtists().then((res) => {
@@ -56,11 +58,11 @@ const CreateAlbum: FC<AlbumsProps> = () => {
 
   useEffect(() => {
     if (ready) {
-      AlbumsService.createAlbum(newAlbum);
+      AlbumsService.createAlbum(newAlbum, token);
       setNewAlbum(undefined);
       setReady(false);
     }
-  }, [newAlbum, ready]);
+  }, [newAlbum, ready, token]);
 
   function handleChange(value: any) {
     console.log(value);

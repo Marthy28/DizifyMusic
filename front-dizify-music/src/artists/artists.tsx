@@ -3,6 +3,7 @@ import Modal from "antd/lib/modal/Modal";
 import React, { FC, useEffect, useState, useContext } from "react";
 import ArtistService from "../services/artistService";
 import CreateArtist from "./createArtist";
+import Connection from "../user/connection";
 import { userContext } from "../utils/types";
 
 type Song = {
@@ -34,7 +35,7 @@ interface Props {}
 const ArtistsList: FC<Props> = () => {
   const [Artists, setArtists] = useState<Artist[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
-  const { isConnected, userId, token, connection } = useContext(userContext);
+  const { isConnected, token, admin } = useContext(userContext);
 
   function getArtists() {
     ArtistService.getArtists().then((res) => {
@@ -46,10 +47,10 @@ const ArtistsList: FC<Props> = () => {
   }
 
   useEffect(() => {
-    getArtists();
-  }, []);
+    isConnected && getArtists();
+  }, [isConnected]);
 
-  return (
+  return isConnected ? (
     <>
       <h1
         style={{
@@ -105,6 +106,7 @@ const ArtistsList: FC<Props> = () => {
                 />
               </div>
               <Button
+                disabled={!admin}
                 shape="round"
                 onClick={() => {
                   artist.id &&
@@ -118,6 +120,7 @@ const ArtistsList: FC<Props> = () => {
         ))}
       </div>
       <Button
+        disabled={!admin}
         shape="round"
         type="primary"
         onClick={() => {
@@ -138,6 +141,8 @@ const ArtistsList: FC<Props> = () => {
         <CreateArtist />
       </Modal>
     </>
+  ) : (
+    <Connection />
   );
 };
 

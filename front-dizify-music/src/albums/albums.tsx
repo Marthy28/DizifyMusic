@@ -1,9 +1,12 @@
 import { Button, Card, Image } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useContext } from "react";
 import AlbumsService from "../services/albumsService";
 import SongsForAnAlbum from "../songs/songsForAnAlbum";
 import CreateAlbum from "./createAlbum";
+import Connection from "../user/connection";
+
+import { userContext } from "../utils/types";
 
 type Song = {
   id: number;
@@ -34,21 +37,20 @@ interface AlbumsProps {}
 const AlbumsList: FC<AlbumsProps> = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
+  const { isConnected, token, admin } = useContext(userContext);
 
   function getAlbums() {
     AlbumsService.getAlbums().then((res) => {
       const Albums = res.data;
-      console.log(Albums[0].releaseDate.slice(0, 10));
-
       setAlbums(Albums);
     });
   }
 
   useEffect(() => {
-    getAlbums();
-  }, []);
+    isConnected && getAlbums();
+  }, [isConnected]);
 
-  return (
+  return isConnected ? (
     <>
       <h1
         style={{
@@ -106,9 +108,11 @@ const AlbumsList: FC<AlbumsProps> = () => {
               <SongsForAnAlbum album={album} />
             </div>
             <Button
+              disabled={!admin}
               shape="round"
               onClick={() => {
-                album.id && AlbumsService.deleteAlbum(album.id.toString());
+                album.id &&
+                  AlbumsService.deleteAlbum(album.id.toString(), token);
               }}
             >
               Supprimer l'album
@@ -117,6 +121,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
         ))}
       </div>
       <Button
+        disabled={!admin}
         shape="round"
         type="primary"
         onClick={() => {
@@ -137,6 +142,8 @@ const AlbumsList: FC<AlbumsProps> = () => {
         <CreateAlbum />
       </Modal>
     </>
+  ) : (
+    <Connection />
   );
 };
 
