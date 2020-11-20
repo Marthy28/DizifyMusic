@@ -17,6 +17,7 @@ public class User {
 	private String eMail;
 	private String avatarUri;
 	private String pseudo;
+	private String password;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
 	@JoinColumn(name = "favorite_id")
@@ -88,6 +89,14 @@ public class User {
 
 	public void setAdministrator(Administrator administrator) {
 		this.administrator = administrator;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 
