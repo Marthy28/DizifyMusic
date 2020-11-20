@@ -5,7 +5,6 @@ import ArtistService from "../services/artistService";
 import CreateArtist from "./createArtist";
 import Connection from "../user/connection";
 import { userContext } from "../utils/types";
-
 type Song = {
   id: number;
   duration?: string;
@@ -13,7 +12,6 @@ type Song = {
   artist?: Artist;
   albums: Album[];
 };
-
 type Album = {
   id: number;
   name?: string;
@@ -22,16 +20,13 @@ type Album = {
   songs?: Song;
   releaseDate?: string;
 };
-
 type Artist = {
   id: number;
   name?: string;
   imageUri?: string;
   albums: Album[];
 };
-
 interface Props {}
-
 const ArtistsList: FC<Props> = () => {
   const [Artists, setArtists] = useState<Artist[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
@@ -43,15 +38,12 @@ const ArtistsList: FC<Props> = () => {
       const Artists = res.data;
       console.log("ARTISTS");
       console.log(Artists);
-
       setArtists(Artists);
     });
   }
-
   useEffect(() => {
     isConnected && getArtists();
   }, [isConnected]);
-
   return isConnected ? (
     <>
       <h1
@@ -80,7 +72,6 @@ const ArtistsList: FC<Props> = () => {
                 <h1 style={{ fontWeight: "bold", fontSize: 34 }}>
                   {artist.name}
                 </h1>
-
                 {artist.albums.length ? (
                   artist.albums.map((album: any) => (
                     <>
@@ -93,7 +84,6 @@ const ArtistsList: FC<Props> = () => {
                 ) : (
                   <p>Pas d'album pour cet artist</p>
                 )}
-
                 <Image
                   width={200}
                   src={`${artist.imageUri}`}
@@ -142,5 +132,4 @@ const ArtistsList: FC<Props> = () => {
     <Connection />
   );
 };
-
 export default ArtistsList;

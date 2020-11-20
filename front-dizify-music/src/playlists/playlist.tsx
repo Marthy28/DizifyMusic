@@ -9,7 +9,9 @@ interface PlaylistProps {}
 
 const Playlists: FC<PlaylistProps> = () => {
   const [Playlists, setPlaylists] = useState<Playlist[]>([]);
-  const { isConnected, userId } = useContext(userContext);
+  const { isConnected, userId, token, connection, admin } = useContext(
+    userContext
+  );
 
   function getPlaylistsByUser() {
     playlistService.getPlaylistsByUser(userId).then((res) => {

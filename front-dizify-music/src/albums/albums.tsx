@@ -5,9 +5,7 @@ import AlbumsService from "../services/albumsService";
 import SongsForAnAlbum from "../songs/songsForAnAlbum";
 import CreateAlbum from "./createAlbum";
 import Connection from "../user/connection";
-
 import { userContext } from "../utils/types";
-
 type Song = {
   id: number;
   duration?: string;
@@ -15,7 +13,6 @@ type Song = {
   artist: Artist;
   albums: Album;
 };
-
 type Album = {
   id: number;
   name?: string;
@@ -24,32 +21,26 @@ type Album = {
   songs: Song[];
   releaseDate?: string;
 };
-
 type Artist = {
   id: number;
   name?: string;
   imageUri?: string;
   albums: Album;
 };
-
 interface AlbumsProps {}
-
 const AlbumsList: FC<AlbumsProps> = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const { isConnected, token, admin } = useContext(userContext);
-
   function getAlbums() {
     AlbumsService.getAlbums().then((res) => {
       const Albums = res.data;
       setAlbums(Albums);
     });
   }
-
   useEffect(() => {
     isConnected && getAlbums();
   }, [isConnected]);
-
   return isConnected ? (
     <>
       <h1
@@ -132,5 +123,4 @@ const AlbumsList: FC<AlbumsProps> = () => {
     <Connection />
   );
 };
-
 export default AlbumsList;

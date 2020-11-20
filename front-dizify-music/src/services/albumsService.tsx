@@ -20,7 +20,12 @@ class AlbumsService {
   }
 
   deleteAlbum(albumId: string) {
-    return axios.delete(ALBUMS_API_BASE_URL + "/" + albumId);
+    return axios.delete(ALBUMS_API_BASE_URL + "/" + albumId, {
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
   }
 }
 

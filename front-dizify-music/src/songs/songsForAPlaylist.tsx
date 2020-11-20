@@ -1,4 +1,4 @@
-import { PlusOutlined } from "@ant-design/icons";
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useContext, useState } from "react";
@@ -11,7 +11,7 @@ interface SongsProps {
 
 const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const { token, admin } = useContext(userContext);
+  const { admin } = useContext(userContext);
 
   return (
     <>
@@ -60,7 +60,7 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
               <p>
                 {song.name} {song.duration}
               </p>
-              {/* <p> {song.artist.name}</p> */}
+              <p> {song.artist?.name}</p>
 
               <Button
                 style={{ border: "none", color: "var(--pink)" }}
@@ -73,7 +73,7 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
                   }
                 }}
                 shape="circle"
-                icon={<PlusOutlined />}
+                icon={<CloseOutlined />}
               />
             </div>
           </>

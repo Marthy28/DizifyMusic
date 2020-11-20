@@ -9,7 +9,7 @@ class PlaylistService {
 
   deleteSongInPlaylist(playlistId: number, songId: number) {
     return axios.put(
-      API_BASE_URL + "/playlist/" + playlistId + "/song/" + songId + "/delete"
+      `${API_BASE_URL}/playlist/${playlistId}/song/${songId}/delete`
     );
   }
 }
