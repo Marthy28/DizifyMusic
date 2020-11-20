@@ -35,11 +35,8 @@ public class SongController {
     
     //GET all
     @GetMapping("/songs")
-    public List<Song> getArtists() {
+    public List<Song> getSongs() {
     	try {
-    		System.out.println(SecurityContextHolder.getContext());
-    		System.out.println(SecurityContextHolder.getContext().getAuthentication());
-    		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
     		return songRepository.findAll();
     	} catch (Exception e) {
     		System.out.println(e.toString());

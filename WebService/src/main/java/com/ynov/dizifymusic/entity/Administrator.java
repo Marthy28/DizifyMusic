@@ -3,7 +3,9 @@ package com.ynov.dizifymusic.entity;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+/**
+ * entité Administrateur
+ */
 @Entity
 @Table(name = "Administrator")
 @JsonIgnoreProperties("user")
@@ -13,7 +15,7 @@ public class Administrator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@OneToOne(mappedBy = "administrator",fetch=FetchType.EAGER)
+@OneToOne(mappedBy = "administrator",fetch=FetchType.LAZY)
 	private User user;
 
 	public Long getId() {
@@ -31,9 +33,5 @@ public class Administrator {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
-	
-	
 
 }
