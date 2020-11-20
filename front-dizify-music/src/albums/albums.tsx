@@ -87,7 +87,26 @@ const AlbumsList: FC<AlbumsProps> = () => {
             />
             <p>{album.releaseDate?.slice(0, 10)}</p>
             <SongsForAnAlbum album={album} />
+            <div style={{ height: 500 }}>
+              <h1 style={{ fontWeight: "bold", fontSize: 34 }}>{album.name}</h1>
+              <h2
+                style={{
+                  color: "var(--blue)",
+                  fontSize: 16,
+                  marginBottom: "5%",
+                }}
+              >
+                {album.artist?.name}
+              </h2>
+              <Image
+                width={200}
+                src={`${album.pictureUri}`}
+                style={{ marginBottom: "2%" }}
+              />
+              <SongsForAnAlbum album={album} />
+            </div>
             <Button
+              shape="round"
               onClick={() => {
                 album.id && AlbumsService.deleteAlbum(album.id.toString());
               }}
@@ -98,6 +117,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
         ))}
       </div>
       <Button
+        shape="round"
         type="primary"
         onClick={() => {
           setVisible(true);
