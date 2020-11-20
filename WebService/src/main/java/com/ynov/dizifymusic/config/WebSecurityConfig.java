@@ -3,10 +3,7 @@ package com.ynov.dizifymusic.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-<<<<<<< HEAD
 import org.springframework.http.HttpMethod;
-=======
->>>>>>> develop
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -21,11 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-<<<<<<< HEAD
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-=======
-@EnableGlobalMethodSecurity(prePostEnabled = true)
->>>>>>> develop
+
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -65,11 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		.antMatchers("/login").permitAll()
 		.antMatchers("/signin").permitAll()
-<<<<<<< HEAD
 		.antMatchers("/usertoadmin/{id}").permitAll()
 		.antMatchers(HttpMethod.GET).permitAll()
-=======
->>>>>>> develop
 		.anyRequest().authenticated().and()
 		.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
 
