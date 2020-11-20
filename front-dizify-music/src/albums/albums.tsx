@@ -122,7 +122,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
       </Modal>
     </>
   ) : (
-    <Connection />
+    <h1>Tu dois te connecter pour accéder à tes playlist</h1>
   );
 };
 export default AlbumsList;

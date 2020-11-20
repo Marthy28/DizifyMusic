@@ -106,7 +106,7 @@ const Playlists: FC<PlaylistProps> = () => {
       </div>
     </>
   ) : (
-    <Connection />
+    <h1>Tu dois te connecter pour accéder à tes playlist</h1>
   );
 };
 

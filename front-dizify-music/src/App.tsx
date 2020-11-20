@@ -1,16 +1,19 @@
 /* eslint-disable no-lone-blocks */
-import { message, Tabs } from "antd";
+import { Button, message, Tabs } from "antd";
 import axios from "axios";
 import React, { FC, useState } from "react";
 import AlbumsList from "./albums/albums";
-import Home from "./app/Home";
+import Home from "./Home";
 import ArtistsList from "./artists/artists";
 import Playlists from "./playlists/playlist";
 import { userContext } from "./utils/types";
+import Modal from "antd/lib/modal/Modal";
+import Connection from "./user/connection";
 
 const { TabPane } = Tabs;
 
 const App: FC = () => {
+  const [visible, setVisible] = useState<boolean>(false);
   const [user, setUser] = useState<{
     userId: string;
     token: string;
@@ -39,6 +42,7 @@ const App: FC = () => {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + res.data.token;
       }
+      setVisible(false);
       setUser({
         userId: res.data.user.id,
         token: res.data.token,
@@ -50,17 +54,75 @@ const App: FC = () => {
     });
   };
 
+  const deconnection = () => {
+    setUser({
+      userId: "",
+      token: "",
+      admin: "",
+    });
+    window.sessionStorage.clear();
+    console.log(window.sessionStorage.getItem("userId"));
+  };
+
   return (
     <userContext.Provider value={{ ...user, connection }}>
       <div
         style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          marginTop: "2%",
           width: "80%",
           marginRight: "auto",
           marginLeft: "auto",
-          marginTop: "2%",
         }}
       >
-        <Tabs defaultActiveKey="1" centered>
+        {user.userId ? (
+          <Button
+            shape="round"
+            onClick={() => {
+              deconnection();
+            }}
+          >
+            Se déconnecter
+          </Button>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              shape="round"
+              type="primary"
+              style={{ marginRight: "5%" }}
+              onClick={() => {
+                setVisible(true);
+              }}
+            >
+              Se connecter
+            </Button>
+            <p>ou</p>
+            <Button
+              shape="round"
+              type="primary"
+              style={{ marginLeft: "5%" }}
+              onClick={() => {
+                setVisible(true);
+              }}
+            >
+              S'inscrire
+            </Button>
+          </div>
+        )}
+        <Modal footer={null} title="Se connecter" visible={visible}>
+          <Connection />
+        </Modal>
+
+        <Tabs defaultActiveKey="1" centered style={{ marginTop: "2%" }}>
           <TabPane tab="Accueil" key="1">
             <Home />
           </TabPane>
