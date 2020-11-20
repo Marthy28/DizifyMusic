@@ -65,7 +65,7 @@ const Connection: FC<UserProps> = () => {
             </Button>
           </Form.Item>
         </Form>
-        {console.log({ isConnected, userId, token, connection })}
+        {console.log({ isConnected, userId, token })}
       </Card>
     </>
   );

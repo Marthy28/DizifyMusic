@@ -11,9 +11,7 @@ interface SongsProps {
 
 const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const { token } = useContext(userContext);
-
-  console.log(playlist);
+  const { token, isConnected, userId } = useContext(userContext);
 
   return (
     <>

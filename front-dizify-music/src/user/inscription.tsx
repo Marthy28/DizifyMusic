@@ -7,7 +7,6 @@ interface UserProps {}
 
 const Inscription: FC<UserProps> = () => {
   const onFinish = (values: any) => {
-    console.log(values);
     const data = {
       eMail: values.eMail,
       password: values.password,

@@ -8,11 +8,16 @@ class PlaylistService {
   }
 
   deleteSongInPlaylist(playlistId: number, songId: number, token: string) {
+    console.log(`Bearer ${token}`);
+    console.log("Bearer " + token);
     return axios.put(
       API_BASE_URL + "/playlist/" + playlistId + "/song/" + songId + "/delete",
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: "Bearer " + token,
         },
       }
     );
