@@ -1,7 +1,6 @@
-import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import Modal from "antd/lib/modal/Modal";
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useContext } from "react";
 import playlistService from "../services/playlistService";
 import { Playlist, userContext } from "../utils/types";
 
@@ -10,7 +9,6 @@ interface SongsProps {
 }
 
 const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
-  const [visible, setVisible] = useState<boolean>(false);
   const { token, isConnected, userId } = useContext(userContext);
 
   return (
@@ -37,11 +35,15 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
                 justifyContent: "space-between",
               }}
             >
-              <p>
-                {song.name} {song.duration}
-              </p>
-              <p> {song.artist?.name}</p>
-
+              <div style={{ flexDirection: "column" }}>
+                <p>
+                  {song.name} {song.duration}
+                </p>
+                <p style={{ color: "var(--blue)", fontSize: 14 }}>
+                  {" "}
+                  {song.artist?.name}
+                </p>
+              </div>
               <Button
                 style={{ border: "none", color: "var(--pink)" }}
                 onClick={() => {

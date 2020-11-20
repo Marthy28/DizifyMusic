@@ -1,11 +1,11 @@
 import { Button, Card, Image } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { FC, useEffect, useState, useContext } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import SongsForAnAlbum from "../songs/songsForAnAlbum";
-import CreateAlbum from "./createAlbum";
 import Connection from "../user/connection";
 import { userContext } from "../utils/types";
+import CreateAlbum from "./createAlbum";
 type Song = {
   id: number;
   duration?: string;
@@ -38,9 +38,11 @@ const AlbumsList: FC<AlbumsProps> = () => {
       setAlbums(Albums);
     });
   }
+
   useEffect(() => {
     isConnected && getAlbums();
   }, [isConnected]);
+
   return isConnected ? (
     <>
       <h1

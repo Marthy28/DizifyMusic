@@ -29,7 +29,10 @@ const App: FC = () => {
     };
     axios.post("http://localhost:8080/login", data).then((res) => {
       res && message.success(`Connecté`);
-      {axios.defaults.headers.common['Authorization'] ='Bearer ' + res.data.token}
+      {
+        axios.defaults.headers.common["Authorization"] =
+          "Bearer " + res.data.token;
+      }
       setUser({
         isConnected: true,
         userId: res.data.user.id,

@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Button, Card, Form, Input, message } from "antd";
 import React, { FC, useContext, useEffect, useState } from "react";
 import playlistService from "../services/playlistService";
 import SongsForAPlaylist from "../songs/songsForAPlaylist";
@@ -16,7 +16,7 @@ const Playlists: FC<PlaylistProps> = () => {
   function getPlaylistsByUser() {
     playlistService.getPlaylistsByUser(userId).then((res) => {
       const Plalists = res.data;
-      console.log(res.data)
+      console.log(res.data);
       setPlaylists(Plalists);
     });
   }
@@ -32,17 +32,41 @@ const Playlists: FC<PlaylistProps> = () => {
           fontWeight: "bold",
           fontSize: 55,
           marginTop: 50,
+          marginBottom: 50,
           color: "var(--pink)",
         }}
       >
         Tes playlists
       </h1>
+      <Form
+        name="basic"
+        style={{ display: "flex" }}
+        onFinish={(e) => {
+          playlistService.createPlaylist(userId, e.name);
+          message.success("Playlist ajoutée ! ");
+        }}
+      >
+        <Form.Item
+          label="Nom de la playlist"
+          name="name"
+          rules={[{ required: true, message: "Nom de la playlist" }]}
+          style={{ marginRight: "2%" }}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" shape="round" htmlType="submit">
+            Ajouter
+          </Button>
+        </Form.Item>
+      </Form>
       <div style={{ display: "flex", flexWrap: "wrap", marginTop: "1%" }}>
         {Playlists.map((playlist, i) => (
           <>
             <Card
               style={{
-                flex: 1,
+                width: 350,
                 marginRight: "1%",
                 marginBottom: "1%",
                 boxShadow: "0px 4px 100px -64px rgba(0,0,0,0.35)",
@@ -51,7 +75,31 @@ const Playlists: FC<PlaylistProps> = () => {
               <h1 style={{ fontWeight: "bold", fontSize: 34 }}>
                 {playlist.name}
               </h1>
-              <SongsForAPlaylist playlist={playlist} />
+              {playlist.songs?.length! > 0 ? (
+                <SongsForAPlaylist playlist={playlist} />
+              ) : (
+                <p style={{ color: "var(--pink)" }}>
+                  Il n'y a pas chansons dans cette playlist
+                </p>
+              )}
+              <Button
+                shape="round"
+                type="primary"
+                onClick={() => {
+                  message.success("TODO");
+                }}
+              >
+                Ajouter les titres
+              </Button>
+              <Button
+                shape="round"
+                onClick={() => {
+                  playlist.id && playlistService.deletePlaylist(playlist.id);
+                  message.success("Playlist suprimée !");
+                }}
+              >
+                Supprimer l'album
+              </Button>
             </Card>
           </>
         ))}
