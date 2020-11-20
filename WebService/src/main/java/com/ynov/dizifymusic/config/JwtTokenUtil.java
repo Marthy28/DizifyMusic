@@ -8,6 +8,11 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+<<<<<<< HEAD
+=======
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+>>>>>>> develop
 
 import com.ynov.dizifymusic.service.UserDetailsImpl;
 
@@ -54,7 +59,11 @@ public class JwtTokenUtil implements Serializable {
 	//génération du token
 	public String generateToken(UserDetailsImpl userDetails) {
 		Map<String, Object> claims = new HashMap<>();
+<<<<<<< HEAD
 		return doGenerateToken(claims, userDetails.getEmail());
+=======
+		return doGenerateToken(claims, userDetails.getUsername());
+>>>>>>> develop
 	}
 
 	//while creating the token -

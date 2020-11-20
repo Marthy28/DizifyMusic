@@ -34,7 +34,7 @@ public class Artist {
 	@OneToMany (mappedBy = "artist", fetch = FetchType.LAZY,
 			cascade = CascadeType.ALL)
 
-	@JsonManagedReference(value="artist-song")
+	@JsonIgnoreProperties("artist")
 	private Set<Song> songs;
 
 	@ManyToMany

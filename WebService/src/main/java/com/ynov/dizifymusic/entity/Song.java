@@ -27,7 +27,7 @@ public class Song {
 	//modifié
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "artist_id", nullable = false)
-	@JsonBackReference(value="artist-song")
+	@JsonIgnoreProperties("songs")
     private Artist artist;
 	
 	//modifié
