@@ -1,4 +1,4 @@
-import { PlusOutlined } from "@ant-design/icons";
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useContext, useState } from "react";
@@ -27,24 +27,6 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
           >
             Titres
           </h1>
-          <Button
-            type="primary"
-            onClick={() => {
-              setVisible(true);
-            }}
-            shape="circle"
-            icon={<PlusOutlined />}
-          />
-          <Modal
-            title="Ajouter un titre"
-            visible={visible}
-            onOk={() => {
-              setVisible(false);
-            }}
-            onCancel={() => setVisible(false)}
-          >
-            TO DO
-          </Modal>
         </div>
         {playlist.playlist.songs?.map((song, i) => (
           <>
@@ -58,7 +40,7 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
               <p>
                 {song.name} {song.duration}
               </p>
-              {/* <p> {song.artist.name}</p> */}
+              <p> {song.artist?.name}</p>
 
               <Button
                 style={{ border: "none", color: "var(--pink)" }}
@@ -72,7 +54,7 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
                   }
                 }}
                 shape="circle"
-                icon={<PlusOutlined />}
+                icon={<CloseOutlined />}
               />
             </div>
           </>

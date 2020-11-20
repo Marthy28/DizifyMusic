@@ -31,10 +31,9 @@ class ArtistService {
     });
   }
 
-  deleteArtist(artistId: string, token: string) {
+  deleteArtist(artistId: string) {
     return axios.delete(ARTIST_API_BASE_URL + "/" + artistId, {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json;charset=UTF-8",
         "Access-Control-Allow-Origin": "*",
       },

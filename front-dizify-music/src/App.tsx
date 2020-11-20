@@ -28,14 +28,13 @@ const App: FC = () => {
       password: values.password,
     };
     axios.post("http://localhost:8080/login", data).then((res) => {
-      console.log("USER : " + res.data.user);
-
       res && message.success(`Connecté`);
+      {axios.defaults.headers.common['Authorization'] ='Bearer ' + res.data.token}
       setUser({
         isConnected: true,
         userId: res.data.user.id,
         token: res.data.token,
-        admin: res.data.user.administrator.id,
+        admin: res.data.user.administrator?.id,
       });
     });
   };

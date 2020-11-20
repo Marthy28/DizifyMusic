@@ -31,10 +31,9 @@ class AlbumsService {
     });
   }
 
-  deleteAlbum(albumId: string, token: string) {
+  deleteAlbum(albumId: string) {
     return axios.delete(ALBUMS_API_BASE_URL + "/" + albumId, {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json;charset=UTF-8",
         "Access-Control-Allow-Origin": "*",
       },
