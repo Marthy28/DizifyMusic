@@ -5,7 +5,9 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+/**
+ * entité Song
+ */
 @Entity
 @Table(name = "Song")
 @JsonIgnoreProperties({"favorites","playlists"})

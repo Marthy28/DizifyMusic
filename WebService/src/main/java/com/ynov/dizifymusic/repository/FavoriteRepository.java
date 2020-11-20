@@ -8,6 +8,8 @@ import com.ynov.dizifymusic.entity.Favorite;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
+
+	//récupérer un favoris grâce à son user 
 	@Query("SELECT f FROM Favorite f "
 			+ "INNER JOIN f.user u  "
 			+ "WHERE u.id = :user_id")

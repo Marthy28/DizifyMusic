@@ -8,6 +8,7 @@ import com.ynov.dizifymusic.entity.Song;
 
 public interface SongRepository extends JpaRepository<Song, Long> {
 
+	//récupérer une chanson par son nom
 	@Query("SELECT s FROM Song s WHERE s.name LIKE %:name%")
     public Song findByName(@Param("name") String songName);
 }

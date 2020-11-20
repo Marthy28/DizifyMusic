@@ -20,6 +20,9 @@ import com.ynov.dizifymusic.repository.PlaylistRepository;
 import com.ynov.dizifymusic.repository.SongRepository;
 import com.ynov.dizifymusic.repository.UserRepository;
 
+/**
+ * Controlleur pour l'entité playlist
+ */
 @RestController
 public class PlaylistController {
 	private PlaylistRepository playlistRepository;
@@ -80,6 +83,7 @@ public class PlaylistController {
     }
     
     //POST
+    //USER
     @ResponseBody
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/playlist/{user_id}")

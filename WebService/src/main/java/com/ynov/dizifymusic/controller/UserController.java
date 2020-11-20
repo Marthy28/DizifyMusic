@@ -18,25 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ynov.dizifymusic.entity.Administrator;
 import com.ynov.dizifymusic.entity.Favorite;
 import com.ynov.dizifymusic.entity.User;
-import com.ynov.dizifymusic.model.JwtRequest;
 import com.ynov.dizifymusic.repository.FavoriteRepository;
 import com.ynov.dizifymusic.repository.UserRepository;
 
+/**
+ * Controlleur pour l'entité User
+ */
 @RestController
 public class UserController {
 	private UserRepository userRepository;
 	private FavoriteRepository favoriteRepository;
-	private JwtAutenticationController jwtAutenticationController;
 
 	@Autowired
     public UserController(UserRepository userRepository, FavoriteRepository favoriteRepository, JwtAutenticationController jwtAutenticationController) {
         this.userRepository = userRepository;
         this.favoriteRepository = favoriteRepository;
-        this.jwtAutenticationController = jwtAutenticationController;
     }
     
     // GET all
-    //admin
     @GetMapping("/users")
     public List<User> getUsers() {
     	try {
@@ -48,7 +47,6 @@ public class UserController {
     }
     
     //GET user by id
-    //user 
     @ResponseBody
     @GetMapping("/user/{id}")
     public User getUser(final @PathVariable("id") Long userId) {
@@ -61,7 +59,7 @@ public class UserController {
     }
     
     //DELETE by id
-    //user - admin
+    //ADMIN
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/user/{id}")
     public void deleteUser(final @PathVariable("id") Long userId) {
@@ -72,8 +70,7 @@ public class UserController {
     	}
     }
 	
-    //POST
-    //user
+    //POST inscription
     @PostMapping("/signin")
     public ResponseEntity<?> addUser(@RequestBody User user) {
     	try {
@@ -81,6 +78,7 @@ public class UserController {
     		if(fav == null)
     			return null;
     		
+    		//vérifie que l'utilisateur n'existe pas déjà 
     		if(userRepository.findByEMail(user.geteMail()) != null)
     			return new ResponseEntity<>("Cet email est déjà utilisé",HttpStatus.BAD_REQUEST);
     		
@@ -94,7 +92,6 @@ public class UserController {
     }
     
     //PUT user to admin by id
-    //admin
     @PutMapping("/usertoadmin/{id}")
     public User userToAdmin(final @PathVariable("id") Long userId) {
     	try {
@@ -114,7 +111,7 @@ public class UserController {
     }
 
     //PUT by id
-    //user
+    //USER
     @ResponseBody
     @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/user")
