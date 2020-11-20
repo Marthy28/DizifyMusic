@@ -5,9 +5,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-/**
- * entité Song
- */
+
 @Entity
 @Table(name = "Song")
 @JsonIgnoreProperties({"favorites","playlists"})
@@ -29,7 +27,7 @@ public class Song {
 	//modifié
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "artist_id", nullable = false)
-	@JsonIgnoreProperties("songs")
+	@JsonBackReference(value="artist-song")
     private Artist artist;
 	
 	//modifié

@@ -4,9 +4,14 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
- * entité Artist
+ * Entité Livre persistente en base de données.
+ * 
+ * @author Matthieu BACHELIER
+ * @since 2020-11
+ * @version 1.0
  */
 @Entity
 @Table(name = "Artist")
@@ -29,7 +34,7 @@ public class Artist {
 	@OneToMany (mappedBy = "artist", fetch = FetchType.LAZY,
 			cascade = CascadeType.ALL)
 
-	@JsonIgnoreProperties("artist")
+	@JsonManagedReference(value="artist-song")
 	private Set<Song> songs;
 
 	@ManyToMany

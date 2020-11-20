@@ -3,9 +3,7 @@ package com.ynov.dizifymusic.entity;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-/**
- * entité Administrateur
- */
+
 @Entity
 @Table(name = "Administrator")
 @JsonIgnoreProperties("user")
@@ -33,5 +31,9 @@ public class Administrator {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	
+	
+	
 
 }

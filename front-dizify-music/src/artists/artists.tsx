@@ -32,6 +32,7 @@ const ArtistsList: FC<Props> = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const { isConnected, token, admin } = useContext(userContext);
   console.log(admin);
+
   function getArtists() {
     ArtistService.getArtists().then((res) => {
       const Artists = res.data;

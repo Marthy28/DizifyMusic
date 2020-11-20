@@ -7,28 +7,16 @@ class AlbumsService {
     return axios.get(ALBUMS_API_BASE_URL + "s");
   }
 
-  createAlbum(album: any, token: string) {
-    return axios.post(ALBUMS_API_BASE_URL, JSON.stringify(album), {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+  createAlbum(album: any) {
+    return axios.post(ALBUMS_API_BASE_URL, JSON.stringify(album));
   }
 
   getAlbumById(albumId: string) {
     return axios.get(ALBUMS_API_BASE_URL + "/" + albumId);
   }
 
-  updateAlbum(album: any, albumId: string, token: string) {
-    return axios.put(ALBUMS_API_BASE_URL + "/" + albumId, album, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+  updateAlbum(album: any, albumId: string) {
+    return axios.put(ALBUMS_API_BASE_URL + "/" + albumId, album);
   }
 
   deleteAlbum(albumId: string) {

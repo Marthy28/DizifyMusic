@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 import { message, Tabs } from "antd";
 import axios from "axios";
 import React, { FC, useState } from "react";

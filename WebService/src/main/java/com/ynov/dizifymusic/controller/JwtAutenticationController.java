@@ -10,12 +10,7 @@ import com.ynov.dizifymusic.model.JwtRequest;
 import com.ynov.dizifymusic.model.JwtResponse;
 import com.ynov.dizifymusic.repository.UserRepository;
 import com.ynov.dizifymusic.service.JwtUserDetailService;
-
 import com.ynov.dizifymusic.service.UserDetailsImpl;
-
-/**
- * Controlleur pour la connexion
- */
 @RestController
 public class JwtAutenticationController {
 
@@ -26,7 +21,6 @@ public class JwtAutenticationController {
 	{
 		this.userRepository = userRepository;
 	}
-	
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -37,11 +31,9 @@ public class JwtAutenticationController {
 	@PostMapping("/login")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-
 		final UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEMail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		return ResponseEntity.ok(new JwtResponse(token,userDetails));
-
 	}
 	
 }

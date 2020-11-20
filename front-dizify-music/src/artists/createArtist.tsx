@@ -45,11 +45,11 @@ const CreateArtist: FC<Props> = () => {
 
   useEffect(() => {
     if (ready && isConnected && admin) {
-      ArtistService.createArtist(newArtist, token);
+      ArtistService.createArtist(newArtist);
       setNewArtist(undefined);
       setReady(false);
     }
-  }, [admin, isConnected, newArtist, ready, token]);
+  }, [admin, isConnected, newArtist, ready]);
 
   function handleChange(value: any) {
     setNewArtist({

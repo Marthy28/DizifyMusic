@@ -41,6 +41,7 @@ const CreateAlbum: FC<AlbumsProps> = () => {
   useEffect(() => {
     artistService.getArtists().then((res) => {
       const artists = res.data;
+      console.log("CREATE ALBUM ARTISTS");
       console.log(artists);
 
       setArtists(artists);
@@ -50,6 +51,7 @@ const CreateAlbum: FC<AlbumsProps> = () => {
   useEffect(() => {
     songsService.getSongs().then((res) => {
       const songs = res.data;
+      console.log("SONGS");
       console.log(songs);
 
       setSongs(songs);
@@ -58,11 +60,11 @@ const CreateAlbum: FC<AlbumsProps> = () => {
 
   useEffect(() => {
     if (ready) {
-      AlbumsService.createAlbum(newAlbum, token);
+      AlbumsService.createAlbum(newAlbum);
       setNewAlbum(undefined);
       setReady(false);
     }
-  }, [newAlbum, ready, token]);
+  }, [newAlbum, ready]);
 
   function handleChange(value: any) {
     console.log(value);

@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ynov.dizifymusic.entity.Artist;
 import com.ynov.dizifymusic.repository.ArtistRepository;
 
-/**
- * Controlleur pour l'entité Artist
- */
+
 @RestController
 public class ArtistController {
 
@@ -65,7 +63,6 @@ public class ArtistController {
     }
    
     //DELETE by id 
-    //ADMIN
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/artist/{id}")
     public void deleteArtist(final @PathVariable("id") Long artistId) {
@@ -76,8 +73,7 @@ public class ArtistController {
     	}
     }
     
-    //POST add new artist
-    //ADMIN
+    //POST 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/artist")
     public Artist addArtist(@RequestBody Artist artist) {

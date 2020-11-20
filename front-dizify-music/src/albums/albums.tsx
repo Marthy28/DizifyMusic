@@ -81,6 +81,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
               >
                 {album.artist?.name}
               </h2>
+
               <p>{album.releaseDate?.slice(0, 10)}</p>
               <SongsForAnAlbum album={album} />
             </div>

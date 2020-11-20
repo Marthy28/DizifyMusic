@@ -21,9 +21,6 @@ import com.ynov.dizifymusic.repository.ArtistRepository;
 import com.ynov.dizifymusic.repository.FavoriteRepository;
 import com.ynov.dizifymusic.repository.SongRepository;
 
-/**
- * Controlleur pour l'entité Favorite
- */
 @RestController
 public class FavoriteController {
 	private FavoriteRepository favoriteRepository;
@@ -106,8 +103,7 @@ public class FavoriteController {
     	}
     }
     
-    //ajouter une chanson dans les favoris d'un user
-    //USER
+
     @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/song/{song_id}/add")
@@ -130,7 +126,7 @@ public class FavoriteController {
     	}
     }
     
-//ajout d'un album dans les favoris d'un user
+
     @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/album/{album_id}/add")
@@ -153,8 +149,7 @@ public class FavoriteController {
     	}
     }
     
-    //ajout d'un artiste dans les favoris d'un user
-    //USER 
+
     @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/artist/{artist_id}/add")
@@ -177,7 +172,7 @@ public class FavoriteController {
     	}
     }
     
-//suppression d'une chanson des favoris 
+
     @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/song/{song_id}/delete")
@@ -200,7 +195,7 @@ public class FavoriteController {
     	}
     }
     
-//suppression d'un album des favoris
+
     @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/album/{album_id}/delete")
@@ -223,7 +218,7 @@ public class FavoriteController {
     	}
     }
     
-//suppression d'un artiste des favoris
+
     @PreAuthorize("hasAuthority('USER')")
     @ResponseBody
     @PutMapping("/favorite/{favorite_id}/artist/{artist_id}/delete")

@@ -1,13 +1,13 @@
 import { Button, Card, Form, Input } from "antd";
-import axios from "axios";
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useContext } from "react";
 import { userContext } from "../utils/types";
-import App from "../App";
 
 interface UserProps {}
 
 const Connection: FC<UserProps> = () => {
-  const { isConnected, userId, token, connection } = useContext(userContext);
+  const { isConnected, userId, token, connection, admin } = useContext(
+    userContext
+  );
 
   const onFinish = (values: any) => {
     connection(values);

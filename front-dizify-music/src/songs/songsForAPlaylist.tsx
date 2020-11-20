@@ -9,8 +9,6 @@ interface SongsProps {
 }
 
 const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
-  const { token, isConnected, userId } = useContext(userContext);
-
   return (
     <>
       <div style={{ flexDirection: "column", marginBottom: "2%" }}>
@@ -50,8 +48,7 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
                   if (playlist.playlist.id && song.id) {
                     playlistService.deleteSongInPlaylist(
                       playlist.playlist.id,
-                      song.id,
-                      token
+                      song.id
                     );
                   }
                 }}

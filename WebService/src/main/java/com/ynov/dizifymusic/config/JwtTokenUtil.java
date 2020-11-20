@@ -8,15 +8,13 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+
 import com.ynov.dizifymusic.service.UserDetailsImpl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-/**
- * Classe utilisée pour faire toutes 
- * les opérations sur le token
- */
+
 @Configuration
 public class JwtTokenUtil implements Serializable {
 
@@ -42,7 +40,7 @@ public class JwtTokenUtil implements Serializable {
 		return claimsResolver.apply(claims);
 	}
 	
-    //Récupération de la clé secrète
+    //for retrieveing any information from token we will need the secret key
 	private Claims getAllClaimsFromToken(String token) {
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 	}
@@ -71,7 +69,7 @@ public class JwtTokenUtil implements Serializable {
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 
-	//valider le token
+	//validate token
 	public Boolean validateToken(String token, UserDetailsImpl userDetails) {
 		final String username = getUsernameFromToken(token);
 		return (username.equals(userDetails.getEmail()) && !isTokenExpired(token));

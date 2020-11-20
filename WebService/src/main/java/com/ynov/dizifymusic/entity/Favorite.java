@@ -4,9 +4,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-/**
- * entité Favorite
- */
+
 @Entity
 @Table(name = "Favorite")
 @JsonIgnoreProperties({"user","hibernateLazyInitializer"})

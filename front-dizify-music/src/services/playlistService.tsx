@@ -7,7 +7,7 @@ class PlaylistService {
     return axios.get(API_BASE_URL + "/playlistByUserId/" + userId);
   }
 
-  deleteSongInPlaylist(playlistId: number, songId: number, token: string) {
+  deleteSongInPlaylist(playlistId: number, songId: number) {
     return axios.put(
       `${API_BASE_URL}/playlist/${playlistId}/song/${songId}/delete`
     );

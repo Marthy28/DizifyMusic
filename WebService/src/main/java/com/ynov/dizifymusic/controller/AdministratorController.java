@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ynov.dizifymusic.entity.Administrator;
 import com.ynov.dizifymusic.repository.AdministratorRepository;
 
-/**
- * Controlleur pour l'entité administrateur
- */
 @RestController
 public class AdministratorController {
 
@@ -53,7 +50,6 @@ public class AdministratorController {
     }
     
     //DELETE by id
-    //ADMIN
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/administrator/{id}")
     public void deleteAdministrator(final @PathVariable("id") Long adminId) {
@@ -64,8 +60,7 @@ public class AdministratorController {
         }	
     }
 	
-    //POST add admin
-    //ADMIN
+    //POST
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/administrator")
     public Administrator addAdministrator(@RequestBody Administrator admin) {
@@ -78,7 +73,6 @@ public class AdministratorController {
     }
 
     //PUT by id
-    //ADMIN
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseBody
     @PutMapping("/administrator/{id}")

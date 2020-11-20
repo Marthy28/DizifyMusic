@@ -36,7 +36,7 @@ interface SongsProps {
 
 const SongsForAnAlbum: FC<SongsProps> = (album) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const { isConnected, userId, token, admin } = useContext(userContext);
+  const { token, admin } = useContext(userContext);
 
   return (
     <>
@@ -52,14 +52,16 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
           >
             Titres
           </h1>
-          <Button
-            type="primary"
-            onClick={() => {
-              setVisible(true);
-            }}
-            shape="circle"
-            icon={<PlusOutlined />}
-          />
+          {admin === "null" ? null : (
+            <Button
+              type="primary"
+              onClick={() => {
+                setVisible(true);
+              }}
+              shape="circle"
+              icon={<PlusOutlined />}
+            />
+          )}
           <Modal
             title="Ajouter un titre"
             visible={visible}
@@ -83,17 +85,18 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
               <p>
                 {song.name} {song.duration}
               </p>
-              <Button
-                disabled={!admin}
-                style={{ border: "none", color: "var(--pink)" }}
-                onClick={() => {
-                  if (song.id) {
-                    SongsService.deleteSong(song.id.toString(), token);
-                  }
-                }}
-                shape="circle"
-                icon={<CloseOutlined />}
-              />
+              {admin === "null" ? null : (
+                <Button
+                  style={{ border: "none", color: "var(--pink)" }}
+                  onClick={() => {
+                    if (song.id) {
+                      SongsService.deleteSong(song.id.toString());
+                    }
+                  }}
+                  shape="circle"
+                  icon={<CloseOutlined />}
+                />
+              )}
             </div>
           </>
         ))}
