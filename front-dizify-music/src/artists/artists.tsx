@@ -36,10 +36,12 @@ const ArtistsList: FC<Props> = () => {
   const [Artists, setArtists] = useState<Artist[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const { isConnected, token, admin } = useContext(userContext);
+  console.log(admin);
 
   function getArtists() {
     ArtistService.getArtists().then((res) => {
       const Artists = res.data;
+      console.log("ARTISTS");
       console.log(Artists);
 
       setArtists(Artists);
@@ -66,7 +68,6 @@ const ArtistsList: FC<Props> = () => {
         {Artists.map((artist, i) => (
           <>
             <Card
-              key={i}
               style={{
                 flex: 1,
                 width: 300,
@@ -98,37 +99,33 @@ const ArtistsList: FC<Props> = () => {
                   src={`${artist.imageUri}`}
                   style={{ marginBottom: "2%" }}
                 />
-
-                <Image
-                  width={200}
-                  src={`${artist.imageUri}`}
-                  style={{ marginBottom: "2%" }}
-                />
               </div>
-              <Button
-                disabled={!admin}
-                shape="round"
-                onClick={() => {
-                  artist.id &&
-                    ArtistService.deleteArtist(artist.id.toString(), token);
-                }}
-              >
-                Supprimer l'artiste
-              </Button>
+              {admin === "null" ? null : (
+                <Button
+                  shape="round"
+                  onClick={() => {
+                    artist.id &&
+                      ArtistService.deleteArtist(artist.id.toString());
+                  }}
+                >
+                  Supprimer l'artiste
+                </Button>
+              )}
             </Card>
           </>
         ))}
       </div>
-      <Button
-        disabled={!admin}
-        shape="round"
-        type="primary"
-        onClick={() => {
-          setVisible(true);
-        }}
-      >
-        Ajouter un artiste
-      </Button>
+      {admin === "null" ? null : (
+        <Button
+          shape="round"
+          type="primary"
+          onClick={() => {
+            setVisible(true);
+          }}
+        >
+          Ajouter un artiste
+        </Button>
+      )}
       <Modal
         title="Ajouter un artiste"
         visible={visible}

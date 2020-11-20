@@ -7,17 +7,10 @@ class SongsService {
     return axios.get(SONGS_API_BASE_URL + "s");
   }
 
-  createSong(artistId: string, song: any, token: string) {
+  createSong(artistId: string, song: any) {
     return axios.post(
       SONGS_API_BASE_URL + "/" + artistId,
-      JSON.stringify(song),
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
+      JSON.stringify(song)
     );
   }
 
@@ -25,24 +18,12 @@ class SongsService {
     return axios.get(SONGS_API_BASE_URL + "/" + songId);
   }
 
-  updateSong(song: any, songId: string, token: string) {
-    return axios.put(SONGS_API_BASE_URL + "/" + songId, song, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+  updateSong(song: any, songId: string) {
+    return axios.put(SONGS_API_BASE_URL + "/" + songId, song);
   }
 
-  deleteSong(songId: string, token: string) {
-    return axios.delete(SONGS_API_BASE_URL + "/" + songId, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+  deleteSong(songId: string) {
+    return axios.delete(SONGS_API_BASE_URL + "/" + songId);
   }
 }
 

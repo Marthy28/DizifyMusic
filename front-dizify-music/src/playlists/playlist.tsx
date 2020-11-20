@@ -13,6 +13,7 @@ const Playlists: FC<PlaylistProps> = () => {
 
   function getPlaylistsByUser() {
     playlistService.getPlaylistsByUser(userId).then((res) => {
+      console.log("PLAYLIST ");
       console.log(res.data);
       const Playlists = res.data;
       setPlaylists(Playlists);

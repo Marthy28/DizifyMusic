@@ -38,11 +38,11 @@ const CreateSong: FC<AlbumsProps> = (album) => {
 
   useEffect(() => {
     if (ready && isConnected && admin && album.album.artist) {
-      songsService.createSong(album.album.artist.id.toString(), newSong, token);
+      songsService.createSong(album.album.artist.id.toString(), newSong);
       setNewSong(undefined);
       setReady(false);
     }
-  }, [admin, album.album.artist, isConnected, newSong, ready, token]);
+  }, [admin, album.album.artist, isConnected, newSong, ready]);
 
   return (
     <Form

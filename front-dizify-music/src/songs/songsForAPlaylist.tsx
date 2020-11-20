@@ -11,9 +11,7 @@ interface SongsProps {
 
 const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const { token } = useContext(userContext);
-
-  console.log(playlist);
+  const { token, admin } = useContext(userContext);
 
   return (
     <>
@@ -29,14 +27,16 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
           >
             Titres
           </h1>
-          <Button
-            type="primary"
-            onClick={() => {
-              setVisible(true);
-            }}
-            shape="circle"
-            icon={<PlusOutlined />}
-          />
+          {admin === "null" ? null : (
+            <Button
+              type="primary"
+              onClick={() => {
+                setVisible(true);
+              }}
+              shape="circle"
+              icon={<PlusOutlined />}
+            />
+          )}
           <Modal
             title="Ajouter un titre"
             visible={visible}
@@ -68,8 +68,7 @@ const SongsForAPlaylist: FC<SongsProps> = (playlist) => {
                   if (playlist.playlist.id && song.id) {
                     playlistService.deleteSongInPlaylist(
                       playlist.playlist.id,
-                      song.id,
-                      token
+                      song.id
                     );
                   }
                 }}
