@@ -37,13 +37,9 @@ type Artist = {
 
 const ArtistsList: FC = () => {
   const [Artists, setArtists] = useState<Artist[]>([]);
-  const [ArtistById, setArtistByID] = useState<Artist[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
-  const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [favorite, setFavorite] = useState<FavorisType>();
   const { userId, admin, token } = useContext(userContext);
-
-  const { confirm } = Modal;
 
   function getArtists() {
     ArtistService.getArtists().then((res) => {
@@ -65,26 +61,15 @@ const ArtistsList: FC = () => {
     });
   }
 
-  function artistById(artistID: number) {
-    ArtistService.getArtistById(artistID.toString(), token).then((res) => {
-      setArtistByID(res.data);
-    });
-  }
-
-  function showUpdating() {
-    confirm({
+  function DataModal(artistID: any) {
+    Modal.success({
       title: "Modifier l'artiste",
-      content: <UpdateArtist artist={ArtistById} />,
-      onOk() {
-        setUpdateModal(false);
-      },
-      onCancel() {
-        setUpdateModal(false);
-      },
+      content: <UpdateArtist data={artistID} />,
+      onOk: () => getArtists(),
     });
   }
 
-  function DataModal(songId: any) {
+  function DataModalAddPlaylist(songId: any) {
     Modal.success({
       title: "Ajouter un titre à une playlist",
       content: <AddSongToPlaylist songId={songId} />,
@@ -164,7 +149,7 @@ const ArtistsList: FC = () => {
                         <Button
                           style={{ border: "none", color: "var(--pink)" }}
                           onClick={() => {
-                            DataModal(song.id);
+                            DataModalAddPlaylist(song.id);
                           }}
                           shape="circle"
                           icon={<PlaySquareOutlined />}
@@ -194,9 +179,7 @@ const ArtistsList: FC = () => {
                   <Button
                     shape="round"
                     onClick={() => {
-                      setUpdateModal(true);
-                      artistById(artist.id);
-                      showUpdating();
+                      DataModal(artist.id);
                     }}
                   >
                     Modifier l'artiste

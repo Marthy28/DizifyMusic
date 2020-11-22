@@ -1,6 +1,5 @@
 import { HeartOutlined } from "@ant-design/icons";
-import { Button, Card, Image, message } from "antd";
-import Modal from "antd/lib/modal/Modal";
+import { Button, Card, Image, message, Modal } from "antd";
 import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import favorisService from "../services/favorisService";
@@ -14,7 +13,6 @@ interface AlbumsProps {}
 const AlbumsList: FC<AlbumsProps> = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
-  const [updateModal, setUpdateModal] = useState<boolean>(false);
   const { userId, admin, token } = useContext(userContext);
   const [favorite, setFavorite] = useState<FavorisType>();
 
@@ -35,6 +33,14 @@ const AlbumsList: FC<AlbumsProps> = () => {
     favorisService.getFavorisByUser(userId).then((res) => {
       const favorisRes = res.data;
       setFavorite(favorisRes);
+    });
+  }
+
+  function DataModal(albumID: any) {
+    Modal.success({
+      title: "Modifier l'album",
+      content: <UpdateAlbum data={albumID} />,
+      onOk: () => getAlbums(),
     });
   }
 
@@ -100,22 +106,11 @@ const AlbumsList: FC<AlbumsProps> = () => {
                 <Button
                   shape="round"
                   onClick={() => {
-                    setUpdateModal(true);
+                    DataModal(album.id);
                   }}
                 >
                   Modifier l'album
                 </Button>
-                <Modal
-                  title="Modifier l'album"
-                  visible={updateModal}
-                  onOk={() => {
-                    setUpdateModal(false);
-                    album.id && AlbumsService.getAlbumById(album.id.toString());
-                  }}
-                  onCancel={() => setUpdateModal(false)}
-                >
-                  <UpdateAlbum data={album} />
-                </Modal>
                 <Button
                   shape="round"
                   onClick={() => {
