@@ -64,8 +64,6 @@ const ArtistsList: FC = () => {
   }
 
   function showUpdating() {
-    console.log("MODAL ");
-
     confirm({
       title: "Modifier l'artiste",
       content: <UpdateArtist artist={ArtistById} />,

@@ -90,8 +90,6 @@ const App: FC = () => {
 
   return (
     <userContext.Provider value={{ ...user, connection }}>
-      {console.log(user)}
-      {console.log(window.sessionStorage.getItem("admin"))}
       <div
         style={{
           display: "flex",
