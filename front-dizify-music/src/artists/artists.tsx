@@ -1,10 +1,13 @@
-import { Button, Card, Divider, Image, Modal, message } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlaySquareOutlined, HeartOutlined } from "@ant-design/icons";
+import { Button, Card, Image, Modal, message } from "antd";
 import React, { FC, useContext, useEffect, useState } from "react";
 import ArtistService from "../services/artistService";
+import favorisService from "../services/favorisService";
+import playlistService from "../services/playlistService";
+import AddSongToPlaylist from "../songs/addSongToPlaylist";
+import { FavorisType, userContext } from "../utils/types";
 import CreateArtist from "./createArtist";
 import UpdateArtist from "./updateArtist";
-import { userContext } from "../utils/types";
 
 type Song = {
   id: number;
@@ -35,15 +38,20 @@ type Artist = {
 const ArtistsList: FC = () => {
   const [Artists, setArtists] = useState<Artist[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
-  const [listVisible, setListVisible] = useState<boolean>(false);
-  const [id, setID] = useState<number>();
-  const [songVisible, setSongVisible] = useState<boolean>(false);
+  const [favorite, setFavorite] = useState<FavorisType>();
   const { userId, admin, token } = useContext(userContext);
 
   function getArtists() {
     ArtistService.getArtists().then((res) => {
       const Artists = res.data;
       setArtists(Artists);
+    });
+  }
+
+  function getFavorisByUser() {
+    favorisService.getFavorisByUser(userId).then((res) => {
+      const favorisRes = res.data;
+      setFavorite(favorisRes);
     });
   }
 
@@ -62,8 +70,18 @@ const ArtistsList: FC = () => {
     });
   }
 
+  function DataModalAddPlaylist(songId: any) {
+    Modal.success({
+      title: "Ajouter un titre à une playlist",
+      content: <AddSongToPlaylist songId={songId} />,
+      icon: <PlaySquareOutlined />,
+      onOk: () => playlistService.getPlaylistsByUser(userId),
+    });
+  }
+
   useEffect(() => {
     userId && getArtists();
+    getFavorisByUser();
   }, [userId]);
   return userId ? (
     <>
@@ -89,68 +107,68 @@ const ArtistsList: FC = () => {
                 boxShadow: "0px 4px 100px -64px rgba(0,0,0,0.35)",
               }}
             >
-              <div style={{ height: 440 }}>
+              <div style={{ height: 600 }}>
                 <h1 style={{ fontWeight: "bold", fontSize: 34 }}>
                   {artist.name}
                 </h1>
-
-                <h3>Liste Albums :</h3>
                 <Button
-                  type="primary"
+                  style={{ border: "none", color: "var(--pink)" }}
                   onClick={() => {
-                    setListVisible(true);
-                    setID(artist.id);
+                    favorisService.addArtistToFavorites(
+                      favorite?.id,
+                      artist.id
+                    );
+                    message.success("Ajouté en favoris");
+                    getFavorisByUser();
                   }}
                   shape="circle"
-                  icon={<PlusOutlined />}
+                  icon={<HeartOutlined />}
                 />
-                <h3>Liste Titres :</h3>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    setSongVisible(true);
-                    setID(artist.id);
-                  }}
-                  shape="circle"
-                  icon={<PlusOutlined />}
-                />
+                <h3 style={{ fontSize: 14, color: "var(--pink)" }}>
+                  Liste Albums :
+                </h3>
+                {artist.albums.map((album) => (
+                  <ul style={{ display: "flex" }}>
+                    <li style={{ marginRight: "1%" }}>{album.name}</li>
+                    <li>{album.releaseDate?.slice(0, 10)}</li>
+                  </ul>
+                ))}
 
-                <Modal
-                  title="Liste des albums"
-                  visible={listVisible}
-                  onOk={() => {
-                    setListVisible(false);
-                  }}
-                  onCancel={() => {
-                    setListVisible(false);
-                  }}
-                >
-                  <Divider orientation="left">Albums : </Divider>
-                  {artist.albums.map((album) => (
-                    <ul>
-                      <li>{album.name}</li>
-                      <li>{album.releaseDate?.slice(0, 10)}</li>
-                    </ul>
-                  ))}
-                </Modal>
-
-                <Modal
-                  title="Liste des titres"
-                  visible={songVisible}
-                  onOk={() => {
-                    setSongVisible(false);
-                  }}
-                  onCancel={() => {
-                    setSongVisible(false);
-                  }}
-                >
-                  <Divider orientation="left">Titres : </Divider>
-                  {artist.songs.map((song) => (
+                <h3 style={{ fontSize: 14, color: "var(--pink)" }}>
+                  Liste Titres :
+                </h3>
+                {artist.songs.map((song, i) => (
+                  <div
+                    key={i}
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
                     <ul>
                       <li>{song.name}</li>
                     </ul>
-                  ))}
-                </Modal>
+                    {admin ? null : (
+                      <>
+                        <Button
+                          style={{ border: "none", color: "var(--pink)" }}
+                          onClick={() => {
+                            DataModalAddPlaylist(song.id);
+                          }}
+                          shape="circle"
+                          icon={<PlaySquareOutlined />}
+                        />
+
+                        <Button
+                          style={{ border: "none", color: "var(--pink)" }}
+                          onClick={() => {
+                            message.error("TODO");
+                          }}
+                          shape="circle"
+                          icon={<HeartOutlined />}
+                        />
+                      </>
+                    )}
+                  </div>
+                ))}
+
                 <Image
                   width={200}
                   src={`${artist.imageUri}`}

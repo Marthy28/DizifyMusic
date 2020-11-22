@@ -1,16 +1,17 @@
 import {
   CloseOutlined,
-  PlusOutlined,
-  PlaySquareOutlined,
   HeartOutlined,
+  PlaySquareOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { Button, message, Modal } from "antd";
-import React, { FC, useState, useContext } from "react";
-import SongsService from "../services/songsService";
-import CreateSong from "./createSong";
-import { Album, userContext } from "../utils/types";
-import AddSongToPlaylist from "./addSongToPlaylist";
+import React, { FC, useContext, useEffect, useState } from "react";
+import favorisService from "../services/favorisService";
 import playlistService from "../services/playlistService";
+import SongsService from "../services/songsService";
+import { Album, FavorisType, userContext } from "../utils/types";
+import AddSongToPlaylist from "./addSongToPlaylist";
+import CreateSong from "./createSong";
 
 interface SongsProps {
   album: Album | undefined;
@@ -18,6 +19,7 @@ interface SongsProps {
 
 const SongsForAnAlbum: FC<SongsProps> = (album) => {
   const [visibleAddSong, setVisibleAddSong] = useState<boolean>(false);
+  const [favorite, setFavorite] = useState<FavorisType>();
   const { admin, userId, token } = useContext(userContext);
 
   function DataModal(songId: any) {
@@ -28,6 +30,17 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
       onOk: () => playlistService.getPlaylistsByUser(userId),
     });
   }
+
+  function getFavorisByUser() {
+    favorisService.getFavorisByUser(userId).then((res) => {
+      const favorisRes = res.data;
+      setFavorite(favorisRes);
+    });
+  }
+
+  useEffect(() => {
+    getFavorisByUser();
+  }, []);
 
   return (
     <>
@@ -74,9 +87,9 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
               }}
             >
               <p>
-                {song.name} {song.duration}
+                {song.name} {song.duration} {song.id}
               </p>
-              {admin == null && (
+              {admin ? null : (
                 <>
                   <Button
                     style={{ border: "none", color: "var(--pink)" }}
@@ -90,7 +103,9 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
                   <Button
                     style={{ border: "none", color: "var(--pink)" }}
                     onClick={() => {
-                      message.error("TODO");
+                      favorisService.addSongToFavorites(favorite?.id, song.id);
+                      message.success("Ajouté en favoris");
+                      getFavorisByUser();
                     }}
                     shape="circle"
                     icon={<HeartOutlined />}

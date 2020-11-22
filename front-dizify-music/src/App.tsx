@@ -11,6 +11,7 @@ import Modal from "antd/lib/modal/Modal";
 import Connection from "./user/connection";
 import usersService from "./services/usersService";
 import Inscription from "./user/inscription";
+import Favoris from "./favoris/favoris";
 
 type User = {
   id: number;
@@ -171,7 +172,11 @@ const App: FC = () => {
           <Inscription />
         </Modal>
 
-        <Tabs defaultActiveKey="1" centered style={{ marginTop: "2%" }}>
+        <Tabs
+          defaultActiveKey="1"
+          centered
+          style={{ marginTop: "2%", marginBottom: "5%" }}
+        >
           <TabPane tab="Accueil" key="1">
             <Home />
           </TabPane>
@@ -184,7 +189,7 @@ const App: FC = () => {
           {user.admin ? null : (
             <>
               <TabPane tab="Favoris" key="4">
-                Favoris
+                <Favoris />
               </TabPane>
               <TabPane tab="Playlists" key="5">
                 <Playlists />
