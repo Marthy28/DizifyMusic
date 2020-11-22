@@ -29,17 +29,9 @@ type Artist = {
 };
 
 const CreateArtist: FC = () => {
-  const [albums, setAlbums] = useState<Album[]>([]);
   const [newArtist, setNewArtist] = useState<Artist>();
   const [ready, setReady] = useState<boolean>(false);
   const { userId, admin, token } = useContext(userContext);
-
-  useEffect(() => {
-    AlbumsService.getAlbums().then((res) => {
-      const albums = res.data;
-      setAlbums(albums);
-    });
-  }, []);
 
   useEffect(() => {
     if (ready) {
@@ -48,12 +40,6 @@ const CreateArtist: FC = () => {
       setReady(false);
     }
   }, [admin, userId, newArtist, ready, token]);
-
-  function handleChange(value: any) {
-    setNewArtist({
-      albums: { id: value },
-    });
-  }
 
   return (
     <Form
@@ -81,16 +67,6 @@ const CreateArtist: FC = () => {
         rules={[{ required: true, message: "Lien vers l'image" }]}
       >
         <Input />
-      </Form.Item>
-
-      <Form.Item label="Album">
-        <Select onChange={handleChange}>
-          {albums.map((album, i) => (
-            <Select.Option key={i} value={album.id}>
-              {album.name}
-            </Select.Option>
-          ))}
-        </Select>
       </Form.Item>
 
       <Form.Item>
