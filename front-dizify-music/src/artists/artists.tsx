@@ -1,11 +1,10 @@
+import { Button, Card, Divider, Image, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Card, Divider, Image } from "antd";
-import Modal from "antd/lib/modal/Modal";
 import React, { FC, useContext, useEffect, useState } from "react";
 import ArtistService from "../services/artistService";
-import { userContext } from "../utils/types";
 import CreateArtist from "./createArtist";
 import UpdateArtist from "./updateArtist";
+import { userContext } from "../utils/types";
 
 type Song = {
   id: number;
@@ -22,6 +21,7 @@ type Album = {
   artist?: Artist;
   songs?: Song;
   releaseDate?: string;
+  artist_id: string;
 };
 
 type Artist = {
@@ -29,19 +29,52 @@ type Artist = {
   name?: string;
   imageUri?: string;
   albums: Album[];
+  songs: Song[];
 };
 
 const ArtistsList: FC = () => {
   const [Artists, setArtists] = useState<Artist[]>([]);
+  const [ArtistById, setArtistByID] = useState<Artist[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [listVisible, setListVisible] = useState<boolean>(false);
-  const { userId, admin } = useContext(userContext);
+  const [id, setID] = useState<number>();
+  const [songVisible, setSongVisible] = useState<boolean>(false);
+  const { userId, admin, token } = useContext(userContext);
+
+  const { confirm } = Modal;
 
   function getArtists() {
     ArtistService.getArtists().then((res) => {
       const Artists = res.data;
       setArtists(Artists);
+    });
+  }
+
+  function deleteID(artistID: number) {
+    ArtistService.deleteArtist(artistID.toString(), token).then((res) => {
+      getArtists();
+    });
+  }
+
+  function artistById(artistID: number) {
+    ArtistService.getArtistById(artistID.toString(), token).then((res) => {
+      setArtistByID(res.data);
+    });
+  }
+
+  function showUpdating() {
+    console.log("MODAL ");
+
+    confirm({
+      title: "Modifier l'artiste",
+      content: <UpdateArtist artist={ArtistById} />,
+      onOk() {
+        setUpdateModal(false);
+      },
+      onCancel() {
+        setUpdateModal(false);
+      },
     });
   }
 
@@ -82,22 +115,55 @@ const ArtistsList: FC = () => {
                   type="primary"
                   onClick={() => {
                     setListVisible(true);
+                    setID(artist.id);
                   }}
                   shape="circle"
                   icon={<PlusOutlined />}
                 />
+                <h3>Liste Titres :</h3>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setSongVisible(true);
+                    setID(artist.id);
+                  }}
+                  shape="circle"
+                  icon={<PlusOutlined />}
+                />
+
                 <Modal
                   title="Liste des albums"
                   visible={listVisible}
                   onOk={() => {
                     setListVisible(false);
                   }}
+                  onCancel={() => {
+                    setListVisible(false);
+                  }}
                 >
-                  <Divider orientation="left">ALbums : </Divider>
+                  <Divider orientation="left">Albums : </Divider>
                   {artist.albums.map((album) => (
                     <ul>
                       <li>{album.name}</li>
                       <li>{album.releaseDate?.slice(0, 10)}</li>
+                    </ul>
+                  ))}
+                </Modal>
+
+                <Modal
+                  title="Liste des titres"
+                  visible={songVisible}
+                  onOk={() => {
+                    setSongVisible(false);
+                  }}
+                  onCancel={() => {
+                    setSongVisible(false);
+                  }}
+                >
+                  <Divider orientation="left">Titres : </Divider>
+                  {artist.songs.map((song) => (
+                    <ul>
+                      <li>{song.name}</li>
                     </ul>
                   ))}
                 </Modal>
@@ -113,26 +179,16 @@ const ArtistsList: FC = () => {
                     shape="round"
                     onClick={() => {
                       setUpdateModal(true);
+                      artistById(artist.id);
+                      showUpdating();
                     }}
                   >
                     Modifier l'artiste
                   </Button>
-                  <Modal
-                    title="Modifier l'artiste"
-                    visible={updateModal}
-                    onOk={() => {
-                      setUpdateModal(false);
-                      ArtistService.getArtistById(artist.id.toString());
-                    }}
-                    onCancel={() => setUpdateModal(false)}
-                  >
-                    <UpdateArtist data={artist} />
-                  </Modal>
                   <Button
                     shape="round"
                     onClick={() => {
-                      artist.id &&
-                        ArtistService.deleteArtist(artist.id.toString());
+                      artist.id && deleteID(artist.id);
                     }}
                   >
                     Supprimer l'artiste
@@ -167,7 +223,7 @@ const ArtistsList: FC = () => {
       </Modal>
     </>
   ) : (
-    <h1>Tu dois te connecter pour accéder à tes playlist</h1>
+    <h1>Connexion requise</h1>
   );
 };
 export default ArtistsList;

@@ -1,8 +1,8 @@
 import { Button, Form, Input, Select } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import artistService from "../services/artistService";
-import songsService from "../services/songsService";
+import { userContext } from "../utils/types";
 
 type Song = {
   id: number;
@@ -34,9 +34,9 @@ interface AlbumsProps {
 
 const UpdateAlbum: FC<AlbumsProps> = ({ data }) => {
   const [artists, setArtists] = useState<Artist[]>([]);
-  const [songs, setSongs] = useState<Song[]>([]);
   const [UpdateAlbum, setUpdateAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
+  const { token } = useContext(userContext);
 
   useEffect(() => {
     artistService.getArtists().then((res) => {
@@ -46,19 +46,12 @@ const UpdateAlbum: FC<AlbumsProps> = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    songsService.getSongs().then((res) => {
-      const songs = res.data;
-      setSongs(songs);
-    });
-  }, []);
-
-  useEffect(() => {
     if (ready) {
-      AlbumsService.updateAlbum(UpdateAlbum, data);
+      AlbumsService.updateAlbum(UpdateAlbum, data, token);
       setUpdateAlbum(undefined);
       setReady(false);
     }
-  }, [UpdateAlbum, ready, data]);
+  }, [UpdateAlbum, ready, data, token]);
 
   function handleChange(value: any) {
     setUpdateAlbum({
@@ -66,11 +59,6 @@ const UpdateAlbum: FC<AlbumsProps> = ({ data }) => {
     });
   }
 
-  function handleChangeSong(value: any) {
-    setUpdateAlbum({
-      songs: { id: value },
-    });
-  }
   return (
     <Form
       name="basic"
@@ -109,13 +97,7 @@ const UpdateAlbum: FC<AlbumsProps> = ({ data }) => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="Sons">
-        <Select onChange={handleChangeSong}>
-          {songs.map((song, i) => (
-            <Select.Option value={song.id}>{song.name}</Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
+
       <Form.Item>
         <Button shape="round" type="primary" htmlType="submit">
           Confirmer

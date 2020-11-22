@@ -1,7 +1,8 @@
 import { Button, Form, Input, Select } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
-import artistService from "../services/artistService";
+import ArtistService from "../services/artistService";
+import { userContext } from "../utils/types";
 import { Album, Artist } from "../utils/types";
 
 interface AlbumsProps {}
@@ -10,30 +11,29 @@ const CreateAlbum: FC<AlbumsProps> = () => {
   const [artists, setArtists] = useState<Artist[]>([]);
   const [newAlbum, setNewAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
+  const [artistid, setID] = useState<string>();
+  const { token } = useContext(userContext);
 
   useEffect(() => {
-    artistService.getArtists().then((res) => {
+    ArtistService.getArtists().then((res) => {
       const artists = res.data;
       setArtists(artists);
     });
   }, []);
 
-  useEffect(() => {
-    if (ready) {
-      Object.values(artists).map((artist) => {
-        let id = artist.id;
-        id && AlbumsService.createAlbum(newAlbum, id.toString());
-      });
-      setNewAlbum(undefined);
-      setReady(false);
-    }
-  }, [newAlbum, ready]);
-
   function handleChange(value: any) {
     setNewAlbum({
       artist: { id: value },
     });
+    setID(value);
   }
+  useEffect(() => {
+    if (ready) {
+      AlbumsService.createAlbum(newAlbum, artistid, token);
+      setNewAlbum(undefined);
+      setReady(false);
+    }
+  }, [artistid, newAlbum, ready, token]);
 
   return (
     <Form
