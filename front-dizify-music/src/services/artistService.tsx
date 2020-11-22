@@ -19,8 +19,8 @@ class ArtistService {
     });
   }
 
-  updateArtist(artist: any, artistId: string, token: string | null) {
-    return axios.put(ARTIST_API_BASE_URL + "/" + artistId, artist, {
+  updateArtist(artist: any, token: string | null) {
+    return axios.put(ARTIST_API_BASE_URL, artist, {
       headers: { Authorization: "Bearer " + token },
     });
   }
