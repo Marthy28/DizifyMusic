@@ -34,7 +34,7 @@ interface Props {
 const UpdateArtist: FC<Props> = ({ data }) => {
   const [UpdateArtist, setUpdateArtist] = useState<Artist>();
   const [ready, setReady] = useState<boolean>(false);
-  const { isConnected, admin } = useContext(userContext);
+  const { userId, admin } = useContext(userContext);
 
   console.log("Data");
   console.log(data);
@@ -45,7 +45,7 @@ const UpdateArtist: FC<Props> = ({ data }) => {
       setUpdateArtist(undefined);
       setReady(false);
     }
-  }, [admin, data, isConnected, UpdateArtist, ready]);
+  }, [admin, data, userId, UpdateArtist, ready]);
 
   return (
     <Form
