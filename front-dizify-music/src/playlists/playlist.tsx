@@ -84,21 +84,12 @@ const Playlists: FC<PlaylistProps> = () => {
               )}
               <Button
                 shape="round"
-                type="primary"
-                onClick={() => {
-                  message.success("TODO");
-                }}
-              >
-                Ajouter les titres
-              </Button>
-              <Button
-                shape="round"
                 onClick={() => {
                   playlist.id && playlistService.deletePlaylist(playlist.id);
                   message.success("Playlist suprimée !");
                 }}
               >
-                Supprimer l'album
+                Supprimer la playlist
               </Button>
             </Card>
           </>

@@ -68,7 +68,6 @@ const App: FC = () => {
       admin: "",
     });
     window.sessionStorage.clear();
-    console.log(window.sessionStorage.getItem("userId"));
   };
 
   function getUserId() {
@@ -165,7 +164,7 @@ const App: FC = () => {
           <TabPane tab="Albums" key="3">
             <AlbumsList />
           </TabPane>
-          {user.admin ? null : (
+          {(user.admin || window.sessionStorage.getItem("admin")) === null ? (
             <>
               <TabPane tab="Favoris" key="4">
                 Favoris
@@ -174,7 +173,7 @@ const App: FC = () => {
                 <Playlists />
               </TabPane>
             </>
-          )}
+          ) : null}
         </Tabs>
       </div>
     </userContext.Provider>
