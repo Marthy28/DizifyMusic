@@ -64,6 +64,8 @@ const ArtistsList: FC = () => {
   }
 
   function showUpdating() {
+    console.log("MODAL ");
+
     confirm({
       title: "Modifier l'artiste",
       content: <UpdateArtist artist={ArtistById} />,
@@ -183,17 +185,6 @@ const ArtistsList: FC = () => {
                   >
                     Modifier l'artiste
                   </Button>
-                  <Modal
-                    title="Modifier l'artiste"
-                    visible={updateModal}
-                    onOk={() => {
-                      setUpdateModal(false);
-                      artistById(artist.id);
-                    }}
-                    onCancel={() => setUpdateModal(false)}
-                  >
-                    <UpdateArtist artist={artist} />
-                  </Modal>
                   <Button
                     shape="round"
                     onClick={() => {
