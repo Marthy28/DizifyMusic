@@ -10,6 +10,7 @@ import { userContext } from "./utils/types";
 import Modal from "antd/lib/modal/Modal";
 import Connection from "./user/connection";
 import usersService from "./services/usersService";
+import Inscription from "./user/inscription";
 
 type User = {
   id: number;
@@ -20,7 +21,8 @@ const { TabPane } = Tabs;
 
 const App: FC = () => {
   const [UserAvatar, setUserAvatar] = useState<User>();
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visibleConenction, setVisibleConnection] = useState<boolean>(false);
+  const [visibleInscription, setVisibleIncription] = useState<boolean>(false);
   const [user, setUser] = useState<{
     userId: string;
     token: string;
@@ -48,7 +50,7 @@ const App: FC = () => {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + res.data.token;
       }
-      setVisible(false);
+      setVisibleConnection(false);
       setUser({
         userId: res.data.user.id,
         token: res.data.token,
@@ -90,8 +92,6 @@ const App: FC = () => {
 
   return (
     <userContext.Provider value={{ ...user, connection }}>
-      {console.log(user)}
-      {console.log(window.sessionStorage.getItem("admin"))}
       <div
         style={{
           display: "flex",
@@ -136,7 +136,7 @@ const App: FC = () => {
               type="primary"
               style={{ marginRight: "5%" }}
               onClick={() => {
-                setVisible(true);
+                setVisibleConnection(true);
               }}
             >
               Se connecter
@@ -147,7 +147,7 @@ const App: FC = () => {
               type="primary"
               style={{ marginLeft: "5%" }}
               onClick={() => {
-                setVisible(true);
+                setVisibleIncription(true);
               }}
             >
               S'inscrire
@@ -157,10 +157,18 @@ const App: FC = () => {
         <Modal
           footer={null}
           title="Se connecter"
-          visible={visible}
-          onCancel={() => setVisible(false)}
+          visible={visibleConenction}
+          onCancel={() => setVisibleConnection(false)}
         >
           <Connection />
+        </Modal>
+        <Modal
+          footer={null}
+          title="S'inscrire'"
+          visible={visibleInscription}
+          onCancel={() => setVisibleIncription(false)}
+        >
+          <Inscription />
         </Modal>
 
         <Tabs defaultActiveKey="1" centered style={{ marginTop: "2%" }}>
