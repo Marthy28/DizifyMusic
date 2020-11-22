@@ -24,7 +24,7 @@ const App: FC = () => {
   const [user, setUser] = useState<{
     userId: string;
     token: string;
-    admin: string;
+    admin: string | null;
   }>({
     userId: window.sessionStorage.getItem("userId")
       ? window.sessionStorage.getItem("userId")!
@@ -34,7 +34,7 @@ const App: FC = () => {
       : "",
     admin: window.sessionStorage.getItem("admin")
       ? window.sessionStorage.getItem("admin")!
-      : "",
+      : null,
   });
 
   const connection = (values: any) => {
@@ -77,11 +77,21 @@ const App: FC = () => {
   }
 
   useEffect(() => {
-    getUserId();
+    user.userId && getUserId();
+    if (window.sessionStorage.getItem("admin") === "undefined") {
+      window.sessionStorage.setItem("admin", "");
+      setUser({
+        userId: user.userId,
+        token: user.token,
+        admin: "",
+      });
+    }
   }, []);
 
   return (
     <userContext.Provider value={{ ...user, connection }}>
+      {console.log(user)}
+      {console.log(window.sessionStorage.getItem("admin"))}
       <div
         style={{
           display: "flex",
@@ -163,7 +173,7 @@ const App: FC = () => {
           <TabPane tab="Albums" key="3">
             <AlbumsList />
           </TabPane>
-          {(user.admin || window.sessionStorage.getItem("admin")) === null ? (
+          {user.admin ? null : (
             <>
               <TabPane tab="Favoris" key="4">
                 Favoris
@@ -172,7 +182,7 @@ const App: FC = () => {
                 <Playlists />
               </TabPane>
             </>
-          ) : null}
+          )}
         </Tabs>
       </div>
     </userContext.Provider>
