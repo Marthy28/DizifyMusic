@@ -99,7 +99,7 @@ const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
               <SongsForAnAlbum album={album} />
             </div>
 
-            {admin === "null" ? null : (
+            {admin && (
               <>
                 <Button
                   shape="round"

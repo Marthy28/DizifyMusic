@@ -1,5 +1,10 @@
-import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import {
+  CloseOutlined,
+  PlusOutlined,
+  PlaySquareOutlined,
+  HeartOutlined,
+} from "@ant-design/icons";
+import { Button, message } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useState, useContext } from "react";
 import SongsService from "../services/songsService";
@@ -85,7 +90,23 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
               <p>
                 {song.name} {song.duration}
               </p>
-              {admin === "null" ? null : (
+              <Button
+                style={{ border: "none", color: "var(--pink)" }}
+                onClick={() => {
+                  message.error("TODO");
+                }}
+                shape="circle"
+                icon={<HeartOutlined />}
+              />
+              <Button
+                style={{ border: "none", color: "var(--pink)" }}
+                onClick={() => {
+                  message.error("TODO");
+                }}
+                shape="circle"
+                icon={<PlaySquareOutlined />}
+              />
+              {admin && (
                 <Button
                   style={{ border: "none", color: "var(--pink)" }}
                   onClick={() => {
