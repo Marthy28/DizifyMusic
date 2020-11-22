@@ -1,9 +1,11 @@
-import { Button, Card, Image } from "antd";
+import { HeartOutlined } from "@ant-design/icons";
+import { Button, Card, Image, message } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
+import favorisService from "../services/favorisService";
 import SongsForAnAlbum from "../songs/songsForAnAlbum";
-import { Album, userContext } from "../utils/types";
+import { Album, FavorisType, userContext } from "../utils/types";
 import CreateAlbum from "./createAlbum";
 import UpdateAlbum from "./updateAlbum";
 
@@ -14,6 +16,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const { userId, admin, token } = useContext(userContext);
+  const [favorite, setFavorite] = useState<FavorisType>();
 
   function getAlbums() {
     AlbumsService.getAlbums().then((res) => {
@@ -25,6 +28,13 @@ const AlbumsList: FC<AlbumsProps> = () => {
   function deleteID(albumID: number) {
     AlbumsService.deleteAlbum(albumID.toString(), token).then((res) => {
       getAlbums();
+    });
+  }
+
+  function getFavorisByUser() {
+    favorisService.getFavorisByUser(userId).then((res) => {
+      const favorisRes = res.data;
+      setFavorite(favorisRes);
     });
   }
 
@@ -56,6 +66,16 @@ const AlbumsList: FC<AlbumsProps> = () => {
           >
             <div style={{ height: 500 }}>
               <h1 style={{ fontWeight: "bold", fontSize: 34 }}>{album.name}</h1>
+              <Button
+                style={{ border: "none", color: "var(--pink)" }}
+                onClick={() => {
+                  favorisService.addAlbumToFavorites(favorite?.id, album.id);
+                  message.success("Ajouté en favoris");
+                  getFavorisByUser();
+                }}
+                shape="circle"
+                icon={<HeartOutlined />}
+              />
               <Image
                 width={200}
                 src={`${album.pictureUri}`}

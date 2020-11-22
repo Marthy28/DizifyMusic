@@ -1,4 +1,5 @@
 import React from "react";
+import favorisService from "../services/favorisService";
 
 export type Artist = {
   id?: number;
@@ -28,6 +29,13 @@ export type Playlist = {
   id?: number;
   name?: string;
   songs?: Song[];
+};
+
+export type FavorisType = {
+  id?: number;
+  songs?: Song[];
+  artists?: Artist[];
+  albums?: Album[];
 };
 
 export type USER_CONNECTED = {

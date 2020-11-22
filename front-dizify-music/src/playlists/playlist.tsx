@@ -30,7 +30,7 @@ const Playlists: FC = () => {
           color: "var(--pink)",
         }}
       >
-        Tes playlists
+        Mes playlists
       </h1>
       <Form
         name="basic"
