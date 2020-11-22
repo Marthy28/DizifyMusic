@@ -126,7 +126,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
         ))}
       </div>
 
-      {admin === "null" ? null : (
+      {admin == null ? null : (
         <Button
           shape="round"
           type="primary"

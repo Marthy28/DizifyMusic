@@ -175,7 +175,7 @@ const ArtistsList: FC = () => {
                   style={{ marginBottom: "2%" }}
                 />
               </div>
-              {admin === "null" ? null : (
+              {admin == null ? null : (
                 <>
                   <Button
                     shape="round"
@@ -199,7 +199,8 @@ const ArtistsList: FC = () => {
           </>
         ))}
       </div>
-      {admin === "null" ? null : (
+      {console.log(admin)}
+      {admin == null ? null : (
         <Button
           shape="round"
           type="primary"
