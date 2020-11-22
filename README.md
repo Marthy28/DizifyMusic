@@ -4,6 +4,8 @@ GROUPE 3 : Chloé, Marie, Thomas et Antoine
 
 Après Git clone : npm i ou yarn install  => npm run start ou yarn start
 
+Lien excel des routes à utiliser lors du projet : https://docs.google.com/spreadsheets/d/15TGKX_BgLexx108NLryR2LYSzEprx4G4-Fj-mx7paKE/edit?usp=sharing
+
 ### MEA CULPA LISTE
 
 ### Besoin de recharger la page régulièrement (à chaque changement)
