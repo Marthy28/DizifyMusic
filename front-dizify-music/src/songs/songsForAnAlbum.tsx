@@ -36,7 +36,7 @@ interface SongsProps {
 
 const SongsForAnAlbum: FC<SongsProps> = (album) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const { token, admin } = useContext(userContext);
+  const { admin } = useContext(userContext);
 
   return (
     <>

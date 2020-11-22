@@ -1,14 +1,15 @@
 import { Card, Image } from "antd";
-import React, { FC, useEffect, useState } from "react";
-import albumsService from "../../services/albumsService";
-import artistService from "../../services/artistService";
-import Inscription from "../../user/inscription";
-import Connection from "../../user/connection";
-import { Artist, Album } from "../../utils/types";
+import React, { FC, useContext, useEffect, useState } from "react";
+import albumsService from "../services/albumsService";
+import artistService from "../services/artistService";
+import Connection from "../user/connection";
+import Inscription from "../user/inscription";
+import { Album, Artist, userContext } from "../utils/types";
 
 const Home: FC = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [Artists, setArtists] = useState<Artist[]>([]);
+  const { userId } = useContext(userContext);
 
   useEffect(() => {
     albumsService.getAlbums().then((res) => {
@@ -19,7 +20,7 @@ const Home: FC = () => {
       const Artists = res.data;
       setArtists(Artists);
     });
-  }, []);
+  }, [window.sessionStorage]);
 
   return (
     <>
@@ -34,10 +35,6 @@ const Home: FC = () => {
       >
         Bienvenue sur DizifyMusic
       </h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Inscription />
-        <Connection />
-      </div>
       <h2
         style={{
           textAlign: "center",

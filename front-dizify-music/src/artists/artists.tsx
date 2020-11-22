@@ -39,7 +39,7 @@ const ArtistsList: FC<Props> = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [listVisible, setListVisible] = useState<boolean>(false);
-  const { isConnected, admin } = useContext(userContext);
+  const { userId, admin } = useContext(userContext);
 
   function getArtists() {
     ArtistService.getArtists().then((res) => {
@@ -51,10 +51,9 @@ const ArtistsList: FC<Props> = () => {
   }
 
   useEffect(() => {
-    isConnected && getArtists();
-  }, [isConnected]);
-
-  return isConnected ? (
+    userId && getArtists();
+  }, [userId]);
+  return userId ? (
     <>
       <h1
         style={{
@@ -173,7 +172,7 @@ const ArtistsList: FC<Props> = () => {
       </Modal>
     </>
   ) : (
-    <Connection />
+    <h1>Tu dois te connecter pour accéder à tes playlist</h1>
   );
 };
 export default ArtistsList;

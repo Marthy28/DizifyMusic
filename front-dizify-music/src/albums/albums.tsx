@@ -1,12 +1,12 @@
 import { Button, Card, Image } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { FC, useEffect, useState, useContext } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import SongsForAnAlbum from "../songs/songsForAnAlbum";
-import CreateAlbum from "./createAlbum";
 import Connection from "../user/connection";
 import { userContext } from "../utils/types";
 import UpdateAlbum from "./updateAlbum";
+import CreateAlbum from "./createAlbum";
 
 type Song = {
   id: number;
@@ -40,7 +40,7 @@ const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
-  const { isConnected, admin } = useContext(userContext);
+  const { userId, admin } = useContext(userContext);
 
   console.log("ICI");
   console.log(listArtist);
@@ -53,10 +53,10 @@ const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
   }
 
   useEffect(() => {
-    isConnected && getAlbums();
-  }, [isConnected]);
+    userId && getAlbums();
+  }, [userId]);
 
-  return isConnected ? (
+  return userId ? (
     <>
       <h1
         style={{
@@ -158,7 +158,7 @@ const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
       </Modal>
     </>
   ) : (
-    <Connection />
+    <h1>Tu dois te connecter pour accéder à tes playlist</h1>
   );
 };
 export default AlbumsList;

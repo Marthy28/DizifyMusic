@@ -12,6 +12,14 @@ class PlaylistService {
       `${API_BASE_URL}/playlist/${playlistId}/song/${songId}/delete`
     );
   }
+
+  createPlaylist(userId: any, name: string) {
+    return axios.post(`${API_BASE_URL}/playlist/${userId}/`, { name });
+  }
+
+  deletePlaylist(playlistId: number) {
+    return axios.delete(`${API_BASE_URL}/playlist/${playlistId}`);
+  }
 }
 
 export default new PlaylistService();

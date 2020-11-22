@@ -1,13 +1,11 @@
-import { Button, Card, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import React, { FC, useContext } from "react";
 import { userContext } from "../utils/types";
 
 interface UserProps {}
 
 const Connection: FC<UserProps> = () => {
-  const { isConnected, userId, token, connection, admin } = useContext(
-    userContext
-  );
+  const { connection } = useContext(userContext);
 
   const onFinish = (values: any) => {
     connection(values);
@@ -19,54 +17,34 @@ const Connection: FC<UserProps> = () => {
 
   return (
     <>
-      <Card
-        style={{
-          width: "30%",
-          marginRight: "1%",
-          marginBottom: "1%",
-          marginTop: 50,
-          boxShadow: "0px 4px 100px -64px rgba(0,0,0,0.35)",
-        }}
+      <Form
+        name="basic"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
-        <h2
-          style={{
-            fontWeight: "bold",
-            fontSize: 40,
-            marginBottom: 50,
-          }}
+        <Form.Item
+          label="Email"
+          name="eMail"
+          rules={[{ required: true, message: "Entrez votre email" }]}
         >
-          Se connecter
-        </h2>
-        <Form
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="password"
+          name="password"
+          rules={[{ required: true, message: "Entrez votre mot de passe" }]}
         >
-          <Form.Item
-            label="Email"
-            name="eMail"
-            rules={[{ required: true, message: "Entrez votre email" }]}
-          >
-            <Input />
-          </Form.Item>
+          <Input.Password />
+        </Form.Item>
 
-          <Form.Item
-            label="password"
-            name="password"
-            rules={[{ required: true, message: "Entrez votre mot de passe" }]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" shape="round" htmlType="submit">
-              Se connecter
-            </Button>
-          </Form.Item>
-        </Form>
-        {console.log({ isConnected, userId, token, admin })}
-      </Card>
+        <Form.Item>
+          <Button type="primary" shape="round" htmlType="submit">
+            Se connecter
+          </Button>
+        </Form.Item>
+      </Form>
     </>
   );
 };

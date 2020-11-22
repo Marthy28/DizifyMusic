@@ -1,4 +1,3 @@
-import { Tabs } from "antd";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
