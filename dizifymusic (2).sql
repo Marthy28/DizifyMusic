@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : lun. 23 nov. 2020 à 00:00
+-- Généré le : lun. 23 nov. 2020 à 00:07
 -- Version du serveur :  8.0.22-0ubuntu0.20.04.2
 -- Version de PHP : 7.4.3
 
@@ -58,10 +58,9 @@ CREATE TABLE `album` (
 --
 
 INSERT INTO `album` (`id`, `name`, `picture_uri`, `release_date`, `artist_id`) VALUES
-(35, 'Music of the sun', 'https://img.discogs.com/GZynNx845Zwa3iM3qdmQk8aKLRg=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-1512743-1232152919.jpeg.jpg', NULL, 2),
-(42, 'B\'day', 'https://images-na.ssl-images-amazon.com/images/I/81c9qazagZL._SL1500_.jpg', NULL, 1),
-(45, 'Mantraasss', ';khdjhd', '2018-10-01 20:54:00.000000', 4),
-(47, 'Nomdelalbi', 'kmdhkdhg', NULL, 2);
+(35, 'Music of the sun', 'https://img.discogs.com/GZynNx845Zwa3iM3qdmQk8aKLRg=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-1512743-1232152919.jpeg.jpg', '2020-11-06 00:02:56.000000', 2),
+(42, 'B\'day', 'https://images-na.ssl-images-amazon.com/images/I/81c9qazagZL._SL1500_.jpg', '2020-11-10 00:02:50.000000', 1),
+(45, 'Mantra', 'https://images-eu.ssl-images-amazon.com/images/I/71C281rEQUL._AC_UL600_SR600,600_.jpg', '2018-10-01 20:54:00.000000', 4);
 
 -- --------------------------------------------------------
 
@@ -73,6 +72,14 @@ CREATE TABLE `album_favorites` (
   `album_id` bigint NOT NULL,
   `favorites_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `album_favorites`
+--
+
+INSERT INTO `album_favorites` (`album_id`, `favorites_id`) VALUES
+(42, 3),
+(45, 3);
 
 -- --------------------------------------------------------
 
@@ -94,9 +101,7 @@ INSERT INTO `artist` (`id`, `image_uri`, `name`) VALUES
 (1, 'https://cdn-elle.ladmedia.fr/var/plain_site/storage/images/personnalites/beyonce/42390447-3-fre-FR/Beyonce.jpg', 'Beyonce'),
 (2, 'https://static.lexpress.fr/medias_11615/w_884,h_1327,c_crop,x_0,y_0/w_640,h_900,c_fill,g_north/v1505811841/rihanna-fenty-beauty-1_5947046.jpg', 'Rihanna'),
 (4, 'https://lastfm.freetls.fastly.net/i/u/770x0/1341e504bbf78cd2675e92c29ecf0342.jpg', 'Sebastian Yatra'),
-(5, 'https://img.pixers.pics/pho(s3:700/PI/70/96/700_PI7096_7ceb8ab0808ecc73fccd927e1b9102a3_5b7abc520efab_.,517,700,jpg)/stickers-bruno-mars.jpg.jpg', 'Bruno Mars'),
-(6, 'khdkhgd', 'Beyonce 4'),
-(9, ':kdhlidhkdghdk', 'Beyonce 3');
+(5, 'https://img.pixers.pics/pho(s3:700/PI/70/96/700_PI7096_7ceb8ab0808ecc73fccd927e1b9102a3_5b7abc520efab_.,517,700,jpg)/stickers-bruno-mars.jpg.jpg', 'Bruno Mars');
 
 -- --------------------------------------------------------
 
@@ -108,6 +113,14 @@ CREATE TABLE `artist_favorites` (
   `artist_id` bigint NOT NULL,
   `favorites_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `artist_favorites`
+--
+
+INSERT INTO `artist_favorites` (`artist_id`, `favorites_id`) VALUES
+(1, 3),
+(5, 5);
 
 -- --------------------------------------------------------
 
@@ -125,15 +138,7 @@ CREATE TABLE `favorite` (
 
 INSERT INTO `favorite` (`id`) VALUES
 (3),
-(5),
-(7),
-(8),
-(9),
-(10),
-(11),
-(12),
-(13),
-(14);
+(5);
 
 -- --------------------------------------------------------
 
@@ -146,6 +151,14 @@ CREATE TABLE `favorite_albums` (
   `albums_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `favorite_albums`
+--
+
+INSERT INTO `favorite_albums` (`favorite_id`, `albums_id`) VALUES
+(5, 35),
+(3, 45);
+
 -- --------------------------------------------------------
 
 --
@@ -157,6 +170,13 @@ CREATE TABLE `favorite_artists` (
   `artists_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `favorite_artists`
+--
+
+INSERT INTO `favorite_artists` (`favorite_id`, `artists_id`) VALUES
+(3, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -167,6 +187,14 @@ CREATE TABLE `favorite_songs` (
   `favorite_id` bigint NOT NULL,
   `songs_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `favorite_songs`
+--
+
+INSERT INTO `favorite_songs` (`favorite_id`, `songs_id`) VALUES
+(3, 3),
+(3, 6);
 
 -- --------------------------------------------------------
 
@@ -197,6 +225,14 @@ CREATE TABLE `playlist_songs` (
   `playlist_id` bigint NOT NULL,
   `songs_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `playlist_songs`
+--
+
+INSERT INTO `playlist_songs` (`playlist_id`, `songs_id`) VALUES
+(2, 6),
+(2, 11);
 
 -- --------------------------------------------------------
 
@@ -236,6 +272,14 @@ CREATE TABLE `song_favorites` (
   `favorites_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `song_favorites`
+--
+
+INSERT INTO `song_favorites` (`song_id`, `favorites_id`) VALUES
+(9, 3),
+(11, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -246,6 +290,14 @@ CREATE TABLE `song_playlists` (
   `song_id` bigint NOT NULL,
   `playlists_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `song_playlists`
+--
+
+INSERT INTO `song_playlists` (`song_id`, `playlists_id`) VALUES
+(8, 2),
+(9, 2);
 
 -- --------------------------------------------------------
 
