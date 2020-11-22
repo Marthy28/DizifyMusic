@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, message } from "antd";
 import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import artistService from "../services/artistService";
@@ -47,9 +47,10 @@ const UpdateAlbum: FC<AlbumsProps> = ({ data }) => {
 
   useEffect(() => {
     if (ready) {
-      AlbumsService.updateAlbum(UpdateAlbum, data, token);
+      AlbumsService.updateAlbum(UpdateAlbum, token);
       setUpdateAlbum(undefined);
       setReady(false);
+      message.success(`Modifié`);
     }
   }, [UpdateAlbum, ready, data, token]);
 
@@ -65,6 +66,7 @@ const UpdateAlbum: FC<AlbumsProps> = ({ data }) => {
       onFinish={(e) => {
         setUpdateAlbum({
           ...UpdateAlbum,
+          id: data,
           name: e.name,
           pictureUri: e.pictureUri,
         });
@@ -74,7 +76,7 @@ const UpdateAlbum: FC<AlbumsProps> = ({ data }) => {
       <Form.Item
         label="Nom de l'album"
         name="name"
-        rules={[{ required: true, message: "Nom de l'album" }]}
+        rules={[{ required: false, message: "Nom de l'album" }]}
       >
         <Input />
       </Form.Item>
@@ -82,14 +84,14 @@ const UpdateAlbum: FC<AlbumsProps> = ({ data }) => {
       <Form.Item
         label="Lien vers l'image"
         name="pictureUri"
-        rules={[{ required: true, message: "Lien vers l'image" }]}
+        rules={[{ required: false, message: "Lien vers l'image" }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
         label="Artiste"
-        rules={[{ required: true, message: "Artiste" }]}
+        rules={[{ required: false, message: "Artiste" }]}
       >
         <Select onChange={handleChange}>
           {artists.map((artist, i) => (

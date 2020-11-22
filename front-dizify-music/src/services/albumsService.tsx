@@ -13,12 +13,12 @@ class AlbumsService {
     });
   }
 
-  getAlbumById(albumId: string) {
+  getAlbumById(albumId: string | undefined) {
     return axios.get(ALBUMS_API_BASE_URL + "/" + albumId);
   }
 
-  updateAlbum(album: any, albumId: string, token: string | null) {
-    return axios.put(ALBUMS_API_BASE_URL + "/" + album, albumId, {
+  updateAlbum(album: any, token: string | null) {
+    return axios.put(ALBUMS_API_BASE_URL, album, {
       headers: { Authorization: "Bearer " + token },
     });
   }
