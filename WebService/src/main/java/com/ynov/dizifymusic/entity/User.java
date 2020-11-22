@@ -4,9 +4,8 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-/**
- * entité User
- */
+
+
 @Entity
 @Table(name = "User")
 public class User {
@@ -30,7 +29,7 @@ public class User {
 	@JsonIgnoreProperties("user")
 	private Set<Playlist> playlist;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
 	@JoinColumn(name = "administrator_id")
 	@JsonIgnoreProperties({"user","hibernateLazyInitializer"})
 	private Administrator administrator;

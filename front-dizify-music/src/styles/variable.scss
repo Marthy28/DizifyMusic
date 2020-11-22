@@ -1,0 +1,30 @@
+///////////////
+// variables //
+///////////////
+$screen-xs: 0;
+$screen-sm: 480px;
+$screen-md: 768px;
+$screen-lg: 992px;
+$screen-xl: 1600px;
+
+:root {
+  --baseFontSize: 14px;
+  --blue: #513cff;
+  --pink: #ff4e7b;
+  --gray: #f3f3f3;
+  --gray-dark: #7d7d7d;
+  --black: #232323;
+  --white: #ffffff;
+  --purple: #cdccff;
+  --dark-gray: #666666;
+  --light-gray: #aaaaaa;
+  --purple-dark: #8080ff;
+  --primary: var(--pink);
+  --secondary: var(--blue);
+  --avatarBackground: var(--primary);
+  --modalBackground: var(--secondary);
+  --modalTextColor: #fff;
+  --tabPaneBackground: #fff;
+  --radius: 5px;
+  --alert: #ff0000;
+}

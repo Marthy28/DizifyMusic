@@ -7,8 +7,7 @@ import org.springframework.data.repository.query.Param;
 import com.ynov.dizifymusic.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-
-	//récupérer un user par son mail
+	
 	@Query("SELECT a FROM User a WHERE a.eMail LIKE %:email%")
     public User findByEMail(@Param("email") String emailUser);
 }

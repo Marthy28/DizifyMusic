@@ -1,8 +1,6 @@
 package com.ynov.dizifymusic.config;
 
-/**
- * Classe utilisée pour retourner un message en cas d'erreur
- */
+
 import java.io.IOException;
 import java.io.Serializable;
 

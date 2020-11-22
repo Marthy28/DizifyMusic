@@ -16,10 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-/**
- * Configuration de spring security
- * Le context et les routes autorisées 
- */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -59,12 +55,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		httpSecurity.cors().and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.authorizeRequests() // requêtes sans identification obligatoire
+		.authorizeRequests()
 		.antMatchers("/login").permitAll()
 		.antMatchers("/signin").permitAll()
 		.antMatchers("/usertoadmin/{id}").permitAll()
 		.antMatchers(HttpMethod.GET).permitAll()
-		.anyRequest().authenticated().and() //toutes les autres auront besoin d'authentification
+		.anyRequest().authenticated().and()
 		.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
 
 		// Add a filter to validate the tokens with every request

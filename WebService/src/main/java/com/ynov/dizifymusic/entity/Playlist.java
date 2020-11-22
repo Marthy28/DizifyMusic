@@ -4,9 +4,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-/**
- * entité Playlist
- */
+
 @Entity
 @Table(name = "Playlist")
 public class Playlist {

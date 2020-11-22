@@ -9,9 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ynov.dizifymusic.entity.Administrator;
 import com.ynov.dizifymusic.entity.User;
 
-/**
- * Implémentation de la classe userDetail
- */
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 

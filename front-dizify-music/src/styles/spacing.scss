@@ -1,0 +1,31 @@
+// ----
+// libsass (v3.5.4)
+// ----
+
+@mixin generate($prefix, $property) {
+  // List of sizes to generate for each
+  $sizes: [0, 0.25, 0.5, 1, 1.5, 3];
+  // Spacing to multiply the sizes by
+  $spacing: 1rem;
+
+  // Loop through all of the sizes(we use @for rather than @each, as we want access to the index)
+  @for $i from 1 through length($sizes) {
+    // Get the size for the current index
+    $size: nth($sizes, $i);
+
+    // Create the rule
+    .#{$prefix}-#{$i - 1} {
+      #{$property}: $spacing * $size;
+    }
+  }
+}
+
+@include generate(mt, margin-top);
+@include generate(mr, margin-right);
+@include generate(mb, margin-bottom);
+@include generate(ml, margin-left);
+
+@include generate(pt, padding-top);
+@include generate(pr, padding-right);
+@include generate(pb, padding-bottom);
+@include generate(pl, padding-left);

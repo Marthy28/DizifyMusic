@@ -20,9 +20,6 @@ import com.ynov.dizifymusic.entity.Song;
 import com.ynov.dizifymusic.repository.ArtistRepository;
 import com.ynov.dizifymusic.repository.SongRepository;
 
-/**
- * Controlleur pour l'entité Song
- */
 @RestController
 @JsonIgnoreProperties("favorites")
 public class SongController {
@@ -38,8 +35,11 @@ public class SongController {
     
     //GET all
     @GetMapping("/songs")
-    public List<Song> getSongs() {
+    public List<Song> getArtists() {
     	try {
+    		System.out.println(SecurityContextHolder.getContext());
+    		System.out.println(SecurityContextHolder.getContext().getAuthentication());
+    		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
     		return songRepository.findAll();
     	} catch (Exception e) {
     		System.out.println(e.toString());
@@ -72,7 +72,6 @@ public class SongController {
     }
     
     //DELETE by id
-    //ADMIN
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/song/{id}")
     public void deleteSong(final @PathVariable("id") Long songId) {
@@ -83,8 +82,7 @@ public class SongController {
     	}
     }
 	
-    //POST add a new song from an artist
-    //ADMIN
+    //POST 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/song/{artist_id}")
     public Song addSong(@RequestBody Song song,final @PathVariable("artist_id") Long artist_id) {
@@ -102,7 +100,6 @@ public class SongController {
     }
 
     //PUT by id
-    //ADMIN
     @ResponseBody
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/song")
