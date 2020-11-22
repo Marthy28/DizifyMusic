@@ -1,15 +1,12 @@
 import { Card, Image } from "antd";
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import albumsService from "../services/albumsService";
 import artistService from "../services/artistService";
-import Connection from "../user/connection";
-import Inscription from "../user/inscription";
-import { Album, Artist, userContext } from "../utils/types";
+import { Album, Artist } from "../utils/types";
 
 const Home: FC = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [Artists, setArtists] = useState<Artist[]>([]);
-  const { userId } = useContext(userContext);
 
   useEffect(() => {
     albumsService.getAlbums().then((res) => {
@@ -55,7 +52,7 @@ const Home: FC = () => {
         }}
       >
         {Artists.slice(0, 3).map((artist, i) => (
-          <>
+          <div key={i}>
             <Card
               style={{
                 width: 300,
@@ -73,7 +70,7 @@ const Home: FC = () => {
                 style={{ marginBottom: "2%" }}
               />
             </Card>
-          </>
+          </div>
         ))}
       </div>
       <h2
@@ -96,7 +93,7 @@ const Home: FC = () => {
         }}
       >
         {Albums.slice(0, 3).map((album, i) => (
-          <>
+          <div key={i}>
             <Card
               style={{
                 width: 300,
@@ -121,7 +118,7 @@ const Home: FC = () => {
                 style={{ marginBottom: "2%" }}
               />
             </Card>
-          </>
+          </div>
         ))}
       </div>
     </>

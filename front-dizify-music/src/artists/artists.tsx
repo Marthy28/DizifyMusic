@@ -1,10 +1,10 @@
-import { Button, Card, Divider, Image } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { Button, Card, Divider, Image } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import React, { FC, useEffect, useState, useContext } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import ArtistService from "../services/artistService";
-import CreateArtist from "./createArtist";
 import { userContext } from "../utils/types";
+import CreateArtist from "./createArtist";
 import UpdateArtist from "./updateArtist";
 
 type Song = {
@@ -31,9 +31,7 @@ type Artist = {
   albums: Album[];
 };
 
-interface Props {}
-
-const ArtistsList: FC<Props> = () => {
+const ArtistsList: FC = () => {
   const [Artists, setArtists] = useState<Artist[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
@@ -43,8 +41,6 @@ const ArtistsList: FC<Props> = () => {
   function getArtists() {
     ArtistService.getArtists().then((res) => {
       const Artists = res.data;
-      console.log("ARTISTS");
-      console.log(Artists);
       setArtists(Artists);
     });
   }

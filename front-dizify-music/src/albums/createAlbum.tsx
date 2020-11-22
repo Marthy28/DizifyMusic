@@ -2,67 +2,27 @@ import { Button, Form, Input, Select } from "antd";
 import React, { FC, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import artistService from "../services/artistService";
-import songsService from "../services/songsService";
-
-type Song = {
-  id: number;
-  duration?: string;
-  name?: string;
-  artist?: Artist;
-  albums?: Album[];
-};
-
-type Album = {
-  id?: number;
-  name?: string;
-  pictureUri?: string;
-  artist?: Artist;
-  songs?: Song;
-  releaseDate?: string;
-};
-
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-  albums?: Album[];
-};
+import { Album, Artist } from "../utils/types";
 
 interface AlbumsProps {}
 
 const CreateAlbum: FC<AlbumsProps> = () => {
   const [artists, setArtists] = useState<Artist[]>([]);
-  const [songs, setSongs] = useState<Song[]>([]);
   const [newAlbum, setNewAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
 
   useEffect(() => {
     artistService.getArtists().then((res) => {
       const artists = res.data;
-      console.log("CREATE ALBUM ARTISTS");
-      console.log(artists);
-
       setArtists(artists);
     });
   }, []);
 
   useEffect(() => {
-    songsService.getSongs().then((res) => {
-      const songs = res.data;
-      console.log("SONGS");
-      console.log(songs);
-
-      setSongs(songs);
-    });
-  }, []);
-
-  useEffect(() => {
     if (ready) {
-      console.log(typeof artists);
-
       Object.values(artists).map((artist) => {
         let id = artist.id;
-        AlbumsService.createAlbum(newAlbum, id.toString());
+        id && AlbumsService.createAlbum(newAlbum, id.toString());
       });
       setNewAlbum(undefined);
       setReady(false);
@@ -70,19 +30,11 @@ const CreateAlbum: FC<AlbumsProps> = () => {
   }, [newAlbum, ready]);
 
   function handleChange(value: any) {
-    console.log(value);
-
     setNewAlbum({
       artist: { id: value },
     });
   }
-  function handleChangeSong(value: any) {
-    console.log(value);
 
-    setNewAlbum({
-      songs: { id: value },
-    });
-  }
   return (
     <Form
       name="basic"
@@ -114,14 +66,7 @@ const CreateAlbum: FC<AlbumsProps> = () => {
       <Form.Item label="Artiste">
         <Select onChange={handleChange}>
           {artists.map((artist, i) => (
-            <Select.Option value={artist.id}>{artist.name}</Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item label="Sons">
-        <Select onChange={handleChangeSong}>
-          {songs.map((song, i) => (
-            <Select.Option value={song.id}>{song.name}</Select.Option>
+            <Select.Option value={artist.id!}>{artist.name}</Select.Option>
           ))}
         </Select>
       </Form.Item>

@@ -8,36 +8,12 @@ import { Button, message, Modal } from "antd";
 import React, { FC, useState, useContext } from "react";
 import SongsService from "../services/songsService";
 import CreateSong from "./createSong";
-import { userContext } from "../utils/types";
+import { Album, userContext } from "../utils/types";
 import AddSongToPlaylist from "./addSongToPlaylist";
 import playlistService from "../services/playlistService";
 
-type Song = {
-  id?: number;
-  duration?: string;
-  name?: string;
-  artist?: Artist;
-  albums: Album;
-};
-
-type Album = {
-  id: number;
-  name?: string;
-  pictureUri?: string;
-  artist: Artist;
-  songs: Song[];
-  releaseDate?: string;
-};
-
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-  albums: Album;
-};
-
 interface SongsProps {
-  album: Album;
+  album: Album | undefined;
 }
 
 const SongsForAnAlbum: FC<SongsProps> = (album) => {
@@ -88,7 +64,7 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
             <CreateSong album={album.album} />
           </Modal>
         </div>
-        {album.album.songs.map((song, i) => (
+        {album.album?.songs?.map((song, i) => (
           <div key={i}>
             <div
               style={{

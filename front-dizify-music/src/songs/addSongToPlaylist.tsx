@@ -1,5 +1,4 @@
 import { Button, Form, message, Select } from "antd";
-import axios from "axios";
 import React, { FC, useContext, useEffect, useState } from "react";
 import playlistService from "../services/playlistService";
 import { Playlist, userContext } from "../utils/types";
@@ -28,9 +27,7 @@ const AddSongToPlaylist: FC<AddSongToPlaylistProps> = (songId) => {
     <Form
       name="basic"
       onFinish={(e) => {
-        axios.put(
-          `http://localhost:8080/playlist/${playlistChoosed}/song/${songId.songId}/add`
-        );
+        playlistService.addSongToPlaylist(playlistChoosed, songId.songId);
         message.success("Chanson ajoutée à la playlist ! ");
       }}
     >

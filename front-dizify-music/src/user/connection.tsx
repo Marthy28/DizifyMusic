@@ -11,18 +11,9 @@ const Connection: FC<UserProps> = () => {
     connection(values);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
-
   return (
     <>
-      <Form
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
+      <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish}>
         <Form.Item
           label="Email"
           name="eMail"

@@ -28,9 +28,7 @@ type Artist = {
   albums?: Album;
 };
 
-interface Props {}
-
-const CreateArtist: FC<Props> = () => {
+const CreateArtist: FC = () => {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [newArtist, setNewArtist] = useState<Artist>();
   const [ready, setReady] = useState<boolean>(false);

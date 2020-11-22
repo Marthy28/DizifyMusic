@@ -2,24 +2,18 @@ import { Button, Card, Form, Input, message } from "antd";
 import React, { FC, useContext, useEffect, useState } from "react";
 import playlistService from "../services/playlistService";
 import SongsForAPlaylist from "../songs/songsForAPlaylist";
-import Connection from "../user/connection";
 import { Playlist, userContext } from "../utils/types";
 
-interface PlaylistProps {}
-
-const Playlists: FC<PlaylistProps> = () => {
+const Playlists: FC = () => {
   const [Playlists, setPlaylists] = useState<Playlist[]>([]);
   const { userId } = useContext(userContext);
 
   function getPlaylistsByUser() {
     playlistService.getPlaylistsByUser(userId).then((res) => {
       const Plalists = res.data;
-      console.log(res.data);
       setPlaylists(Plalists);
     });
   }
-
-  console.log(window.sessionStorage.getItem("token"));
 
   useEffect(() => {
     userId && getPlaylistsByUser();

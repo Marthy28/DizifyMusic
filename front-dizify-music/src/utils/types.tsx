@@ -1,26 +1,26 @@
 import React from "react";
 
 export type Artist = {
-  id: number;
+  id?: number;
   name?: string;
   imageUri?: string;
-  albums: Album[];
+  albums?: Album[];
 };
 
 export type Song = {
-  id: number;
+  id?: number;
   duration?: string;
   name?: string;
   artist?: Artist;
-  albums: Album[];
+  album?: Album;
 };
 
 export type Album = {
-  id: number;
+  id?: number;
   name?: string;
   pictureUri?: string;
   artist?: Artist;
-  songs?: Song;
+  songs?: Song[];
   releaseDate?: string;
 };
 

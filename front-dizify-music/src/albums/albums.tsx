@@ -3,34 +3,9 @@ import Modal from "antd/lib/modal/Modal";
 import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import SongsForAnAlbum from "../songs/songsForAnAlbum";
-import Connection from "../user/connection";
-import { userContext } from "../utils/types";
-import UpdateAlbum from "./updateAlbum";
+import { Album, userContext } from "../utils/types";
 import CreateAlbum from "./createAlbum";
-
-type Song = {
-  id: number;
-  duration?: string;
-  name?: string;
-  artist: Artist;
-  albums: Album;
-};
-
-type Album = {
-  id: number;
-  name?: string;
-  pictureUri?: string;
-  artist: Artist;
-  songs: Song[];
-  releaseDate?: string;
-};
-
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-  albums: Album;
-};
+import UpdateAlbum from "./updateAlbum";
 
 interface AlbumsProps {
   listArtist?: any;
@@ -41,9 +16,6 @@ const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const { userId, admin } = useContext(userContext);
-
-  console.log("ICI");
-  console.log(listArtist);
 
   function getAlbums() {
     AlbumsService.getAlbums().then((res) => {
@@ -114,7 +86,7 @@ const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
                   visible={updateModal}
                   onOk={() => {
                     setUpdateModal(false);
-                    AlbumsService.getAlbumById(album.id.toString());
+                    album.id && AlbumsService.getAlbumById(album.id.toString());
                   }}
                   onCancel={() => setUpdateModal(false)}
                 >

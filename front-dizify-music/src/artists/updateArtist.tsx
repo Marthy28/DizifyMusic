@@ -36,9 +36,6 @@ const UpdateArtist: FC<Props> = ({ data }) => {
   const [ready, setReady] = useState<boolean>(false);
   const { userId, admin } = useContext(userContext);
 
-  console.log("Data");
-  console.log(data);
-
   useEffect(() => {
     if (ready) {
       ArtistService.updateArtist(UpdateArtist, data);
