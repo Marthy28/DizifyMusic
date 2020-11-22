@@ -2,12 +2,9 @@ import { Button, Card, Form, Input, message } from "antd";
 import React, { FC, useContext, useEffect, useState } from "react";
 import playlistService from "../services/playlistService";
 import SongsForAPlaylist from "../songs/songsForAPlaylist";
-import Connection from "../user/connection";
 import { Playlist, userContext } from "../utils/types";
 
-interface PlaylistProps {}
-
-const Playlists: FC<PlaylistProps> = () => {
+const Playlists: FC = () => {
   const [Playlists, setPlaylists] = useState<Playlist[]>([]);
   const { userId } = useContext(userContext);
 

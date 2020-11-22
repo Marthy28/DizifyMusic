@@ -3,33 +3,9 @@ import Modal from "antd/lib/modal/Modal";
 import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import SongsForAnAlbum from "../songs/songsForAnAlbum";
-import { userContext } from "../utils/types";
-import UpdateAlbum from "./updateAlbum";
+import { Album, userContext } from "../utils/types";
 import CreateAlbum from "./createAlbum";
-
-type Song = {
-  id: number;
-  duration?: string;
-  name?: string;
-  artist: Artist;
-  albums: Album;
-};
-
-type Album = {
-  id: number;
-  name?: string;
-  pictureUri?: string;
-  artist: Artist;
-  songs: Song[];
-  releaseDate?: string;
-};
-
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-  albums: Album;
-};
+import UpdateAlbum from "./updateAlbum";
 
 interface AlbumsProps {}
 
@@ -99,7 +75,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
               <SongsForAnAlbum album={album} />
             </div>
 
-            {admin === "null" ? null : (
+            {admin && (
               <>
                 <Button
                   shape="round"
@@ -114,7 +90,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
                   visible={updateModal}
                   onOk={() => {
                     setUpdateModal(false);
-                    AlbumsService.getAlbumById(album.id.toString());
+                    album.id && AlbumsService.getAlbumById(album.id.toString());
                   }}
                   onCancel={() => setUpdateModal(false)}
                 >

@@ -2,38 +2,13 @@ import { Button, Form, Input, Select } from "antd";
 import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import ArtistService from "../services/artistService";
-import songsService from "../services/songsService";
 import { userContext } from "../utils/types";
-
-type Song = {
-  id: number;
-  duration?: string;
-  name?: string;
-  artist?: Artist;
-  albums?: Album[];
-};
-
-type Album = {
-  id?: number;
-  name?: string;
-  pictureUri?: string;
-  artist?: Artist;
-  songs?: Song;
-  releaseDate?: string;
-};
-
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-  albums?: Album[];
-};
+import { Album, Artist } from "../utils/types";
 
 interface AlbumsProps {}
 
 const CreateAlbum: FC<AlbumsProps> = () => {
   const [artists, setArtists] = useState<Artist[]>([]);
-  const [songs, setSongs] = useState<Song[]>([]);
   const [newAlbum, setNewAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
   const [artistid, setID] = useState<string>();
@@ -46,25 +21,12 @@ const CreateAlbum: FC<AlbumsProps> = () => {
     });
   }, []);
 
-  useEffect(() => {
-    songsService.getSongs().then((res) => {
-      const songs = res.data;
-      setSongs(songs);
-    });
-  }, []);
-
   function handleChange(value: any) {
     setNewAlbum({
       artist: { id: value },
     });
     setID(value);
   }
-  function handleChangeSong(value: any) {
-    setNewAlbum({
-      songs: { id: value },
-    });
-  }
-
   useEffect(() => {
     if (ready) {
       AlbumsService.createAlbum(newAlbum, artistid, token);
@@ -104,14 +66,7 @@ const CreateAlbum: FC<AlbumsProps> = () => {
       <Form.Item label="Artiste">
         <Select onChange={handleChange}>
           {artists.map((artist, i) => (
-            <Select.Option value={artist.id}>{artist.name}</Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item label="Sons">
-        <Select onChange={handleChangeSong}>
-          {songs.map((song, i) => (
-            <Select.Option value={song.id}>{song.name}</Select.Option>
+            <Select.Option value={artist.id!}>{artist.name}</Select.Option>
           ))}
         </Select>
       </Form.Item>

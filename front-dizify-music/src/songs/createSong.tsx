@@ -1,34 +1,10 @@
 import { Button, Form, Input } from "antd";
 import React, { FC, useEffect, useState, useContext } from "react";
 import songsService from "../services/songsService";
-import { userContext } from "../utils/types";
-
-type Song = {
-  id?: number;
-  duration?: string;
-  name?: string;
-  artist?: Artist;
-  albums: Album;
-};
-
-type Album = {
-  id: number;
-  name?: string;
-  pictureUri?: string;
-  artist: Artist;
-  songs: Song[];
-  releaseDate?: string;
-};
-
-type Artist = {
-  id: number;
-  name?: string;
-  imageUri?: string;
-  albums: Album;
-};
+import { Album, Song, userContext } from "../utils/types";
 
 interface AlbumsProps {
-  album: Album;
+  album: Album | undefined;
 }
 
 const CreateSong: FC<AlbumsProps> = (album) => {
@@ -37,12 +13,12 @@ const CreateSong: FC<AlbumsProps> = (album) => {
   const { userId, admin, token } = useContext(userContext);
 
   useEffect(() => {
-    if (ready && userId && admin && album.album.artist) {
+    if (ready && userId && admin && album.album?.artist?.id) {
       songsService.createSong(album.album.artist.id.toString(), newSong, token);
       setNewSong(undefined);
       setReady(false);
     }
-  }, [admin, album.album.artist, userId, newSong, ready, token]);
+  }, [admin, album.album?.artist, userId, newSong, ready, token]);
 
   return (
     <Form
@@ -51,8 +27,8 @@ const CreateSong: FC<AlbumsProps> = (album) => {
         setNewSong({
           name: e.name,
           duration: e.duration,
-          artist: album.album.artist,
-          albums: album.album,
+          artist: album.album?.artist,
+          album: album.album,
         });
         setReady(true);
       }}

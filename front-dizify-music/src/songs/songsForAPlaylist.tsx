@@ -1,8 +1,8 @@
 import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import playlistService from "../services/playlistService";
-import { Playlist, userContext } from "../utils/types";
+import { Playlist } from "../utils/types";
 
 interface SongsProps {
   playlist: Playlist;

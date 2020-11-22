@@ -28,9 +28,7 @@ type Artist = {
   albums?: Album;
 };
 
-interface Props {}
-
-const CreateArtist: FC<Props> = () => {
+const CreateArtist: FC = () => {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [newArtist, setNewArtist] = useState<Artist>();
   const [ready, setReady] = useState<boolean>(false);
@@ -51,11 +49,11 @@ const CreateArtist: FC<Props> = () => {
     }
   }, [admin, userId, newArtist, ready, token]);
 
-  // function handleChange(value: any) {
-  //   setNewArtist({
-  //     albums: { id: value },
-  //   });
-  // }
+  function handleChange(value: any) {
+    setNewArtist({
+      albums: { id: value },
+    });
+  }
 
   return (
     <Form
@@ -85,7 +83,7 @@ const CreateArtist: FC<Props> = () => {
         <Input />
       </Form.Item>
 
-      {/* <Form.Item label="Album">
+      <Form.Item label="Album">
         <Select onChange={handleChange}>
           {albums.map((album, i) => (
             <Select.Option key={i} value={album.id}>
@@ -93,7 +91,7 @@ const CreateArtist: FC<Props> = () => {
             </Select.Option>
           ))}
         </Select>
-      </Form.Item> */}
+      </Form.Item>
 
       <Form.Item>
         <Button type="primary" shape="round" htmlType="submit">

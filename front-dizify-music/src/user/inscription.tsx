@@ -1,7 +1,6 @@
-import { Button, Card, Form, Input } from "antd";
+import { Button, Card, Form, Input, message } from "antd";
 import axios from "axios";
 import React, { FC } from "react";
-import { message } from "antd";
 
 interface UserProps {}
 

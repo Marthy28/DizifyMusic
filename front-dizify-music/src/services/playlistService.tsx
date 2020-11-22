@@ -20,6 +20,12 @@ class PlaylistService {
   deletePlaylist(playlistId: number) {
     return axios.delete(`${API_BASE_URL}/playlist/${playlistId}`);
   }
+
+  addSongToPlaylist(playlistChoosed: any, songId: any) {
+    return axios.put(
+      `http://localhost:8080/playlist/${playlistChoosed}/song/${songId}/add`
+    );
+  }
 }
 
 export default new PlaylistService();
