@@ -1,7 +1,7 @@
 /* eslint-disable no-lone-blocks */
 import { Button, message, Tabs } from "antd";
 import axios from "axios";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import AlbumsList from "./albums/albums";
 import Home from "./Home";
 import ArtistsList from "./artists/artists";
@@ -61,7 +61,6 @@ const App: FC = () => {
       admin: "",
     });
     window.sessionStorage.clear();
-    console.log(window.sessionStorage.getItem("userId"));
   };
 
   return (
@@ -132,7 +131,7 @@ const App: FC = () => {
           <TabPane tab="Albums" key="3">
             <AlbumsList />
           </TabPane>
-          {user.admin ? null : (
+          {(user.admin || window.sessionStorage.getItem("admin")) === null ? (
             <>
               <TabPane tab="Favoris" key="4">
                 Favoris
@@ -141,7 +140,7 @@ const App: FC = () => {
                 <Playlists />
               </TabPane>
             </>
-          )}
+          ) : null}
         </Tabs>
       </div>
     </userContext.Provider>
