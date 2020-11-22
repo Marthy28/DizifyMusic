@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import React, { FC, useEffect, useState, useContext } from "react";
 import ArtistService from "../services/artistService";
 import { userContext } from "../utils/types";
@@ -37,6 +37,7 @@ const CreateArtist: FC = () => {
       ArtistService.createArtist(newArtist, token);
       setNewArtist(undefined);
       setReady(false);
+      message.success(`Créé`);
     }
   }, [admin, userId, newArtist, ready, token]);
 

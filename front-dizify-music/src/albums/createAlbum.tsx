@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, message } from "antd";
 import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import ArtistService from "../services/artistService";
@@ -32,6 +32,7 @@ const CreateAlbum: FC<AlbumsProps> = () => {
       AlbumsService.createAlbum(newAlbum, artistid, token);
       setNewAlbum(undefined);
       setReady(false);
+      message.success(`Créé`);
     }
   }, [artistid, newAlbum, ready, token]);
 

@@ -1,4 +1,4 @@
-import { Button, Card, Image, Modal } from "antd";
+import { Button, Card, Image, Modal, message } from "antd";
 import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import SongsForAnAlbum from "../songs/songsForAnAlbum";
@@ -23,6 +23,7 @@ const AlbumsList: FC<AlbumsProps> = () => {
   function deleteID(albumID: number) {
     AlbumsService.deleteAlbum(albumID.toString(), token).then((res) => {
       getAlbums();
+      message.success(`Supprimé`);
     });
   }
 

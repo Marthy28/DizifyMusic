@@ -1,4 +1,4 @@
-import { Button, Card, Divider, Image, Modal } from "antd";
+import { Button, Card, Divider, Image, Modal, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import React, { FC, useContext, useEffect, useState } from "react";
 import ArtistService from "../services/artistService";
@@ -50,6 +50,7 @@ const ArtistsList: FC = () => {
   function deleteID(artistID: number) {
     ArtistService.deleteArtist(artistID.toString(), token).then((res) => {
       getArtists();
+      message.success(`Supprimé`);
     });
   }
 
