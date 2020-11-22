@@ -4,12 +4,13 @@ import {
   PlaySquareOutlined,
   HeartOutlined,
 } from "@ant-design/icons";
-import { Button, message } from "antd";
-import Modal from "antd/lib/modal/Modal";
+import { Button, message, Modal } from "antd";
 import React, { FC, useState, useContext } from "react";
 import SongsService from "../services/songsService";
 import CreateSong from "./createSong";
 import { userContext } from "../utils/types";
+import AddSongToPlaylist from "./addSongToPlaylist";
+import playlistService from "../services/playlistService";
 
 type Song = {
   id?: number;
@@ -40,8 +41,17 @@ interface SongsProps {
 }
 
 const SongsForAnAlbum: FC<SongsProps> = (album) => {
-  const [visible, setVisible] = useState<boolean>(false);
-  const { admin } = useContext(userContext);
+  const [visibleAddSong, setVisibleAddSong] = useState<boolean>(false);
+  const { admin, userId } = useContext(userContext);
+
+  function DataModal(songId: any) {
+    Modal.success({
+      title: "Ajouter un titre à une playlist",
+      content: <AddSongToPlaylist songId={songId} />,
+      icon: <PlaySquareOutlined />,
+      onOk: () => playlistService.getPlaylistsByUser(userId),
+    });
+  }
 
   return (
     <>
@@ -61,7 +71,7 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
             <Button
               type="primary"
               onClick={() => {
-                setVisible(true);
+                setVisibleAddSong(true);
               }}
               shape="circle"
               icon={<PlusOutlined />}
@@ -69,17 +79,17 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
           )}
           <Modal
             title="Ajouter un titre"
-            visible={visible}
+            visible={visibleAddSong}
             onOk={() => {
-              setVisible(false);
+              setVisibleAddSong(false);
             }}
-            onCancel={() => setVisible(false)}
+            onCancel={() => setVisibleAddSong(false)}
           >
             <CreateSong album={album.album} />
           </Modal>
         </div>
         {album.album.songs.map((song, i) => (
-          <>
+          <div key={i}>
             <div
               style={{
                 display: "flex",
@@ -90,22 +100,27 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
               <p>
                 {song.name} {song.duration}
               </p>
-              <Button
-                style={{ border: "none", color: "var(--pink)" }}
-                onClick={() => {
-                  message.error("TODO");
-                }}
-                shape="circle"
-                icon={<HeartOutlined />}
-              />
-              <Button
-                style={{ border: "none", color: "var(--pink)" }}
-                onClick={() => {
-                  message.error("TODO");
-                }}
-                shape="circle"
-                icon={<PlaySquareOutlined />}
-              />
+              {admin == null && (
+                <>
+                  <Button
+                    style={{ border: "none", color: "var(--pink)" }}
+                    onClick={() => {
+                      DataModal(song.id);
+                    }}
+                    shape="circle"
+                    icon={<PlaySquareOutlined />}
+                  />
+
+                  <Button
+                    style={{ border: "none", color: "var(--pink)" }}
+                    onClick={() => {
+                      message.error("TODO");
+                    }}
+                    shape="circle"
+                    icon={<HeartOutlined />}
+                  />
+                </>
+              )}
               {admin && (
                 <Button
                   style={{ border: "none", color: "var(--pink)" }}
@@ -119,7 +134,7 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
                 />
               )}
             </div>
-          </>
+          </div>
         ))}
       </div>
     </>
