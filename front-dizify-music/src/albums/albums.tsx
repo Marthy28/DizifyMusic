@@ -6,6 +6,8 @@ import SongsForAnAlbum from "../songs/songsForAnAlbum";
 import CreateAlbum from "./createAlbum";
 import Connection from "../user/connection";
 import { userContext } from "../utils/types";
+import UpdateAlbum from "./updateAlbum";
+
 type Song = {
   id: number;
   duration?: string;
@@ -13,6 +15,7 @@ type Song = {
   artist: Artist;
   albums: Album;
 };
+
 type Album = {
   id: number;
   name?: string;
@@ -21,26 +24,38 @@ type Album = {
   songs: Song[];
   releaseDate?: string;
 };
+
 type Artist = {
   id: number;
   name?: string;
   imageUri?: string;
   albums: Album;
 };
-interface AlbumsProps {}
-const AlbumsList: FC<AlbumsProps> = () => {
+
+interface AlbumsProps {
+  listArtist?: any;
+}
+
+const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
-  const { isConnected, token, admin } = useContext(userContext);
+  const [updateModal, setUpdateModal] = useState<boolean>(false);
+  const { isConnected, admin } = useContext(userContext);
+
+  console.log("ICI");
+  console.log(listArtist);
+
   function getAlbums() {
     AlbumsService.getAlbums().then((res) => {
       const Albums = res.data;
       setAlbums(Albums);
     });
   }
+
   useEffect(() => {
     isConnected && getAlbums();
   }, [isConnected]);
+
   return isConnected ? (
     <>
       <h1
@@ -83,19 +98,42 @@ const AlbumsList: FC<AlbumsProps> = () => {
               <p>{album.releaseDate?.slice(0, 10)}</p>
               <SongsForAnAlbum album={album} />
             </div>
+
             {admin === "null" ? null : (
-              <Button
-                shape="round"
-                onClick={() => {
-                  album.id && AlbumsService.deleteAlbum(album.id.toString());
-                }}
-              >
-                Supprimer l'album
-              </Button>
+              <>
+                <Button
+                  shape="round"
+                  onClick={() => {
+                    setUpdateModal(true);
+                  }}
+                >
+                  Modifier l'album
+                </Button>
+                <Modal
+                  title="Modifier l'album"
+                  visible={updateModal}
+                  onOk={() => {
+                    setUpdateModal(false);
+                    AlbumsService.getAlbumById(album.id.toString());
+                  }}
+                  onCancel={() => setUpdateModal(false)}
+                >
+                  <UpdateAlbum data={album} />
+                </Modal>
+                <Button
+                  shape="round"
+                  onClick={() => {
+                    album.id && AlbumsService.deleteAlbum(album.id.toString());
+                  }}
+                >
+                  Supprimer l'album
+                </Button>
+              </>
             )}
           </Card>
         ))}
       </div>
+
       {admin === "null" ? null : (
         <Button
           shape="round"

@@ -34,6 +34,9 @@ const App: FC = () => {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + res.data.token;
       }
+      {
+        axios.defaults.headers["Content-Type"] = "application/json";
+      }
       setUser({
         isConnected: true,
         userId: res.data.user.id,
@@ -63,12 +66,16 @@ const App: FC = () => {
           <TabPane tab="Albums" key="3">
             <AlbumsList />
           </TabPane>
-          <TabPane tab="Favoris" key="4">
-            Favoris
-          </TabPane>
-          <TabPane tab="Playlists" key="5">
-            <Playlists />
-          </TabPane>
+          {user.admin ? null : (
+            <>
+              <TabPane tab="Favoris" key="4">
+                Favoris
+              </TabPane>
+              <TabPane tab="Playlists" key="5">
+                <Playlists />
+              </TabPane>
+            </>
+          )}
         </Tabs>
       </div>
     </userContext.Provider>

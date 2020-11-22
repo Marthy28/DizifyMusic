@@ -7,8 +7,11 @@ class AlbumsService {
     return axios.get(ALBUMS_API_BASE_URL + "s");
   }
 
-  createAlbum(album: any) {
-    return axios.post(ALBUMS_API_BASE_URL, JSON.stringify(album));
+  createAlbum(album: any, artistId: string) {
+    return axios.post(
+      ALBUMS_API_BASE_URL + "/" + artistId,
+      JSON.stringify(album)
+    );
   }
 
   getAlbumById(albumId: string) {
@@ -16,16 +19,11 @@ class AlbumsService {
   }
 
   updateAlbum(album: any, albumId: string) {
-    return axios.put(ALBUMS_API_BASE_URL + "/" + albumId, album);
+    return axios.put(ALBUMS_API_BASE_URL + "/" + album, albumId);
   }
 
   deleteAlbum(albumId: string) {
-    return axios.delete(ALBUMS_API_BASE_URL + "/" + albumId, {
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+    return axios.delete(ALBUMS_API_BASE_URL + "/" + albumId);
   }
 }
 

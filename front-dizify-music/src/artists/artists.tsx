@@ -1,10 +1,13 @@
-import { Button, Card, Image } from "antd";
+import { Button, Card, Divider, Image } from "antd";
+import { PlusOutlined, CloseSquareOutlined } from "@ant-design/icons";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useEffect, useState, useContext } from "react";
 import ArtistService from "../services/artistService";
 import CreateArtist from "./createArtist";
 import Connection from "../user/connection";
 import { userContext } from "../utils/types";
+import UpdateArtist from "./updateArtist";
+
 type Song = {
   id: number;
   duration?: string;
@@ -12,6 +15,7 @@ type Song = {
   artist?: Artist;
   albums: Album[];
 };
+
 type Album = {
   id: number;
   name?: string;
@@ -20,18 +24,22 @@ type Album = {
   songs?: Song;
   releaseDate?: string;
 };
+
 type Artist = {
   id: number;
   name?: string;
   imageUri?: string;
   albums: Album[];
 };
+
 interface Props {}
+
 const ArtistsList: FC<Props> = () => {
   const [Artists, setArtists] = useState<Artist[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
-  const { isConnected, token, admin } = useContext(userContext);
-  console.log(admin);
+  const [updateModal, setUpdateModal] = useState<boolean>(false);
+  const [listVisible, setListVisible] = useState<boolean>(false);
+  const { isConnected, admin } = useContext(userContext);
 
   function getArtists() {
     ArtistService.getArtists().then((res) => {
@@ -41,9 +49,11 @@ const ArtistsList: FC<Props> = () => {
       setArtists(Artists);
     });
   }
+
   useEffect(() => {
     isConnected && getArtists();
   }, [isConnected]);
+
   return isConnected ? (
     <>
       <h1
@@ -57,7 +67,7 @@ const ArtistsList: FC<Props> = () => {
         Artistes
       </h1>
       <div style={{ display: "flex", flexWrap: "wrap", marginTop: "1%" }}>
-        {Artists.map((artist, i) => (
+        {Artists.map((artist, _i) => (
           <>
             <Card
               style={{
@@ -72,18 +82,31 @@ const ArtistsList: FC<Props> = () => {
                 <h1 style={{ fontWeight: "bold", fontSize: 34 }}>
                   {artist.name}
                 </h1>
-                {artist.albums.length ? (
-                  artist.albums.map((album: any) => (
-                    <>
-                      <h3>Liste Albums :</h3>
-                      <p>{album.name}</p>
-                      <p>{album.releaseDate?.slice(0, 10)}</p>
-                      <p>{album.songs.length}</p>
-                    </>
-                  ))
-                ) : (
-                  <p>Pas d'album pour cet artist</p>
-                )}
+
+                <h3>Liste Albums :</h3>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setListVisible(true);
+                  }}
+                  shape="circle"
+                  icon={<PlusOutlined />}
+                />
+                <Modal
+                  title="Liste des albums"
+                  visible={listVisible}
+                  onOk={() => {
+                    setListVisible(false);
+                  }}
+                >
+                  <Divider orientation="left">ALbums : </Divider>
+                  {artist.albums.map((album) => (
+                    <ul>
+                      <li>{album.name}</li>
+                      <li>{album.releaseDate?.slice(0, 10)}</li>
+                    </ul>
+                  ))}
+                </Modal>
                 <Image
                   width={200}
                   src={`${artist.imageUri}`}
@@ -91,15 +114,36 @@ const ArtistsList: FC<Props> = () => {
                 />
               </div>
               {admin === "null" ? null : (
-                <Button
-                  shape="round"
-                  onClick={() => {
-                    artist.id &&
-                      ArtistService.deleteArtist(artist.id.toString());
-                  }}
-                >
-                  Supprimer l'artiste
-                </Button>
+                <>
+                  <Button
+                    shape="round"
+                    onClick={() => {
+                      setUpdateModal(true);
+                    }}
+                  >
+                    Modifier l'artiste
+                  </Button>
+                  <Modal
+                    title="Modifier l'artiste"
+                    visible={updateModal}
+                    onOk={() => {
+                      setUpdateModal(false);
+                      ArtistService.getArtistById(artist.id.toString());
+                    }}
+                    onCancel={() => setUpdateModal(false)}
+                  >
+                    <UpdateArtist data={artist} />
+                  </Modal>
+                  <Button
+                    shape="round"
+                    onClick={() => {
+                      artist.id &&
+                        ArtistService.deleteArtist(artist.id.toString());
+                    }}
+                  >
+                    Supprimer l'artiste
+                  </Button>
+                </>
               )}
             </Card>
           </>

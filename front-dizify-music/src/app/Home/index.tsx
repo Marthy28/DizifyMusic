@@ -1,4 +1,3 @@
-import { RouteComponentProps } from "@reach/router";
 import { Card, Image } from "antd";
 import React, { FC, useEffect, useState } from "react";
 import albumsService from "../../services/albumsService";

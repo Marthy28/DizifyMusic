@@ -28,18 +28,21 @@ type Artist = {
   albums?: Album[];
 };
 
-interface AlbumsProps {}
+interface AlbumsProps {
+  data: any;
+}
 
-const CreateAlbum: FC<AlbumsProps> = () => {
+const UpdateAlbum: FC<AlbumsProps> = ({ data }) => {
   const [artists, setArtists] = useState<Artist[]>([]);
   const [songs, setSongs] = useState<Song[]>([]);
-  const [newAlbum, setNewAlbum] = useState<Album>();
+  const [UpdateAlbum, setUpdateAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
+  console.log(data);
 
   useEffect(() => {
     artistService.getArtists().then((res) => {
       const artists = res.data;
-      console.log("CREATE ALBUM ARTISTS");
+      console.log("UPDATE ALBUM ARTISTS");
       console.log(artists);
 
       setArtists(artists);
@@ -58,28 +61,20 @@ const CreateAlbum: FC<AlbumsProps> = () => {
 
   useEffect(() => {
     if (ready) {
-      console.log(typeof artists);
-
-      Object.values(artists).map((artist) => {
-        let id = artist.id;
-        AlbumsService.createAlbum(newAlbum, id.toString());
-      });
-      setNewAlbum(undefined);
+      AlbumsService.updateAlbum(UpdateAlbum, data);
+      setUpdateAlbum(undefined);
       setReady(false);
     }
-  }, [newAlbum, ready]);
+  }, [UpdateAlbum, ready, data]);
 
   function handleChange(value: any) {
-    console.log(value);
-
-    setNewAlbum({
+    setUpdateAlbum({
       artist: { id: value },
     });
   }
-  function handleChangeSong(value: any) {
-    console.log(value);
 
-    setNewAlbum({
+  function handleChangeSong(value: any) {
+    setUpdateAlbum({
       songs: { id: value },
     });
   }
@@ -87,8 +82,8 @@ const CreateAlbum: FC<AlbumsProps> = () => {
     <Form
       name="basic"
       onFinish={(e) => {
-        setNewAlbum({
-          ...newAlbum,
+        setUpdateAlbum({
+          ...UpdateAlbum,
           name: e.name,
           pictureUri: e.pictureUri,
         });
@@ -111,7 +106,10 @@ const CreateAlbum: FC<AlbumsProps> = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item label="Artiste">
+      <Form.Item
+        label="Artiste"
+        rules={[{ required: true, message: "Artiste" }]}
+      >
         <Select onChange={handleChange}>
           {artists.map((artist, i) => (
             <Select.Option value={artist.id}>{artist.name}</Select.Option>
@@ -127,11 +125,11 @@ const CreateAlbum: FC<AlbumsProps> = () => {
       </Form.Item>
       <Form.Item>
         <Button shape="round" type="primary" htmlType="submit">
-          Ajouter
+          Confirmer
         </Button>
       </Form.Item>
     </Form>
   );
 };
 
-export default CreateAlbum;
+export default UpdateAlbum;
