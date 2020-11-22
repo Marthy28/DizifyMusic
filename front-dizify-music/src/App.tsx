@@ -43,7 +43,6 @@ const App: FC = () => {
       password: values.password,
     };
     axios.post("http://localhost:8080/login", data).then((res) => {
-      console.log(res.data);
       res && message.success(`Connecté`);
       {
         axios.defaults.headers.common["Authorization"] =

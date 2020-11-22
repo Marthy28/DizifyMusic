@@ -28,24 +28,21 @@ type Artist = {
 };
 
 interface Props {
-  data: any;
+  artist: any;
 }
 
-const UpdateArtist: FC<Props> = ({ data }) => {
+const UpdateArtist: FC<Props> = ({ artist }) => {
   const [UpdateArtist, setUpdateArtist] = useState<Artist>();
   const [ready, setReady] = useState<boolean>(false);
-  const { userId, admin } = useContext(userContext);
-
-  console.log("Data");
-  console.log(data);
+  const { userId, admin, token } = useContext(userContext);
 
   useEffect(() => {
     if (ready) {
-      ArtistService.updateArtist(UpdateArtist, data);
+      ArtistService.updateArtist(UpdateArtist, artist.id, token);
       setUpdateArtist(undefined);
       setReady(false);
     }
-  }, [admin, data, userId, UpdateArtist, ready]);
+  }, [admin, userId, UpdateArtist, ready, token, artist.id]);
 
   return (
     <Form
@@ -64,7 +61,7 @@ const UpdateArtist: FC<Props> = ({ data }) => {
         name="name"
         rules={[{ required: true, message: "Nom de l'artiste" }]}
       >
-        <Input placeholder={data.name} />
+        <Input placeholder={artist.name} />
       </Form.Item>
 
       <Form.Item
@@ -72,7 +69,7 @@ const UpdateArtist: FC<Props> = ({ data }) => {
         name="imageUri"
         rules={[{ required: true, message: "Lien vers l'image" }]}
       >
-        <Input placeholder={data.imageUri} />
+        <Input placeholder={artist.imageUri} />
       </Form.Item>
 
       <Form.Item>

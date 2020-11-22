@@ -34,15 +34,15 @@ interface AlbumsProps {
 const CreateSong: FC<AlbumsProps> = (album) => {
   const [newSong, setNewSong] = useState<Song>();
   const [ready, setReady] = useState<boolean>(false);
-  const { userId, admin } = useContext(userContext);
+  const { userId, admin, token } = useContext(userContext);
 
   useEffect(() => {
     if (ready && userId && admin && album.album.artist) {
-      songsService.createSong(album.album.artist.id.toString(), newSong);
+      songsService.createSong(album.album.artist.id.toString(), newSong, token);
       setNewSong(undefined);
       setReady(false);
     }
-  }, [admin, album.album.artist, userId, newSong, ready]);
+  }, [admin, album.album.artist, userId, newSong, ready, token]);
 
   return (
     <Form

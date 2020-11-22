@@ -3,7 +3,6 @@ import Modal from "antd/lib/modal/Modal";
 import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
 import SongsForAnAlbum from "../songs/songsForAnAlbum";
-import Connection from "../user/connection";
 import { userContext } from "../utils/types";
 import UpdateAlbum from "./updateAlbum";
 import CreateAlbum from "./createAlbum";
@@ -32,23 +31,24 @@ type Artist = {
   albums: Album;
 };
 
-interface AlbumsProps {
-  listArtist?: any;
-}
+interface AlbumsProps {}
 
-const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
+const AlbumsList: FC<AlbumsProps> = () => {
   const [Albums, setAlbums] = useState<Album[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
-  const { userId, admin } = useContext(userContext);
-
-  console.log("ICI");
-  console.log(listArtist);
+  const { userId, admin, token } = useContext(userContext);
 
   function getAlbums() {
     AlbumsService.getAlbums().then((res) => {
       const Albums = res.data;
       setAlbums(Albums);
+    });
+  }
+
+  function deleteID(albumID: number) {
+    AlbumsService.deleteAlbum(albumID.toString(), token).then((res) => {
+      getAlbums();
     });
   }
 
@@ -123,7 +123,7 @@ const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
                 <Button
                   shape="round"
                   onClick={() => {
-                    album.id && AlbumsService.deleteAlbum(album.id.toString());
+                    album.id && deleteID(album.id);
                   }}
                 >
                   Supprimer l'album
@@ -158,7 +158,7 @@ const AlbumsList: FC<AlbumsProps> = ({ listArtist }) => {
       </Modal>
     </>
   ) : (
-    <h1>Tu dois te connecter pour accéder à tes playlist</h1>
+    <h1>Connexion requise</h1>
   );
 };
 export default AlbumsList;

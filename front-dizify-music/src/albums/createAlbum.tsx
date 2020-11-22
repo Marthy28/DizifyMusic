@@ -1,8 +1,9 @@
 import { Button, Form, Input, Select } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import AlbumsService from "../services/albumsService";
-import artistService from "../services/artistService";
+import ArtistService from "../services/artistService";
 import songsService from "../services/songsService";
+import { userContext } from "../utils/types";
 
 type Song = {
   id: number;
@@ -35,13 +36,12 @@ const CreateAlbum: FC<AlbumsProps> = () => {
   const [songs, setSongs] = useState<Song[]>([]);
   const [newAlbum, setNewAlbum] = useState<Album>();
   const [ready, setReady] = useState<boolean>(false);
+  const [artistid, setID] = useState<string>();
+  const { token } = useContext(userContext);
 
   useEffect(() => {
-    artistService.getArtists().then((res) => {
+    ArtistService.getArtists().then((res) => {
       const artists = res.data;
-      console.log("CREATE ALBUM ARTISTS");
-      console.log(artists);
-
       setArtists(artists);
     });
   }, []);
@@ -49,40 +49,30 @@ const CreateAlbum: FC<AlbumsProps> = () => {
   useEffect(() => {
     songsService.getSongs().then((res) => {
       const songs = res.data;
-      console.log("SONGS");
-      console.log(songs);
-
       setSongs(songs);
     });
   }, []);
 
-  useEffect(() => {
-    if (ready) {
-      console.log(typeof artists);
-
-      Object.values(artists).map((artist) => {
-        let id = artist.id;
-        AlbumsService.createAlbum(newAlbum, id.toString());
-      });
-      setNewAlbum(undefined);
-      setReady(false);
-    }
-  }, [newAlbum, ready]);
-
   function handleChange(value: any) {
-    console.log(value);
-
     setNewAlbum({
       artist: { id: value },
     });
+    setID(value);
   }
   function handleChangeSong(value: any) {
-    console.log(value);
-
     setNewAlbum({
       songs: { id: value },
     });
   }
+
+  useEffect(() => {
+    if (ready) {
+      AlbumsService.createAlbum(newAlbum, artistid, token);
+      setNewAlbum(undefined);
+      setReady(false);
+    }
+  }, [artistid, newAlbum, ready, token]);
+
   return (
     <Form
       name="basic"

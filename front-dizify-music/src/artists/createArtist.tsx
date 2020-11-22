@@ -34,7 +34,7 @@ const CreateArtist: FC<Props> = () => {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [newArtist, setNewArtist] = useState<Artist>();
   const [ready, setReady] = useState<boolean>(false);
-  const { userId, token, admin } = useContext(userContext);
+  const { userId, admin, token } = useContext(userContext);
 
   useEffect(() => {
     AlbumsService.getAlbums().then((res) => {
@@ -44,18 +44,18 @@ const CreateArtist: FC<Props> = () => {
   }, []);
 
   useEffect(() => {
-    if (ready && userId && admin) {
-      ArtistService.createArtist(newArtist);
+    if (ready) {
+      ArtistService.createArtist(newArtist, token);
       setNewArtist(undefined);
       setReady(false);
     }
-  }, [admin, userId, newArtist, ready]);
+  }, [admin, userId, newArtist, ready, token]);
 
-  function handleChange(value: any) {
-    setNewArtist({
-      albums: { id: value },
-    });
-  }
+  // function handleChange(value: any) {
+  //   setNewArtist({
+  //     albums: { id: value },
+  //   });
+  // }
 
   return (
     <Form
@@ -85,7 +85,7 @@ const CreateArtist: FC<Props> = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item label="Album">
+      {/* <Form.Item label="Album">
         <Select onChange={handleChange}>
           {albums.map((album, i) => (
             <Select.Option key={i} value={album.id}>
@@ -93,7 +93,7 @@ const CreateArtist: FC<Props> = () => {
             </Select.Option>
           ))}
         </Select>
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item>
         <Button type="primary" shape="round" htmlType="submit">

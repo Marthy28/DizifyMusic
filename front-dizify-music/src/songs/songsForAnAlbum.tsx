@@ -36,7 +36,7 @@ interface SongsProps {
 
 const SongsForAnAlbum: FC<SongsProps> = (album) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const { admin } = useContext(userContext);
+  const { admin, token } = useContext(userContext);
 
   return (
     <>
@@ -90,7 +90,7 @@ const SongsForAnAlbum: FC<SongsProps> = (album) => {
                   style={{ border: "none", color: "var(--pink)" }}
                   onClick={() => {
                     if (song.id) {
-                      SongsService.deleteSong(song.id.toString());
+                      SongsService.deleteSong(song.id.toString(), token);
                     }
                   }}
                   shape="circle"

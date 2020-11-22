@@ -7,20 +7,28 @@ class ArtistService {
     return axios.get(ARTIST_API_BASE_URL + "s");
   }
 
-  createArtist(artist: any) {
-    return axios.post(ARTIST_API_BASE_URL, JSON.stringify(artist));
+  createArtist(artist: any, token: string | null) {
+    return axios.post(ARTIST_API_BASE_URL, artist, {
+      headers: { Authorization: "Bearer " + token },
+    });
   }
 
-  getArtistById(artistId: string) {
-    return axios.get(ARTIST_API_BASE_URL + "/" + artistId);
+  getArtistById(artistId: string, token: string | null) {
+    return axios.get(ARTIST_API_BASE_URL + "/" + artistId, {
+      headers: { Authorization: "Bearer " + token },
+    });
   }
 
-  updateArtist(artist: any, artistId: string) {
-    return axios.put(ARTIST_API_BASE_URL + "/" + artistId, artist);
+  updateArtist(artist: any, artistId: string, token: string | null) {
+    return axios.put(ARTIST_API_BASE_URL + "/" + artistId, artist, {
+      headers: { Authorization: "Bearer " + token },
+    });
   }
 
-  deleteArtist(artistId: string) {
-    return axios.delete(ARTIST_API_BASE_URL + "/" + artistId);
+  deleteArtist(artistId: string, token: string | null) {
+    return axios.delete(ARTIST_API_BASE_URL + "/" + artistId, {
+      headers: { Authorization: "Bearer " + token },
+    });
   }
 }
 

@@ -7,23 +7,26 @@ class SongsService {
     return axios.get(SONGS_API_BASE_URL + "s");
   }
 
-  createSong(artistId: string, song: any) {
-    return axios.post(
-      SONGS_API_BASE_URL + "/" + artistId,
-      JSON.stringify(song)
-    );
+  createSong(artistId: string, song: any, token: string | null) {
+    return axios.post(SONGS_API_BASE_URL + "/" + artistId, song, {
+      headers: { Authorization: "Bearer " + token },
+    });
   }
 
   getSongById(songId: string) {
     return axios.get(SONGS_API_BASE_URL + "/" + songId);
   }
 
-  updateSong(song: any, songId: string) {
-    return axios.put(SONGS_API_BASE_URL + "/" + songId, song);
+  updateSong(song: any, songId: string, token: string | null) {
+    return axios.put(SONGS_API_BASE_URL + "/" + songId, song, {
+      headers: { Authorization: "Bearer " + token },
+    });
   }
 
-  deleteSong(songId: string) {
-    return axios.delete(SONGS_API_BASE_URL + "/" + songId);
+  deleteSong(songId: string, token: string | null) {
+    return axios.delete(SONGS_API_BASE_URL + "/" + songId, {
+      headers: { Authorization: "Bearer " + token },
+    });
   }
 }
 

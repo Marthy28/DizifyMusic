@@ -14,12 +14,9 @@ const Playlists: FC<PlaylistProps> = () => {
   function getPlaylistsByUser() {
     playlistService.getPlaylistsByUser(userId).then((res) => {
       const Plalists = res.data;
-      console.log(res.data);
       setPlaylists(Plalists);
     });
   }
-
-  console.log(window.sessionStorage.getItem("token"));
 
   useEffect(() => {
     userId && getPlaylistsByUser();
