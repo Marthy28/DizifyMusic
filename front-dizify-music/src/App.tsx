@@ -1,5 +1,5 @@
 /* eslint-disable no-lone-blocks */
-import { Button, message, Tabs } from "antd";
+import { Avatar, Button, message, Tabs } from "antd";
 import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
 import AlbumsList from "./albums/albums";
@@ -9,10 +9,17 @@ import Playlists from "./playlists/playlist";
 import { userContext } from "./utils/types";
 import Modal from "antd/lib/modal/Modal";
 import Connection from "./user/connection";
+import usersService from "./services/usersService";
+
+type User = {
+  id: number;
+  avatarUri: string;
+};
 
 const { TabPane } = Tabs;
 
 const App: FC = () => {
+  const [UserAvatar, setUserAvatar] = useState<User>();
   const [visible, setVisible] = useState<boolean>(false);
   const [user, setUser] = useState<{
     userId: string;
@@ -62,6 +69,17 @@ const App: FC = () => {
     window.sessionStorage.clear();
   };
 
+  function getUserId() {
+    usersService.getUserById(user.userId).then((res) => {
+      const User = res.data;
+      setUserAvatar(User);
+    });
+  }
+
+  useEffect(() => {
+    getUserId();
+  }, []);
+
   return (
     <userContext.Provider value={{ ...user, connection }}>
       <div
@@ -77,14 +95,24 @@ const App: FC = () => {
         }}
       >
         {user.userId ? (
-          <Button
-            shape="round"
-            onClick={() => {
-              deconnection();
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            Se déconnecter
-          </Button>
+            <Button
+              shape="round"
+              onClick={() => {
+                deconnection();
+              }}
+            >
+              Se déconnecter
+            </Button>
+            <Avatar size="large" src={UserAvatar?.avatarUri} />
+          </div>
         ) : (
           <div
             style={{
@@ -116,7 +144,12 @@ const App: FC = () => {
             </Button>
           </div>
         )}
-        <Modal footer={null} title="Se connecter" visible={visible}>
+        <Modal
+          footer={null}
+          title="Se connecter"
+          visible={visible}
+          onCancel={() => setVisible(false)}
+        >
           <Connection />
         </Modal>
 

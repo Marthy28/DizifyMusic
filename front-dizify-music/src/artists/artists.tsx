@@ -1,10 +1,9 @@
 import { Button, Card, Divider, Image } from "antd";
-import { PlusOutlined, CloseSquareOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import Modal from "antd/lib/modal/Modal";
 import React, { FC, useEffect, useState, useContext } from "react";
 import ArtistService from "../services/artistService";
 import CreateArtist from "./createArtist";
-import Connection from "../user/connection";
 import { userContext } from "../utils/types";
 import UpdateArtist from "./updateArtist";
 
