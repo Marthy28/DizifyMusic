@@ -89,7 +89,7 @@ const App: FC = () => {
         admin: "",
       });
     }
-  }, []);
+  }, [user.userId]);
 
   return (
     <userContext.Provider value={{ ...user, connection }}>
